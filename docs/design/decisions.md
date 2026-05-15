@@ -242,6 +242,29 @@ Collision resolution order:
 
 ---
 
+## 2026-05-15 — Stages are faction-themed; one planet, varied invaders
+
+**Decision:** Each stage in a run features a distinct alien faction in the invasion. The defended planet stays singular, but the attackers change stage to stage. Each faction has both a visual identity (enemy silhouettes, color palette, bullet style, carrier-ship designs) and a mechanical identity (formation behaviors, descent patterns, HP/shield profile, primary threat type). A run targets roughly four faction stages plus a final boss stage; exact count is tunable. The final stage is the coalition warlord or prime instigator behind the invasion.
+
+**Reasoning:** Defending a single planet across multiple stages creates a visual sameness problem — every stage reads the same backdrop and the same enemies. Two alternatives were considered and rejected:
+
+1. **Multi-planet campaign** (each stage is a different defended planet) — rejected because it dilutes the singular "defend YOUR planet" emotional core that anchors the Defense Grid fiction (2026-05-13 and 2026-05-14 entries), and adds thorny questions about per-planet vs. shared grids and what failure on an outer planet means.
+2. **Single planet with cosmetic variety levers only** (time of day, altitude, sky mood) — rejected as the *only* lever because it provides backdrop variety but not mechanical variety, so each stage still plays the same.
+
+Faction-as-stage is stronger than either alone: it preserves the single-planet emotional core, provides strong visual distinction between stages, and adds *mechanical* variety against the typed-weapon model without requiring biome fictionalization on a single planet. It also gives the run a natural climax — a final boss as the warlord of the coalition.
+
+**Implications:**
+
+- Each faction is a content unit. Designing a faction means: a handful of enemy silhouettes, a color palette, a bullet style, formation behaviors, the faction's own carrier hulls (weapon-chip, fuel-cell, repair), and a faction boss.
+- Each faction should have a distinct *mechanical* signature against the typed-weapon model. Illustrative directions (not committed): swarm/leak-pressure faction, armored/typed-weapon-required faction, shielded/pea-shooter-immune faction, long-range/sniper faction.
+- The Defense Grid sky/backdrop shifts per stage to reflect the current attacker (organic glow, industrial particulate, prismatic shimmer, etc.), so the whole screen reads different even though the planet is the same.
+- The strategic mini-map side panel (2026-05-14) continues to show the same defended planet but should reflect the current attacking faction in its squadron miniatures.
+- Run shape is implicitly **winnable**, not endless. Roughly four faction stages plus a final boss stage; tunable. Replay extension after first clear is expected to come from a separate difficulty-ladder mechanism (not decided here).
+- Faction defeat is a natural meta-progression hook (e.g., reverse-engineered tech unlocks per faction), but the meta-progression layer itself remains undecided.
+- The "between-stage screen" open question is now sharper: stages have clear faction boundaries (faction defeat → next faction arrives), so there is well-defined space between them if we want to use it.
+
+---
+
 ## Open questions to resolve in GDD
 
 - **Collision tuning:** what exact weapon-energy spend rate, ship-shield absorption cap, feedback, and control penalty make ramming a desperate tactical interception rather than either optimal field-sweeping or a pointless action?
@@ -249,3 +272,6 @@ Collision resolution order:
 - **Grid repair tuning:** what exact restore amount, spawn cap, and stage placement rules should govern rare Defense Grid repair carriers?
 - **Between-stage screen:** any screen at all between stages? Tentative direction *if* yes: planetary defense upgrades only (grid max, regen, etc.) — ship offense stays purely in-run.
 - **Side panel layout:** which side gets the planet view, and what information belongs on the opposite side?
+- **Faction roster and stage count:** how many factions exist in total, what is the per-run stage count (currently leaning four faction stages plus one final boss stage), and is the faction order fixed, randomized, or branching (route choice)?
+- **Faction-themed meta unlocks:** if and how faction defeats translate into between-run unlocks (e.g., reverse-engineered tech entering the pickup pool). Depends on the still-undecided meta-progression layer.
+- **Difficulty ladder after first clear:** what mechanism extends replay value once the coalition is first defeated — ascension-style modifiers, harder faction variants, or something else.
