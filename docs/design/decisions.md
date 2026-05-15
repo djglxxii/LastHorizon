@@ -265,13 +265,39 @@ Faction-as-stage is stronger than either alone: it preserves the single-planet e
 
 ---
 
+## 2026-05-15 — Large weapon pool, faction-gated primary drops, reverse-engineered rare drops after faction defeat
+
+**Decision:** The typed-weapon pool is large — many weapon families, not a fixed four — and access to those weapons is gated through two channels:
+
+1. **Primary channel — faction-themed drops.** At each stage, the weapon-chip carriers operated by the attacking faction drop weapons from *that faction's* weapon pool. Stage 1's faction drops Stage 1's weapons; later factions drop their own weapons. A player cannot get late-faction weapons in early stages through normal play.
+2. **Secondary channel — reverse-engineered cross-faction drops.** Once a faction has been defeated in any prior run, that faction's weapons enter a persistent cross-faction "reverse-engineered tech" pool. Subsequent runs can roll rare drops from that pool at *any* stage, narratively framed as the player's coalition deploying reverse-engineered tech rather than the current attacker's tech. The drop chance is intentionally small — this is a "tasty rare moment," not a reliable shortcut to peak power.
+
+**Reasoning:** The general shape is inspired by *Enter the Gungeon* (large weapon pool, gated access expanding over runs) but does not replicate Gungeon's specifics. The two-channel structure delivers several things at once:
+
+- **Within-run identity:** faction-themed primary drops preserve each stage's combat character (the typed weapons a player can field in Stage 1 are shaped by Stage 1's faction), reinforcing the 2026-05-15 faction-stage decision.
+- **Cross-run progression that is visible:** new weapons appearing in early stages of later runs is tangible proof of meta-progression, stronger than a stat number going up.
+- **Run-to-run surprise:** the rare reverse-engineered drop is a slot-machine moment that makes individual runs feel distinct.
+- **Narratively grounded gating:** the player cannot get a late-faction weapon in Stage 1 because that faction has not arrived yet, and they can only get the reverse-engineered version once their coalition has actually beaten that faction in a prior run. There is no abstract "tier" or "rarity" gate to explain.
+
+**Implications:**
+
+- Each faction must author its own weapon-family roster. The total typed-weapon pool will be substantially larger than the four-type model implicit in earlier decisions; exact counts per faction are tunable.
+- Faction defeat is the unlock event. Encountering or even temporarily using a faction's weapon does *not* unlock it; the player must defeat the faction's stage in a prior run.
+- The reverse-engineered drop chance is a tuning value, not a decision. The design intent is "tasty rare moment that makes a run feel special," not "reliable shortcut to power." Too high trivializes early-stage power pacing; too low and the mechanic does not feel real.
+- The 2026-05-14 "Typed weapon max level is 3" decision was designed around a small fixed type pool where same-type stacking was common. With a much larger pool, same-type drops will become rare and the level system may be redundant or need simplification. This tension is acknowledged as an open follow-up; the level system is not changed by this decision.
+- The 2026-05-14 "Authored drop carriers and dynamic weapon sustain" entry's within-stage *level* progression language (early/mid/late stage gating by weapon level) describes the same drop system using terminology that predates this decision. The faction-themed gating model now carries the within-run progression weight; that earlier entry should be revisited and aligned once the level-system follow-up is resolved.
+- HUD design must communicate weapon identity clearly given a larger pool. Pickup readability ("what is this weapon I am about to grab?") becomes a more important UX problem in a many-weapon pool and may need preview or icon language so the same-type-stacks-vs-different-type-swaps decision stays informed.
+
+---
+
 ## Open questions to resolve in GDD
 
 - **Collision tuning:** what exact weapon-energy spend rate, ship-shield absorption cap, feedback, and control penalty make ramming a desperate tactical interception rather than either optimal field-sweeping or a pointless action?
-- **Dynamic weapon drop tuning:** what exact stage-progress thresholds, fuel-cell restore amounts, and carrier spawn rules should govern weapon sustain and level pacing?
+- **Weapon drop tuning:** fuel-cell restore amounts, carrier spawn rules across faction stages, and the exact reverse-engineered cross-faction drop rate. Faction-themed gating supersedes the earlier stage-progress level-threshold framing.
 - **Grid repair tuning:** what exact restore amount, spawn cap, and stage placement rules should govern rare Defense Grid repair carriers?
 - **Between-stage screen:** any screen at all between stages? Tentative direction *if* yes: planetary defense upgrades only (grid max, regen, etc.) — ship offense stays purely in-run.
 - **Side panel layout:** which side gets the planet view, and what information belongs on the opposite side?
 - **Faction roster and stage count:** how many factions exist in total, what is the per-run stage count (currently leaning four faction stages plus one final boss stage), and is the faction order fixed, randomized, or branching (route choice)?
-- **Faction-themed meta unlocks:** if and how faction defeats translate into between-run unlocks (e.g., reverse-engineered tech entering the pickup pool). Depends on the still-undecided meta-progression layer.
+- **Level system in a large weapon pool:** does the level-1/2/3 stacking system from 2026-05-14 survive when same-type drops become rare in a large faction-themed pool? Should levels be simplified, removed, or replaced with a different within-type progression lever? Resolving this likely requires revising the 2026-05-14 "Authored drop carriers and dynamic weapon sustain" entry.
+- **Pickup readability:** how do pickups communicate weapon identity to the player before contact, so the same-type-stacks vs different-type-swaps decision remains informed in a many-weapon pool?
 - **Difficulty ladder after first clear:** what mechanism extends replay value once the coalition is first defeated — ascension-style modifiers, harder faction variants, or something else.
