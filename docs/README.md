@@ -4,18 +4,19 @@
 
 Background reading and external references that inform the design.
 
-- [`research/schump-deep-research-report.md`](research/schump-deep-research-report.md) — Deep research report on the Invaders + Blazing Lazers + BALL x PIT hybrid concept. Reference material; not a design commitment.
+- [`research/schump-deep-research-report.md`](research/schump-deep-research-report.md) — Deep research report on the Invaders + Blazing Lazers + BALL x PIT hybrid concept. Reference material only; several elements of the report (BALL x PIT-style mid-run recombination, town/base-building layer, mid-combat pause-and-pick upgrade choices) have since been explicitly rejected — see `design/decisions.md`.
 
 ## Design
 
-The game design document and supporting design notes.
+The active design log and supporting design notes.
 
-- _Game Design Document — to be drafted._
+- [`design/decisions.md`](design/decisions.md) — chronological log of committed design decisions, append-only, **Decision / Reasoning / Implications** format. This is the authoritative source for current design state until the GDD is drafted.
+- [`design/feedback.md`](design/feedback.md) — external review of the decision log. Signal, not a design source.
 
 Planned design artifacts:
-- `design/GDD.md` — top-level game design document (vision, pillars, core loop, systems)
-- `design/systems/` — deeper specs per system (weapons, formations, reactor, bosses) as they emerge
-- `design/scope.md` — prototype scope and milestone targets
+- `design/GDD.md` — top-level game design document (vision, pillars, core loop, systems) — to be drafted once decisions stabilize.
+- `design/systems/` — deeper specs per system (typed weapons, factions, formations, bosses, HUD) as they emerge.
+- `design/scope.md` — prototype scope and milestone targets.
 
 ## Decisions
 

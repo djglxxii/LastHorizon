@@ -290,11 +290,131 @@ Faction-as-stage is stronger than either alone: it preserves the single-planet e
 
 ---
 
+## 2026-05-16 — Auto-fire pea shooter; typed-weapon energy doubles as shield and ammo
+
+**Decision:** The input model and the role of the typed-weapon energy meter are revised:
+
+- The pea shooter auto-fires continuously. The player does not control pea-shooter fire; it is always on.
+- The player's fire input controls **only** the typed weapon.
+- Typed-weapon energy/fuel is now drained by **both** firing the typed weapon **and** absorbing enemy-fire hits while a typed weapon is active. Energy is a single shared pool that serves as both sacrificial shield against incoming fire and ammunition for the typed weapon.
+- When the energy pool reaches 0, the typed weapon expires and the player drops back to the pea shooter (unchanged from the prior model).
+
+**Reasoning:** The previous model framed typed-weapon energy as a durability buffer that drained only on hits; firing was effectively free for as long as the weapon was active. That made resource management a question of *when do I take the risk to refresh*, but it did not make individual shots tactical. Tying firing to the same energy pool changes the moment-to-moment question to *when is this shot worth it*, which fits the "sustained descending pressure" fantasy better: profligate fire shortens uptime, drops the player back to the pea shooter sooner, increases leakage, and damages the Defense Grid.
+
+It also collapses two inputs into one. The pea shooter being auto-fire means the player only ever pulls the trigger to spend energy, which makes the player's actions and the resource meter perfectly aligned. There is no "I forgot to shoot" loss state, and no "I should hold fire to conserve the pea shooter" non-decision.
+
+**Implications:**
+- Energy is now a dual-role meter: shield-against-fire AND firing budget. HUD readability for the energy bar becomes a primary surface, not a secondary one.
+- Tuning surface expands: per-shot firing drain, hit drain, max capacity at level 1/2/3, fuel-cell refill amount, and same-type pickup refill amount are all separate levers.
+- Weapon family identity now includes burn rate. A rapid-fire or beam-style family will inherently feel more expensive than a slow heavy-shot family, and weapon design must account for that — a low-DPS-but-frugal weapon and a high-DPS-but-thirsty weapon are now distinct archetypes within the same level.
+- Pickup decisions sharpen. A same-type weapon chip is now a level bump AND a budget refill; a fuel cell is strictly fire budget. The choice between holding fire to conserve and firing through a wave becomes a real tactical lever.
+- Collision interception (2026-05-14) is unaffected in resolution order but feels different in practice, because weapon energy spent on collision is also fire budget the player loses.
+- This decision opens a clear meta-progression lever surface (e.g., increase max energy capacity, reduce per-shot firing drain, increase fuel-cell yield). Whether and how to use that surface remains part of the open meta-progression question — this entry does not commit a meta layer.
+
+**Supersedes / amends:**
+- 2026-05-13 "Ship cannot be destroyed; hits drain weapon power" — the "hits drain typed-weapon energy" rule still holds; firing is now also a drain channel.
+- 2026-05-14 "Typed weapons are temporary energy states" — same amendment. Energy is no longer a hit-only durability timer; it is a shared shield-and-ammo pool.
+- The "pea shooter is always firing, never goes away" property from the 2026-05-13 entry is reaffirmed and made literal: the player has no input that affects it.
+
+---
+
+## 2026-05-16 — Per-weapon-family firing cost
+
+**Decision:** Each typed-weapon family defines its own per-shot energy drain. Firing cost is a per-family property, not a uniform game-wide constant. Within a family, the per-shot drain may also scale with level (e.g., level 3 spread firing more pellets per trigger pull naturally costs more), though level-scaling of cost is a tuning detail, not a separate decision.
+
+**Reasoning:** A uniform per-shot cost would have forced weapon identity to be expressed only through firing pattern and damage. Allowing per-family cost adds a third design axis — economy — so a family can earn its slot by being thrifty rather than flashy. This makes a low-DPS-but-frugal weapon and a high-DPS-but-thirsty weapon genuinely distinct archetypes within the same level, and it gives the balance team a knob that does not require redesigning a weapon's pattern or damage to retune its feel.
+
+**Implications:**
+- Each weapon family's spec now includes its per-shot energy drain alongside its pattern, damage, and visual identity.
+- Pickup decisions become more layered: switching to a thirstier family may shorten your uptime even if you refill on pickup, so "do I swap for the fresh Type IV?" now factors in burn rate as well as level loss.
+- HUD and pickup readability should communicate burn rate, not only weapon identity — players need at least a rough sense of how expensive a weapon is before committing to it. Exact representation (icon hint, bar pip count, telegraphed in the pickup carrier itself) is a UX problem for prototyping.
+- The "thrifty vs thirsty" axis interacts with faction identity: a faction's roster could lean systematically thrifty or thirsty, which becomes a faction-level mechanical signature in addition to silhouette / formation / bullet style.
+- The 2026-05-16 "Auto-fire pea shooter; typed-weapon energy doubles as shield and ammo" entry's tuning surface is expanded — per-family burn rate joins per-family pattern and damage as primary balance levers.
+
+**Status note:** Committed for now. Likely to be revisited once actual weapon-family design starts and the practical tuning surface becomes clearer — uniform cost may turn out to be sufficient, or per-family cost may need to be constrained within bands to keep weapons comparable. The decision is "per-family cost is allowed and expected," not "every family must have a distinct cost."
+
+---
+
+## 2026-05-16 — Pickup sources split: enemy carriers drop weapons, coalition supply drops fuel
+
+**Decision:** The two confirmed pickup categories now come from distinct sources with distinct visual directions:
+
+- **Weapon-chip carriers** are enemy ships within the descending armada and drop the attacking faction's typed-weapon chips. This reaffirms the 2026-05-15 large-weapon-pool entry — weapon-chip carriers remain part of the enemy faction and remain a leak risk if not engaged.
+- **Fuel-cell carriers** are player-coalition supply vessels that approach from outside the armada — entering from the bottom or sides of the screen. They are narratively framed as the player's coalition resupplying the defender, not as enemy ships, and they do not advance toward the planet.
+- **Defense Grid repair carriers**: source is *not* decided here and is added as an open question.
+
+**Reasoning:** Splitting pickup sources by direction does several things at once. Visually, enemy-down vs coalition-up/sides gives each pickup category an unmistakable read at a glance, which matters more as the weapon pool grows. Narratively, weapon chips remain "enemy tech you scavenge" (which is what makes faction-themed weapons and reverse-engineered cross-run unlocks self-evident), while fuel cells become "your coalition reinforcing you" — a quiet reinforcement of the defended-planet fiction without inventing a new system. Mechanically, the leak-risk tension is preserved exactly where it matters most (weapon chips, the primary build-expression decision) and is intentionally absent for fuel cells (you have to break formation to collect them, but they will not damage the Grid if you ignore them).
+
+**Implications:**
+- Coalition supply vessels need a clearly distinct visual identity from enemy carriers — different silhouette language, palette closer to player-coalition colors, approach vector from below/sides. They must not read as targets to avoid.
+- Fuel-cell carriers do not damage the Defense Grid if ignored; engagement is purely opportunity cost (do I leave my formation slot to grab it?), not a leak-risk decision.
+- Weapon-chip carriers continue to behave as in 2026-05-15: faction-flavored, in-armada, leak risk if not engaged.
+- Faction visual identity work no longer has to design a "coalition supply" hull per faction — coalition supply is faction-agnostic.
+- Defense Grid repair carrier source is the next call to make; it could match weapon chips (in-armada leak risk, "repair tech from defeated enemies") or fuel cells (coalition supply, narratively consistent with "we send help") — both are defensible.
+
+---
+
+## 2026-05-16 — Non-formation rushers are faction content
+
+**Decision:** Dive-bomber-style enemies that break the descending-armada formation to rush past the player directly (Galaxian-style) are part of each faction's content unit. Whether a faction has rushers, how many, what their dive patterns look like, and how aggressive they are is faction-defined. Rushers express faction identity in motion, not only in silhouette.
+
+**Reasoning:** The descending armada provides one kind of pressure (slow inevitable advance); rushers provide a different kind (sudden directed threat). Tying rushers to faction identity gives each faction a mechanical handle on *both* axes — formation behavior and rusher behavior — and creates room for factions that explicitly do not have rushers (a slow-armored siege faction reads completely differently from a swarm faction with frequent low-HP dive bombers, even if their formation behavior is similar). This makes faction encounters more distinct without adding a separate universal enemy type the player has to track across all stages.
+
+**Implications:**
+- Each faction's content unit (from 2026-05-15) now explicitly includes a rusher spec: presence/absence, HP/damage profile, dive pattern, frequency, and whether rushers are tied to specific armada events (e.g., triggered when their formation slot is reached or destroyed) or appear on independent timers.
+- A faction with no rushers is a valid design choice and a meaningful identity signal — it tells the player "this faction's threat is in the formation; hold your lane."
+- Rushers interact strongly with the typed-weapon model: they are short-window threats that may be perfect targets for spread/area weapons but bad matchups for heavy-shot weapons, which sharpens the "is my current weapon family right for this stage?" question.
+- Rusher behavior is a primary balance lever for individual faction difficulty within a run; it does not need to scale with stage position in the run if the faction roster itself does.
+
+---
+
+## 2026-05-16 — Stage shape: long descending armada with progressive intermix, faction-boss culmination
+
+**Decision:** Each faction stage is structured as a single long descending armada that extends across multiple screen heights, not as a series of discrete waves with downtime between them. Stage shape:
+
+- The stage opens with weaker baseline enemies in the leading rows of the descending formation.
+- Tougher enemies — elites/heavies (see separate entry) and faction rushers (2026-05-16) — are intermixed throughout the armada at progressively greater density and severity as it descends.
+- The stage culminates in a faction boss encounter at the end of the armada. The faction boss is part of each faction's content unit (already implied in the 2026-05-15 large-weapon-pool entry's "designing a faction means … a faction boss" implication; this entry makes per-stage faction bosses an explicit stage-structural commitment).
+- The final run stage remains the coalition warlord, per 2026-05-15.
+
+**Reasoning:** A long descending armada with intermixed difficulty preserves the "sustained descending pressure" fantasy that the entire damage hierarchy and typed-weapon model is designed around. Discrete waves with downtime would create natural breath points that the pressure loop is explicitly designed *not* to have; intermixing keeps the descent continuous and lets escalation happen by composition rather than by event. Reaching a boss at the end of a long sustained advance feels earned in a way that a wave-arena structure does not, and it keeps the Defense Grid meter the dominant pacing signal (the boss arrives when the armada has had time to chip the Grid down).
+
+**Implications:**
+- Stage authoring is part choreography (formation placement, where heavies and rushers sit in the descending column) and part faction-systemic (faction enemy roster, formation behavior, rusher spec). Carrier placement — weapon-chip carriers (enemy) and coalition fuel-cell carriers (your side) — is part of stage authoring.
+- Stage length is a tuning value, but must be long enough for typed-weapon expiry / swap / refresh cycles to play out multiple times within a single stage, not just once. A stage that ends before the player has cycled weapons would not exercise the resource economy this design centers on.
+- The Defense Grid meter is expected to take real damage over the course of a stage, not just at the boss. Repair-carrier pacing (open question on carrier source notwithstanding) must be tuned against expected per-stage Grid loss.
+- The strategic mini-map side panel (2026-05-14) should be able to show approximate stage progress — how much of the armada remains, boss presence — without giving the player exact positional information about off-screen threats.
+- Stage transitions remain a separate open question (between-stage screen), but the stage's *internal* shape is now committed.
+
+---
+
+## 2026-05-16 — Elite/heavy enemy tier per faction
+
+**Decision:** Each faction's enemy roster includes at minimum two tiers:
+
+- **Baseline enemies** — low HP, killable by the pea shooter within the time they spend in the playfield. These are the bulk of the descending armada and the primary leakage pressure if ignored.
+- **Elite/heavy enemies** — significantly higher HP, designed so that the pea shooter alone cannot reliably kill them before they cross the playfield and damage the Grid. Killing elites in time effectively requires an active typed weapon, and higher typed-weapon levels make the matchup substantially easier.
+
+Faction rosters may have more than one elite tier (e.g., a mid-elite and a heavier "legendary" tier) — that internal granularity is a per-faction content decision, not a global rule.
+
+**Reasoning:** This is what gives typed weapons their job. The typed-weapon economy — energy, levels, family identity, faction-themed drops, post-run upgrade lever — is built around the premise that you *need* the typed weapon to handle some threats. Without an elite tier, the pea shooter would eventually clear everything given enough time and the typed weapon would be a flavor-only bonus rather than a tactical necessity. Elites are the structural reason the typed-weapon system has stakes, and they directly drive the "is my current weapon family right for this stage?" question.
+
+**Implications:**
+- Each faction defines its elite roster (at least one elite type) as part of its content unit. Elite visual silhouettes must clearly read as "this is a different-tier threat" — same faction palette, distinct shape language.
+- Elite placement within the descending armada is part of stage authoring (see stage-shape entry, same date) — early stage has few or no elites, density and elite tier increase deeper into the armada.
+- Elite HP tuning is bounded by two requirements: pea shooter cannot reliably kill an elite before it crosses the playfield, and a level-appropriate typed weapon should make the matchup feel decisive but not trivial. Exact numbers are prototype tuning values.
+- The "thrifty vs thirsty" weapon-family axis (2026-05-16 per-family firing cost entry) interacts strongly here. A thirsty high-DPS family is the natural counter to an elite but is unsustainable as default cleanup; a thrifty family handles baseline well but may struggle with elites. This is the intended texture, not a balance problem.
+- Elites do not automatically drop pickups. Drops remain authored-carrier-based per 2026-05-14 — being an elite is about HP/threat profile, not about reward.
+- Rushers (separate 2026-05-16 entry) are a *third* category orthogonal to baseline/elite — they are defined by formation behavior (out of formation, directed dive) rather than HP profile, and a faction can have elite rushers, baseline rushers, or none.
+
+---
+
 ## Open questions to resolve in GDD
 
 - **Collision tuning:** what exact weapon-energy spend rate, ship-shield absorption cap, feedback, and control penalty make ramming a desperate tactical interception rather than either optimal field-sweeping or a pointless action?
 - **Weapon drop tuning:** fuel-cell restore amounts, carrier spawn rules across faction stages, and the exact reverse-engineered cross-faction drop rate. Faction-themed gating supersedes the earlier stage-progress level-threshold framing.
 - **Grid repair tuning:** what exact restore amount, spawn cap, and stage placement rules should govern rare Defense Grid repair carriers?
+- **Defense Grid repair carrier source (opened 2026-05-16):** with pickup sources split between enemy armada (weapon chips) and coalition supply from below/sides (fuel cells), where do repair carriers come from? Coalition supply is the natural narrative match ("we send help"), but in-armada repair carriers as a rare enemy-side spawn preserves the "engage or let leak" tension that makes weapon-chip carriers tactically rich.
 - **Between-stage screen:** any screen at all between stages? Tentative direction *if* yes: planetary defense upgrades only (grid max, regen, etc.) — ship offense stays purely in-run.
 - **Side panel layout:** which side gets the planet view, and what information belongs on the opposite side?
 - **Faction roster and stage count:** how many factions exist in total, what is the per-run stage count (currently leaning four faction stages plus one final boss stage), and is the faction order fixed, randomized, or branching (route choice)?
