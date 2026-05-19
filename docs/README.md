@@ -11,12 +11,12 @@ Background reading and external references that inform the design.
 The active design log and supporting design notes.
 
 - [`design/decisions.md`](design/decisions.md) — chronological log of committed design decisions, append-only, **Decision / Reasoning / Implications** format. This is the authoritative source for current design state until the GDD is drafted.
-- [`design/feedback.md`](design/feedback.md) — external review of the decision log. Signal, not a design source.
+- [`design/scope.md`](design/scope.md) — v1 prototype scope and done criteria. Defines what the first playable prototype is testing and what is deliberately deferred.
+- [`design/feedback.md`](design/feedback.md) — external review of the decision log. Signal, not a design source. Predates the 2026-05-19 level removal; read as a snapshot, not current state.
 
 Planned design artifacts:
-- `design/GDD.md` — top-level game design document (vision, pillars, core loop, systems) — to be drafted once decisions stabilize.
+- `design/GDD.md` — top-level game design document (vision, pillars, core loop, systems) — to be drafted once v1 prototype playtest answers the open questions in `scope.md`.
 - `design/systems/` — deeper specs per system (typed weapons, factions, formations, bosses, HUD) as they emerge.
-- `design/scope.md` — prototype scope and milestone targets.
 
 ## Decisions
 
