@@ -409,15 +409,174 @@ Faction rosters may have more than one elite tier (e.g., a mid-elite and a heavi
 
 ---
 
+## 2026-05-18 — Typed weapons are faction-flavored sidegrades, not a power ladder
+
+**Decision:** Typed weapons across the full faction-gated pool are **sidegrades**, not progressively stronger tiers. A faction-1 weapon family and a faction-4 weapon family at the same level are comparable in raw power; they differ in *handling profile* (pattern, range, burn rate, target shape) rather than in damage tier. Reverse-engineered drops (2026-05-15) introducing late-faction weapons into early stages do not trivialize already-cleared content, because those weapons are not stronger — they are different tools whose matchup against the current faction's threats may be better, worse, or roughly equivalent.
+
+**Reasoning:** Earlier entries left the relationship between faction order and weapon power unstated, which created the concern that beating later factions and unlocking their tech via the reverse-engineered pool could cake-walk early stages on subsequent runs. Committing weapons as sidegrades resolves that tension structurally: the cross-run unlock is *variety*, not *power*. It also aligns with the existing "thrifty vs thirsty" axis (2026-05-16 per-family firing cost) and the "is my current weapon family right for this stage?" question already implied by the elite/heavy and rusher entries — both of which assume weapon choice is a *matchup* question, not a power question.
+
+**Implications:**
+- Weapon-family design budgets are roughly equivalent in peak power within a level, regardless of source faction. A faction-4 spread weapon at level 2 should not significantly out-damage a faction-1 spread weapon at level 2.
+- Differentiation between weapons across factions comes from handling — burn rate, projectile speed, spread arc, pierce, area, lock-on behavior — not from raw damage multipliers.
+- Difficulty must arise from the enemy side, not the weapon side (see the difficulty-levers entry, same date).
+- The reverse-engineered drop pool (2026-05-15) is reaffirmed without modification: rare cross-run drops are tasty variety moments, not power shortcuts.
+- A "wrong" weapon for the current faction is harder to play, but never impossible — three universal floors apply (see the bi-modal faction threat profile entry, same date).
+- This decision does **not** answer the level-system follow-up. Whether the 1/2/3 level mechanic survives in a large pool is still open; this entry only commits that *within a given level*, faction sources are comparable.
+
+---
+
+## 2026-05-18 — Difficulty arises from enemy-side levers, not weapon power
+
+**Decision:** Progressive difficulty within and across stages comes from enemy-side levers, not from weapons becoming stronger. The committed lever surface:
+
+- **Armada density** — enemies per screen-height of descending column.
+- **Descent speed and formation aggression** — closure rate toward the planet, formation reshape behavior on losses.
+- **Elite density and mix** — fraction of the armada that is elite tier, presence of multiple elite tiers (mid-elite + heavy).
+- **Rusher cadence and aggression** — frequency, overlap with armada pressure, dive HP.
+- **Bullet pattern complexity** — density, leading shots, area denial.
+- **Leak penalty** — per-enemy Grid damage on leak, varying by enemy type.
+- **Carrier scarcity** — weapon-chip and fuel-cell carrier spawn rate and placement depth in the armada.
+
+Carrier scarcity is particularly load-bearing because it compounds: fewer carriers → lower typed-weapon uptime → more pea-shooter time → more leakage → tighter Grid margins.
+
+**Reasoning:** With weapons committed as sidegrades (same date), difficulty has to live somewhere structural. Enemy-side levers preserve the existing pressure-loop fantasy ("sustained descending pressure → leaks → Grid damage → planet falls") and let difficulty scale without breaking the matchup texture the typed-weapon system depends on. They are also the levers stage authoring already touches — armada composition, formation behavior, rusher spec, carrier placement — so this is making explicit what existing entries implicitly relied on.
+
+**Implications:**
+- Stage authoring (2026-05-16 stage shape) now has a committed lever surface. Each lever can be turned independently per stage and per faction.
+- Difficulty tuning is primarily a stage-authoring problem, not a weapon-balance problem. Weapons are balanced for parity within their level; stages are balanced for intensity.
+- Carrier scarcity must be used carefully — turning it too high starves the typed-weapon economy entirely and undermines the resource loop, not just makes the stage harder. There is a floor below which stages stop exercising the system.
+- Bullet pattern complexity is now treated as a primary tuning surface for the first time in the log. Faction bullet styles (referenced in 2026-05-13 / 2026-05-14) now carry mechanical weight in addition to visual identity.
+- Per-stage Grid damage expectation (2026-05-16 stage shape) is a target output of these levers — stage design should produce a predictable Grid-loss range, and the levers are what tune it.
+
+---
+
+## 2026-05-18 — Bi-modal faction threat profile; three universal floors
+
+**Decision:** Each faction must combine **at least two distinct threat categories** that no single weapon family can handle well simultaneously. The two categories are part of each faction's content unit (2026-05-15) and are the structural reason no weapon "solves" a faction stage on its own.
+
+Illustrative bi-modal pairings (not committed rosters):
+- Tight swarm formations + dive rushers — wide AOE clears swarm but is too diffuse to commit on dives.
+- Armored elites + dense bullet curtain — single-target burst kills elites but heavy dodging time stalls a thirsty burst weapon.
+- Shielded baseline + leak-prone swarm — shield-pierce handles elites but doesn't clear swarm fast enough.
+
+When the typed weapon handles one category, the pea shooter, positioning, and energy budget cover the other. The reverse symmetry — what keeps a poorly matched typed weapon from being a soft-lock — is the **three universal floors**:
+
+1. **The pea shooter clears baseline enemies indefinitely**, regardless of typed-weapon state.
+2. **Typed-weapon energy retains full shield value** against incoming fire even when its damage output is poorly matched against the current threat.
+3. **Fuel-cell and Grid repair carriers function identically** regardless of weapon match — recovery options exist in every matchup.
+
+**Reasoning:** Without bi-modal threats, a sufficiently good weapon pickup could trivialize any single faction, which would make weapon RNG the dominant variable in run outcome and undermine the "difficulty is on the enemy side" commitment (same date). Forcing every faction to demand two distinct handling profiles means the player is always solving two problems with two tools (typed weapon + pea shooter + positioning), regardless of what weapon family they're holding. It is what gives the "is my current weapon family right for this stage?" question real teeth.
+
+The three universal floors are the symmetric guardrail: they make every weapon viable enough to finish the stage, even when poorly matched. The wrong weapon should be tense, not impossible.
+
+**Implications:**
+- Faction design now has a structural requirement: at least two threat categories, paired so that no existing weapon family handles both. When new weapon families are added, they must be checked against the existing faction roster for this property — a weapon that solves any faction's bi-modal pairing breaks the guardrail.
+- "Threat category" is a recognizable handling demand (burst single-target / wide AOE / shield-pierce / responsive tracking / area denial / patience). Two categories within a faction must be genuinely distinct in tool requirements, not two flavors of the same demand.
+- Rushers (2026-05-16) are a strong second-category candidate but not the only one. A rusher-less faction (which 2026-05-16 explicitly allows) must derive its second category from armada composition or bullet behavior.
+- A deliberate "burn the wrong weapon's energy down to expose the pea shooter" is a valid tactical choice when the pea shooter is genuinely the better tool for the current phase. Not a degenerate strategy.
+- This entry extends, not supersedes, the 2026-05-16 elite/heavy entry. Elites are still the structural reason typed weapons have stakes; bi-modal pairing is what stops any one weapon from cake-walking those stakes.
+
+---
+
+## 2026-05-18 — Weapon power axes: faction-source parity, in-pool rarity tier, levels as peak
+
+**Decision:** Amends the same-date "Typed weapons are faction-flavored sidegrades, not a power ladder" entry to clarify how the power fantasy is expressed. **Faction source remains parity** — a faction-4 common weapon at level 2 is not stronger than a faction-1 common weapon at level 2 — but power in this game lives on three other axes that the sidegrade framing must not be read as flattening:
+
+1. **Levels are the in-run power spike.** Reaching level 3 of any weapon family should *feel* genuinely overpowered for as long as the player can sustain it. The fantasy is reaching peak and holding it under pressure, not maintaining it forever. This reaffirms the 2026-05-14 level-system entry's "level 3 = late-stage peak state" intent.
+2. **Each faction's roster has a rarity gradient.** Most weapons in a faction's pool are roughly comparable (the sidegrade-flavored variety the prior entry named), but each faction authors **1–2 legendary / rare-tier weapons** that are genuinely stronger within their level — exotic patterns, higher damage, lower burn rate, or some combination. These are the lottery pickups; rarity itself prevents reliance.
+3. **Cross-run reverse-engineered drops pull from the full pool, legendaries included.** Rolling a cross-run legendary in stage 1 is now an explicit slot-machine moment — the 2026-05-15 "tasty rare moment" given real teeth.
+
+**Reasoning:** The earlier same-date sidegrade entry solved the right problem (faction-source parity, so cross-run unlocks don't trivialize early stages) but collapsed too much of the power-expression surface onto one axis, which would have left the arcade power fantasy flat. The power fantasy in shmups lives in *temporary peak states* — Blazing Lazers' top-level weapons, smart-bomb windows, brief godlike moments. Last Horizon already commits to weapons as temporary energy states (2026-05-14), so peak power is structurally short-lived already. The remaining question was whether the peak is *high enough* to feel godlike, and the original entry implied "no, all weapons are flat." This amendment corrects that: levels and rarity tier are where the height comes from; faction source is only constrained for trivialization-avoidance.
+
+The bi-modal threat guardrail (same date) still does its job even when the player is holding a legendary. A legendary trivializes one of the faction's two threat categories; the other is still tense. That is the "feels overpowered without actually winning the game for you" sweet spot.
+
+**Implications:**
+- Each faction authors a tiered roster: a set of common-rarity weapons (parity-balanced across factions) plus 1–2 legendary weapons (genuinely stronger within their level). Exact counts and rarity ratios are tuning.
+- Legendary weapons must still respect the bi-modal pairing rule — a legendary cannot solve both of a faction's threat categories. It solves one *harder*, not both.
+- The reverse-engineered cross-run pool now has explicit power texture: drops can roll legendaries from defeated factions. The 2026-05-15 "intentionally small" rate still applies, likely with separate rates for common-tier vs. legendary-tier within the cross-run pool.
+- HUD and pickup-readability work has another visual axis to communicate: weapon family + faction source + **rarity tier**. Legendary pickups should be immediately recognizable on approach (color, shape, particle treatment) so the choice to commit to them is informed.
+- The 2026-05-14 level-system entry is reaffirmed for now, but the open-question tension with the large-pool model carries new weight. If levels become very rare to reach in a large pool, the in-run power spike axis weakens and rarity tier carries more of the fantasy alone. Resolution of the level-system follow-up must consider this.
+- Faction-source parity is not reopened. A faction-4 common weapon is still parity-balanced against a faction-1 common weapon; the power axes added here are orthogonal to faction source.
+
+**Amends:**
+- 2026-05-18 "Typed weapons are faction-flavored sidegrades, not a power ladder" — faction-source parity stands; power expression now explicitly includes levels and in-pool rarity tier.
+
+---
+
+## 2026-05-18 — Stage-slot intensity scaling; faction order is randomizable
+
+**Decision:** Within-run progressive difficulty rides the **stage slot**, not the faction identity. Each faction authors multiple **intensity presets** for its armada — versions tuned for the stage-1 slot, the stage-2 slot, etc. Same faction roster, same threat shape, but later slots have higher density, more elite intermix, faster descent, sparser carriers, and harder bullet patterns. Faction order within a run is **randomizable**; the slot's intensity preset is what determines difficulty regardless of which faction lands there.
+
+A lightweight global **coalition pressure** multiplier may stack on top to add cross-stage ramp (e.g., gradual rusher cadence increase, bullet density tick). The coalition warlord boss stage (2026-05-15) remains the fixed final stage and is not part of the random pool.
+
+**Reasoning:** Two alternatives were considered and rejected:
+
+1. **Fixed faction order with hand-tuned per-faction difficulty** — rejected because it kills replay variety and forces one faction to always be "the hard one," conflating faction identity with difficulty tier.
+2. **Randomized order with no per-slot scaling** — rejected because difficulty would then ride faction identity, making a "harder" faction in slot 1 feel unfair and an "easier" faction in slot 4 feel anticlimactic.
+
+Stage-slot scaling preserves the "invasion is intensifying" pacing fantasy while leaving faction order free to vary run-to-run. It keeps faction identity *mechanical* (threat shape, weapon roster, visual style) rather than *difficulty-tiered*, which is consistent with the sidegrade weapon decision (same date).
+
+**Implications:**
+- Each faction's content unit (2026-05-15) now includes multiple intensity presets — one per stage slot it can occupy. Likely 3–4 presets per faction if runs settle on roughly four faction stages.
+- Authoring cost per faction increases. This is the explicit tradeoff for replay variety + a structural difficulty curve.
+- The coalition pressure multiplier is intentionally lightweight — small per-stage bumps on a few specific levers (rusher cadence, bullet density), not a global damage multiplier. Exact form is tuning.
+- This entry partly resolves the open question on faction roster and stage count: **order is randomized, count is still tunable.** Whether the random pool is unrestricted, weighted, or constrained (e.g., no repeat factions in one run) is still open.
+- Route choice (Slay the Spire-style branching) is a separate question not answered here. Default is straight-line random.
+- The 2026-05-14 "Authored drop carriers and dynamic weapon sustain" entry's early/mid/late stage gating language is now structurally backed: run-internal difficulty attaches to *stage position*, which is what intensity presets formalize. That earlier entry still needs the level-system follow-up resolved before its full rewrite.
+
+---
+
+## 2026-05-18 — Faction content unit clarification: which carriers are faction content
+
+**Decision:** Clarifies the 2026-05-15 faction-themed stages entry, whose content-unit list ("the faction's own carrier hulls — weapon-chip, fuel-cell, repair") was written before the 2026-05-16 pickup-source-split. The current, authoritative breakdown of which carriers are faction content vs. faction-agnostic:
+
+- **Weapon-chip carriers — faction content.** Enemy ships within the descending armada, faction-flavored hull and palette, drop the attacking faction's weapon chips. Leak risk if not engaged (2026-05-16 source split).
+- **Coalition fuel-cell carriers — faction-agnostic.** Player-coalition supply vessels approaching from outside the armada (bottom/sides). Not designed per faction; one shared coalition visual identity is reused across all stages (2026-05-16 source split).
+- **Defense Grid repair carriers — source open.** Whether repair carriers are faction content (in-armada, enemy-side) or coalition-agnostic (coalition supply) is still unresolved; remains the same open question raised 2026-05-16.
+
+**Reasoning:** The 2026-05-15 entry pre-dated the carrier-source split and is now misleading if read literally on the faction-content scope. This clarification does not change any decision; it just realigns the content-unit list with the current state of pickup-source decisions. Stating the current breakdown in one place avoids agents (or designers) inheriting the older implicit "every carrier is faction content" framing during faction authoring.
+
+**Implications:**
+- Per-faction authoring scope: enemy roster (baseline + at least one elite tier), formation/descent behavior, rusher spec (optional), bullet style, weapon-chip carrier hull, weapon family roster (common + 1–2 legendary), boss, and intensity presets per stage slot. Coalition fuel-cell carriers are not in this list.
+- Coalition supply visual identity is a one-time global art problem, not a per-faction one.
+- If the repair-carrier-source question lands on "in-armada enemy-side," the faction content unit will gain a repair carrier hull at that point. If it lands on "coalition supply," it stays out.
+- No supersession of 2026-05-15; this is a clarification, not a course change.
+
+---
+
+## 2026-05-18 — Bi-modal threat categories are independent from baseline/elite HP tiers
+
+**Decision:** Clarifies the interaction between the 2026-05-16 elite/heavy entry (each faction has at minimum baseline + elite HP tiers) and the same-date 2026-05-18 bi-modal threat profile entry (each faction has at least two distinct *handling-demand* categories). These two requirements are **independent axes**, not the same axis:
+
+- **HP tier** = how hard an enemy is to kill before it leaks (baseline = pea-shooter killable in time; elite = effectively requires active typed weapon). This is the lever the typed-weapon economy *needs to exist*.
+- **Handling demand** = what tool shape kills it efficiently (burst single-target / wide AOE / shield-pierce / responsive tracking / area denial / patience).
+
+A faction's baseline and elite tiers may demand the **same** handling at different HP scales — e.g., an armored faction where baseline grunts and heavy elites both want burst single-target. That satisfies the HP-tier requirement but does **not** satisfy bi-modal. In that case the faction needs its second threat category from somewhere else (rushers, bullet patterns, formation behavior, a shielded subtype, area-denial mines, etc.).
+
+A faction's baseline and elite tiers **may** also demand different handling — e.g., baseline = swarm wanting AOE, elite = armored single-target. In that case the baseline/elite distinction satisfies both rules at once, and rushers/bullet-patterns become optional flavor rather than structural requirement.
+
+**Reasoning:** Without this clarification, an author could satisfy the baseline/elite rule with two HP tiers that demand the same handling and silently fail bi-modal — producing a faction that a single matched weapon family can carry. The two rules read like they could be the same rule but aren't; pinning the distinction prevents that drift.
+
+**Implications:**
+- Faction authoring requires an explicit check: do the HP tiers demand different handling? If yes, bi-modal is satisfied by composition alone. If no, the second handling category must be sourced from rushers, bullet patterns, formation behavior, or a subtype.
+- This also constrains the legendary tier (2026-05-18 power axes): legendary weapons must not satisfy *both* handling demands of any faction simultaneously, regardless of whether the demands come from HP tiers, rushers, or bullet behavior.
+- No supersession; both source entries remain valid. This entry only names the relationship between them.
+
+---
+
 ## Open questions to resolve in GDD
 
 - **Collision tuning:** what exact weapon-energy spend rate, ship-shield absorption cap, feedback, and control penalty make ramming a desperate tactical interception rather than either optimal field-sweeping or a pointless action?
-- **Weapon drop tuning:** fuel-cell restore amounts, carrier spawn rules across faction stages, and the exact reverse-engineered cross-faction drop rate. Faction-themed gating supersedes the earlier stage-progress level-threshold framing.
+- **Weapon drop tuning:** fuel-cell restore amounts, carrier spawn rules across faction stages, the exact reverse-engineered cross-faction drop rate, and the separate rarity-tier drop rates introduced 2026-05-18 (common vs. legendary, both in-faction and cross-run). Faction-themed gating supersedes the earlier stage-progress level-threshold framing.
 - **Grid repair tuning:** what exact restore amount, spawn cap, and stage placement rules should govern rare Defense Grid repair carriers?
 - **Defense Grid repair carrier source (opened 2026-05-16):** with pickup sources split between enemy armada (weapon chips) and coalition supply from below/sides (fuel cells), where do repair carriers come from? Coalition supply is the natural narrative match ("we send help"), but in-armada repair carriers as a rare enemy-side spawn preserves the "engage or let leak" tension that makes weapon-chip carriers tactically rich.
 - **Between-stage screen:** any screen at all between stages? Tentative direction *if* yes: planetary defense upgrades only (grid max, regen, etc.) — ship offense stays purely in-run.
 - **Side panel layout:** which side gets the planet view, and what information belongs on the opposite side?
-- **Faction roster and stage count:** how many factions exist in total, what is the per-run stage count (currently leaning four faction stages plus one final boss stage), and is the faction order fixed, randomized, or branching (route choice)?
+- **Faction roster and stage count:** how many factions exist in total, and what is the per-run stage count (currently leaning four faction stages plus one final boss stage)? Faction order is randomized per 2026-05-18, but the random-pool constraints (can the same faction appear twice in a run, are slot weights uniform) are still open.
+- **Route choice:** does the player get Slay-the-Spire-style branching between stages, or is the run a straight-line random sequence? Default per 2026-05-18 is straight-line random; branching is unresolved.
+- **Intensity preset count per faction:** if runs are roughly four faction stages, each faction probably needs 3–4 intensity presets (2026-05-18). Whether all factions author the full set, or some are slot-restricted (e.g., only ever appears in slots 2–4), is a tuning + authoring-cost question.
+- **Coalition pressure multiplier form:** the lightweight cross-stage ramp introduced in 2026-05-18 needs an exact form — which levers it touches (rusher cadence, bullet density, ...) and how aggressively it scales per stage.
+- **Bi-modal pairing audit on weapon additions:** the 2026-05-18 bi-modal threat profile decision requires that no weapon family handles both of any faction's threat categories. As new weapons are added, this needs a check; the process for that check is not yet defined.
 - **Level system in a large weapon pool:** does the level-1/2/3 stacking system from 2026-05-14 survive when same-type drops become rare in a large faction-themed pool? Should levels be simplified, removed, or replaced with a different within-type progression lever? Resolving this likely requires revising the 2026-05-14 "Authored drop carriers and dynamic weapon sustain" entry.
-- **Pickup readability:** how do pickups communicate weapon identity to the player before contact, so the same-type-stacks vs different-type-swaps decision remains informed in a many-weapon pool?
+- **Pickup readability:** how do pickups communicate weapon identity (family + faction source), **rarity tier** (common vs. legendary, per 2026-05-18 power axes), and **burn rate** (per-family firing cost, per 2026-05-16) to the player before contact, so the same-type-stacks vs different-type-swaps decision remains informed in a many-weapon pool with multiple power axes? Three readable axes on a small in-flight pickup icon is the actual UX problem.
 - **Difficulty ladder after first clear:** what mechanism extends replay value once the coalition is first defeated — ascension-style modifiers, harder faction variants, or something else.
