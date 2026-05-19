@@ -564,10 +564,109 @@ A faction's baseline and elite tiers **may** also demand different handling — 
 
 ---
 
+## 2026-05-19 — Remove weapon levels; rarity tier carries the in-run power spike alone
+
+**Decision:** Typed weapons no longer have levels. Each weapon family has a **single tuning** — there is no level 1 / level 2 / level 3 progression within a family. The in-run power spike that the level system was supposed to provide is now carried entirely by the **rarity tier** (see same-date three-tier rarity entry).
+
+Same-family pickups no longer level up the held weapon; they refill its energy meter to full (see same-date same-family refill entry). Different-family pickups swap to the new family at full energy. The pickup decision becomes purely about *what tool you want*, not about *what level you're at*.
+
+**Reasoning:** The level system was designed for the 4-type Blazing Lazers pool, where same-type stacking happens regularly (~25% of drops match the held weapon). In the faction-gated large pool (2026-05-15), with 6+ weapon families per faction and multiple factions accessible across runs, that match rate drops below 17% — and individual stages don't surface enough weapon drops to reliably see a repeat. Levels were structurally dead-on-arrival under that constraint; the 2026-05-15 entry already flagged this tension and the 2026-05-18 power-axes entry conceded that if levels become rare to reach, rarity tier carries the fantasy alone. This decision commits that path rather than papering over the gap with catalyst pickups or level-from-any-pickup hacks that would recreate a level treadmill.
+
+This also simplifies four surfaces at once: HUD (no level state to display), pickup readability (one less axis), faction authoring (one tuning per weapon instead of three), and stage-progress gating (rarity rather than level — see same-date late-armada gating entry).
+
+**Implications:**
+- Each weapon family must land its identity AND its punch in a single tuning. There is no "level 1 establishes the family, level 3 is the payoff" progression to lean on; weapons must feel good at default. This is more design work per family, not less.
+- The 2026-05-18 power-axes entry's three axes (faction-source parity, in-pool rarity tier, levels-as-peak) collapse to two: faction-source parity + rarity tier. Rarity is the only in-run height axis. Cross-run reverse-engineered legendary drops remain the slot-machine peak moment.
+- Faction roster sizing may need to grow to compensate for the loss of per-weapon depth (was: 3 levels × N families; now: 1 tuning × N families). Exact counts remain tuning.
+- The 2026-05-13 / 2026-05-14 "same-type pickup levels you up" rules are gone. The refill / swap-at-full semantics replace them — see same-date entry.
+
+**Supersedes / amends:**
+- 2026-05-14 "Typed weapon max level is 3" — **superseded outright.** No levels.
+- 2026-05-18 "Weapon power axes: faction-source parity, in-pool rarity tier, levels as peak" — **major amendment.** Levels-as-peak removed; rarity tier carries the entire in-run power spike. Faction-source parity stands.
+- 2026-05-14 "Authored drop carriers and dynamic weapon sustain" — early/mid/late level-gating framing is replaced; see same-date late-armada rarity gating entry.
+- 2026-05-13 "Ship cannot be destroyed; hits drain weapon power" — same-type / different-type level rules collapse to refill / swap-at-full; see same-date same-family refill entry.
+- 2026-05-14 "Typed weapons are temporary energy states" — same amendment as above.
+- 2026-05-15 "Large weapon pool, faction-gated primary drops" — the entry's note that "the level system may be redundant or need simplification" is now resolved by removal.
+- 2026-05-16 "Auto-fire pea shooter; typed-weapon energy doubles as shield and ammo" — tuning surface no longer includes "max capacity at level 1/2/3"; max capacity is one value per weapon family.
+- 2026-05-16 "Per-weapon-family firing cost" — the note about "per-shot drain may scale with level" is removed; firing cost is one value per family.
+- 2026-05-18 "Typed weapons are faction-flavored sidegrades, not a power ladder" — references to "at the same level" become "at the same rarity tier"; faction-source parity is unchanged.
+- 2026-05-18 "Difficulty arises from enemy-side levers, not weapon power" — the implication "Weapons are balanced for parity within their level" becomes "within their rarity tier"; substance unchanged.
+- 2026-05-16 "Elite/heavy enemy tier per faction" — incidental references to "higher typed-weapon levels make the matchup substantially easier" and "level-appropriate typed weapon" should now be read as rarity-tier references. The structural claim (killing elites requires an active typed weapon, and a better-matched / higher-rarity weapon makes the matchup more decisive) is unchanged.
+
+---
+
+## 2026-05-19 — Three-tier rarity: common / rare / legendary
+
+**Decision:** Within each faction's weapon pool, rarity has **three tiers**, not two:
+
+- **Common** — the bulk of a faction's roster. Sidegrade-flavored variety. Faction-source parity applies across all factions' commons.
+- **Rare** — middle tier. Noticeably stronger or weirder than commons, but still parity-balanced across factions within the rare tier. A few per faction.
+- **Legendary** — peak tier. 1–2 per faction, genuinely strong (exotic patterns, lower burn rate, higher damage, or some combination). Lottery pickups.
+
+**Reasoning:** The 2026-05-18 power-axes amendment introduced a two-tier model (common + legendary). With levels removed (same-date entry), rarity tier is the entire in-run power spike axis, and two tiers risks being too coarse — there is no middle ground between "common variety" and "legendary screen-clearer," which leaves no shape for a meaningful-but-not-overpowered pickup. A three-tier model gives the run more texture and more memorable-moment shapes (a rare drop is a "nice" beat without the lottery anxiety of legendaries).
+
+**Implications:**
+- Per-faction authoring: roughly N commons + a smaller set of rares + 1–2 legendaries.
+- Drop-rate tuning expands: common / rare / legendary spawn rates, both in-faction and cross-run (reverse-engineered) pools. Legendary rates remain "intentionally small" per 2026-05-15; rare rates are a new tuning value, positioned to land between "common is the default" and "legendary is the rare crown."
+- The bi-modal threat guardrail (2026-05-18) applies at all three tiers: no weapon at any tier may solve both of a faction's threat categories. Rares solve one harder; legendaries solve one significantly harder.
+- HUD and pickup-readability must distinguish three rarity tiers (color, frame, particle treatment) — folded into the existing pickup-readability open question.
+
+**Supersedes / amends:**
+- 2026-05-18 "Weapon power axes" — the "1–2 legendary / rare-tier weapons" framing conflated rare and legendary; this entry separates them into distinct tiers.
+
+---
+
+## 2026-05-19 — Same-family pickup refills energy; different-family swaps at full
+
+**Decision:** With levels removed (same-date entry), weapon-chip pickup behavior is:
+
+- **Same family as currently held:** refills the typed-weapon energy meter to full. No swap, no other state change.
+- **Different family:** swaps to the new family at full energy. The previous family is lost; its remaining energy is discarded.
+
+Fuel-cell carriers (2026-05-16) continue to give *partial* energy refills regardless of weapon family. So weapon-chip and fuel-cell pickups stay meaningfully distinct: weapon chips are the higher-value refresh (full top-up if same family, full reset to a new tool if different); fuel cells are the general partial top-up.
+
+**Reasoning:** With no levels, same-family pickups need a new payoff. Full refill preserves the "stick with what's working" texture from the old level model (you're rewarded for holding the family longer) without recreating a level treadmill. It also preserves the leak-risk premium of weapon-chip carriers (enemy ships, 2026-05-16 source split) over fuel-cell carriers (coalition supply, no leak risk) — weapon chips remain the more valuable carrier, justifying the higher engagement cost.
+
+A no-op on same-family was considered (force variety) and rejected — it would punish the "celebrate seeing your family again" beat. A partial-refill on same-family was considered (collapses into fuel-cell behavior) and rejected — it would erase the carrier-leak-risk premium.
+
+**Implications:**
+- HUD feedback for same-family pickup must clearly signal "your meter just refilled, no swap" so the no-state-change is legible.
+- Weapon-chip carrier drop logic is now purely "drop a weapon chip from the faction's pool"; there is no same-vs-different-family branching at drop time. Whether the drop is same-family or different-family is determined by what the player happens to be holding.
+- Different-family swap-at-full preserves the 2026-05-13 commitment shape ("commit to your current family or risk it for a fresh one") without the level-loss cost.
+
+**Supersedes / amends:**
+- 2026-05-13 "Ship cannot be destroyed; hits drain weapon power" — same-type / different-type rules collapse to the refill / swap-at-full model described here.
+- 2026-05-14 "Typed weapons are temporary energy states" — same amendment.
+
+---
+
+## 2026-05-19 — Late-armada rarity gating replaces level-progress gating
+
+**Decision:** With weapon levels removed (same-date entry), the early/mid/late stage drop gating from 2026-05-14 (level 1 early, level 2 mid, level 3 late) is replaced by **rarity gating** along the descending armada:
+
+- **Early armada:** common weapons only.
+- **Mid armada:** commons + rares.
+- **Late armada / pre-boss:** commons + rares + legendaries. Legendaries remain rare even within the late-armada window.
+- **Boss phase:** not committed here; open question.
+
+**Reasoning:** The 2026-05-14 gating logic (you can't get peak power early in a stage) is still load-bearing — it's what made the late-stage power-spike pacing work. With levels gone, the lever changes from "level" to "rarity," but the intent is preserved: the player builds up to peak power across the descending armada, not at its start.
+
+The dynamic responsiveness from 2026-05-14 (if no weapon, more chips; if low energy, more fuel cells) is preserved in spirit but its level-state logic is gone. Responsiveness now lives between *carrier categories* (encourage swap vs. encourage hold), not within a level dimension.
+
+**Implications:**
+- Stage authoring: the armada column has implicit rarity zones tied to position — early enemies' weapon-chip carriers drop commons, late enemies' carriers can drop legendaries.
+- The 2026-05-18 stage-slot intensity scaling is unaffected; rarity zones live inside each intensity preset, not across them. A stage-1 slot still gets its own early-to-late rarity escalation, just at lower overall intensity than a stage-4 slot.
+- Reverse-engineered cross-run drops (2026-05-15, amended 2026-05-18) can include all three rarity tiers. Whether the cross-run pool respects stage-progress rarity gating, or whether reverse-engineered drops can roll any rarity at any stage position, is a new open question.
+
+**Supersedes / amends:**
+- 2026-05-14 "Authored drop carriers and dynamic weapon sustain" — early/mid/late level-gating framing is fully replaced by rarity gating. The dynamic-responsiveness intent (give the player what they need) is preserved but lives between carrier categories, not within level state.
+
+---
+
 ## Open questions to resolve in GDD
 
 - **Collision tuning:** what exact weapon-energy spend rate, ship-shield absorption cap, feedback, and control penalty make ramming a desperate tactical interception rather than either optimal field-sweeping or a pointless action?
-- **Weapon drop tuning:** fuel-cell restore amounts, carrier spawn rules across faction stages, the exact reverse-engineered cross-faction drop rate, and the separate rarity-tier drop rates introduced 2026-05-18 (common vs. legendary, both in-faction and cross-run). Faction-themed gating supersedes the earlier stage-progress level-threshold framing.
+- **Weapon drop tuning:** fuel-cell restore amounts, weapon-chip carrier spawn rules across faction stages and across the within-stage rarity zones (2026-05-19 late-armada rarity gating), and the separate per-rarity drop rates for **common / rare / legendary** (2026-05-19 three-tier rarity) in both the in-faction primary pool and the cross-run reverse-engineered pool.
 - **Grid repair tuning:** what exact restore amount, spawn cap, and stage placement rules should govern rare Defense Grid repair carriers?
 - **Defense Grid repair carrier source (opened 2026-05-16):** with pickup sources split between enemy armada (weapon chips) and coalition supply from below/sides (fuel cells), where do repair carriers come from? Coalition supply is the natural narrative match ("we send help"), but in-armada repair carriers as a rare enemy-side spawn preserves the "engage or let leak" tension that makes weapon-chip carriers tactically rich.
 - **Between-stage screen:** any screen at all between stages? Tentative direction *if* yes: planetary defense upgrades only (grid max, regen, etc.) — ship offense stays purely in-run.
@@ -577,6 +676,8 @@ A faction's baseline and elite tiers **may** also demand different handling — 
 - **Intensity preset count per faction:** if runs are roughly four faction stages, each faction probably needs 3–4 intensity presets (2026-05-18). Whether all factions author the full set, or some are slot-restricted (e.g., only ever appears in slots 2–4), is a tuning + authoring-cost question.
 - **Coalition pressure multiplier form:** the lightweight cross-stage ramp introduced in 2026-05-18 needs an exact form — which levers it touches (rusher cadence, bullet density, ...) and how aggressively it scales per stage.
 - **Bi-modal pairing audit on weapon additions:** the 2026-05-18 bi-modal threat profile decision requires that no weapon family handles both of any faction's threat categories. As new weapons are added, this needs a check; the process for that check is not yet defined.
-- **Level system in a large weapon pool:** does the level-1/2/3 stacking system from 2026-05-14 survive when same-type drops become rare in a large faction-themed pool? Should levels be simplified, removed, or replaced with a different within-type progression lever? Resolving this likely requires revising the 2026-05-14 "Authored drop carriers and dynamic weapon sustain" entry.
+- **Reverse-engineered cross-run rarity gating (opened 2026-05-19):** does the cross-run reverse-engineered drop pool respect the within-stage rarity gating (legendaries only in late-armada), or can reverse-engineered drops roll any rarity at any stage position? Consistency argues for respecting the gate; the "tasty rare cross-run moment" framing could argue for breaking it.
+- **Boss-phase weapon drops (opened 2026-05-19):** the late-armada rarity gating entry does not commit boss-phase drop behavior. Do bosses drop weapons at all? If yes, is the boss its own rarity zone (e.g., guaranteed rare, chance at legendary) or does it inherit late-armada rates?
+- **Single-tuning weapon depth (opened 2026-05-19):** with levels removed, each weapon family is one tuning. Does each common need a distinctive enough handling profile to land its identity in a single read, or do we need a roster-sizing decision (more families per faction) to compensate for shallower per-weapon depth? Answerable only by prototyping.
 - **Pickup readability:** how do pickups communicate weapon identity (family + faction source), **rarity tier** (common vs. legendary, per 2026-05-18 power axes), and **burn rate** (per-family firing cost, per 2026-05-16) to the player before contact, so the same-type-stacks vs different-type-swaps decision remains informed in a many-weapon pool with multiple power axes? Three readable axes on a small in-flight pickup icon is the actual UX problem.
 - **Difficulty ladder after first clear:** what mechanism extends replay value once the coalition is first defeated — ascension-style modifiers, harder faction variants, or something else.
