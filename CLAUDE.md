@@ -65,3 +65,15 @@ When proposing systems, mechanics, or content, these are committed and should no
 The bottom of `decisions.md` tracks open questions. Many of the remaining ones — collision tuning, per-rarity weapon drop rates, single-tuning weapon depth, intensity preset shape, fuel-cell economy — explicitly need prototype playtest data to resolve, not more decision rounds. The core systems are stable enough that a scoped prototype focused on the dual-role energy meter is the natural next artifact; the historical "level system tension" was resolved 2026-05-19 by removing levels.
 
 Note: `docs/design/feedback.md` was written before the 2026-05-19 level removal and still discusses the levels 1–3 system as committed. Read it as a snapshot in time, not current state.
+
+## Implementation workflow (for coding agents)
+
+When implementation work begins on the v1 prototype, follow the task-driven workflow under `docs/tasks/`. The full rules are in [`docs/tasks/README.md`](docs/tasks/README.md); the load-bearing invariants:
+
+- **At most one task in `docs/tasks/active/` at a time.** Do not move a second task to `active/` while one is already there.
+- **Stop for review at every task boundary.** When the active task's acceptance evidence is ready, report to the user and stop. Do not pick up a new task on your own — the user approves completion and designates the next task. This is the load-bearing rule of the workflow.
+- **Every active task produces human-verifiable evidence** under `tests/evidence/T###-name/`. The task file specifies what artifacts, what the reviewer checks, and the command to regenerate.
+- **Task files are append-mostly.** Update the Progress log with dated entries. Record scope changes in the Scope changes section, never by editing the original Scope.
+- **The architectural plan is [`docs/PLAN.md`](docs/PLAN.md).** Every task references it. The plan groups work into milestones; only the next 1–2 tasks within a milestone are fully spec'd at any time.
+- **Pre-flight before activating a task:** re-read the relevant entries in `docs/design/decisions.md` and the prior task's evidence. If anything in the design log contradicts the task as written, raise it to the user before starting — don't paper over it in code.
+- **Spec just-in-time.** Drafting full `T###` files for distant milestones risks specifying out-of-date work, because each task's shape depends on what the prior one taught us.

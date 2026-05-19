@@ -12,6 +12,8 @@ The active design log and supporting design notes.
 
 - [`design/decisions.md`](design/decisions.md) — chronological log of committed design decisions, append-only, **Decision / Reasoning / Implications** format. This is the authoritative source for current design state until the GDD is drafted.
 - [`design/scope.md`](design/scope.md) — v1 prototype scope and done criteria. Defines what the first playable prototype is testing and what is deliberately deferred.
+- [`PLAN.md`](PLAN.md) — active architectural plan for v1 implementation. Source organization, milestone list, verification baseline. Referenced by every task file.
+- [`tasks/`](tasks/) — task-driven execution queue (`planned/` → `active/` → `completed/`). See [`tasks/README.md`](tasks/README.md) for workflow rules and [`tasks/INDEX.md`](tasks/INDEX.md) for the current scan summary.
 - [`design/feedback.md`](design/feedback.md) — external review of the decision log. Signal, not a design source. Predates the 2026-05-19 level removal; read as a snapshot, not current state.
 
 Planned design artifacts:
