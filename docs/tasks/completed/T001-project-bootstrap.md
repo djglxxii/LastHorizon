@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | ID | T001 |
-| State | planned |
+| State | completed |
 | Phase | M0 — Repo bootstrap |
 | Depends on | none |
 | Plan reference | `docs/PLAN.md` — M0 |
@@ -32,15 +32,17 @@ None.
 
 ## Pre-flight
 
-- [ ] Confirm Godot 4.6.2-stable is downloadable from the official source (`https://github.com/godotengine/godot/releases/tag/4.6.2-stable`) for the target platform.
-- [ ] Confirm `docs/decisions/0001-engine-and-language.md` is the current authoritative tech-stack decision (no superseding ADR exists).
+- [x] Confirm Godot 4.6.2-stable is downloadable from the official source (`https://github.com/godotengine/godot/releases/tag/4.6.2-stable`) for the target platform.
+- [x] Confirm `docs/decisions/0001-engine-and-language.md` is the current authoritative tech-stack decision (no superseding ADR exists).
 
 ## Implementation notes
 
 - Repo root is the Godot project root (`project.godot` lives at repo root).
 - The pinned engine is downloaded into `tools/` and is **not** committed; the bootstrap script downloads it reproducibly. The script itself is committed.
 - The wrapper executable can be a thin shell script that execs the downloaded binary, or a direct symlink — either is fine. Document the choice in evidence.
+- Implementation choice: `tools/setup_godot.sh` installs the official Linux x86_64 binary directly at `tools/godot/bin/godot`; that binary path is the wrapper/executable used by evidence commands.
 - The headless smoke runs the wrapper with `--headless --path .` and a `--quit` (or equivalent) flag. The boot message uses GDScript `print()` so it appears on stdout.
+- Implementation choice: `tools/run_headless_smoke.sh` runs `tools/godot/bin/godot --headless --path <repo>`, and the boot scene exits itself when `DisplayServer.get_name() == "headless"`.
 - The boot-scene script is the simplest viable GDScript that prints and exits in headless mode. Do not attempt gameplay logic here.
 - Pin the Godot version explicitly in the bootstrap script (`GODOT_VERSION=4.6.2` near the top), so future agents can find and revisit it without grepping.
 
@@ -67,7 +69,7 @@ None.
 tools/setup_godot.sh
 tools/godot/bin/godot --version > tests/evidence/T001-project-bootstrap/godot-version.txt
 tools/run_headless_smoke.sh > tests/evidence/T001-project-bootstrap/headless-smoke.txt
-find . -type d -not -path './.git*' -not -path './tools/godot/*' -not -path './.godot*' | sort > tests/evidence/T001-project-bootstrap/repo-tree.txt
+find . -type d -not -path './.git*' -not -path './tools/godot' -not -path './tools/godot/*' -not -path './.godot*' | sort > tests/evidence/T001-project-bootstrap/repo-tree.txt
 git status > tests/evidence/T001-project-bootstrap/git-status.txt
 ```
 
@@ -76,6 +78,9 @@ git status > tests/evidence/T001-project-bootstrap/git-status.txt
 | Date | Entry |
 |---|---|
 | 2026-05-19 | Created, state: planned. |
+| 2026-05-19 | Activated. Pre-flight confirmed official Linux x86_64 Godot 4.6.2-stable asset and ADR-0001 as the only tech-stack ADR. |
+| 2026-05-19 | Implemented bootstrap project, setup scripts, source skeleton, and generated acceptance evidence. Ready for human review. |
+| 2026-05-19 | Human-approved; moved to completed. |
 
 ## Blocker
 

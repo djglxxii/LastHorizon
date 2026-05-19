@@ -9,12 +9,23 @@ Thumbs.db
 *.swo
 *~
 
-# Build artifacts (engine-agnostic placeholders; tighten once stack is chosen)
+# Godot editor/import state
+.godot/
+.import/
+*.import
+*.godot.uid
+
+# Local pinned engine download
+tools/godot/
+
+# Build/export artifacts
 build/
 dist/
 out/
 bin/
 obj/
+exports/
+export_presets.cfg
 *.log
 
 # Dependency directories (placeholders for common ecosystems)

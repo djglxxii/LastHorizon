@@ -8,21 +8,21 @@ See [`README.md`](README.md) for workflow rules and [`../PLAN.md`](../PLAN.md) f
 
 ## Current focus
 
-- **Active:** none
+- **Active:** T002 — Player ship + horizontal movement
 - **Blocked:** none
-- **Next proposed:** T001 — Project bootstrap
+- **Next proposed:** T003 — Auto-fire pea shooter
 
 ## M0 — Repo bootstrap
 
 | ID | Title | State | Depends on | Evidence type |
 |---|---|---|---|---|
-| T001 | Project bootstrap | planned | none | tool output + smoke log |
+| T001 | Project bootstrap | completed | none | tool output + smoke log |
 
 ## M1 — Player baseline
 
 | ID | Title | State | Depends on | Evidence type |
 |---|---|---|---|---|
-| T002 | Player ship + horizontal movement | one-liner | T001 | video/screens + input checklist |
+| T002 | Player ship + horizontal movement | active | T001 | video/screens + input checklist |
 | T003 | Auto-fire pea shooter | one-liner | T002 | video/screens + event log |
 
 ## M2 — Typed weapon + energy meter
