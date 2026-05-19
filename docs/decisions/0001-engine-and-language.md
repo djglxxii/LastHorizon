@@ -10,7 +10,7 @@ A separate prior prototype using a closely related design was previously built i
 
 ## Decision
 
-**Godot 4.x** as the engine, **GDScript** as the primary language.
+**Godot 4.6.2-stable** as the engine (the latest stable 4.x maintenance release at v1 start, 2026-05-19), **GDScript** as the primary language. Future patch upgrades within the 4.6.x line are allowed; minor or major version bumps require a superseding ADR.
 
 ## Alternatives considered
 
@@ -43,6 +43,5 @@ This decision should be revisited if any of:
 
 ## Open follow-ups
 
-- Pin a specific Godot 4.x version at v1 start.
-- Write the `tools/` bootstrap script and `.gitignore` entries.
+- Write the `tools/` bootstrap script and `.gitignore` entries (T001).
 - Decide whether to add a CI smoke-test gate now or defer to v2.

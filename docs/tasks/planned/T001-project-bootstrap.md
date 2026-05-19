@@ -15,7 +15,7 @@ Initialize the v1 prototype so subsequent gameplay tasks can begin: pinned Godot
 ## Scope
 
 - **In scope:**
-  - `tools/setup_godot.sh` (or equivalent) that downloads and pins a specific Godot 4.x version into `tools/` and provides a wrapper executable. The wrapper path and version is documented in the task evidence.
+  - `tools/setup_godot.sh` (or equivalent) that downloads **Godot 4.6.2-stable** (per ADR-0001) into `tools/` and provides a wrapper executable. The wrapper path and version is documented in the task evidence.
   - `tools/run_headless_smoke.sh` (or equivalent) that runs the wrapper in `--headless` mode against the project and exits cleanly.
   - `project.godot` configured for a narrow vertical viewport consistent with the design log's ~9:16 invariant. Specific viewport dimensions are an implementation detail of this task.
   - `scenes/main/Main.tscn` as the boot scene with a single placeholder script that prints a recognizable boot message and exits cleanly under headless mode.
@@ -32,7 +32,7 @@ None.
 
 ## Pre-flight
 
-- [ ] Confirm the chosen Godot 4.x version is downloadable from the official source for the target platform.
+- [ ] Confirm Godot 4.6.2-stable is downloadable from the official source (`https://github.com/godotengine/godot/releases/tag/4.6.2-stable`) for the target platform.
 - [ ] Confirm `docs/decisions/0001-engine-and-language.md` is the current authoritative tech-stack decision (no superseding ADR exists).
 
 ## Implementation notes
@@ -42,7 +42,7 @@ None.
 - The wrapper executable can be a thin shell script that execs the downloaded binary, or a direct symlink — either is fine. Document the choice in evidence.
 - The headless smoke runs the wrapper with `--headless --path .` and a `--quit` (or equivalent) flag. The boot message uses GDScript `print()` so it appears on stdout.
 - The boot-scene script is the simplest viable GDScript that prints and exits in headless mode. Do not attempt gameplay logic here.
-- Pin the Godot version explicitly in the bootstrap script (e.g., `GODOT_VERSION=4.x.y` near the top), so future agents can find and revisit it without grepping.
+- Pin the Godot version explicitly in the bootstrap script (`GODOT_VERSION=4.6.2` near the top), so future agents can find and revisit it without grepping.
 
 ## Acceptance evidence
 
@@ -56,7 +56,7 @@ None.
 **Reviewer checklist:**
 
 - [ ] `tools/setup_godot.sh` runs cleanly from a fresh checkout.
-- [ ] `tools/godot/bin/godot --version` reports the pinned Godot 4.x version.
+- [ ] `tools/godot/bin/godot --version` reports `4.6.2.stable.official` (or the standard Godot stable-version format).
 - [ ] The headless smoke prints the boot message and exits with status 0.
 - [ ] `repo-tree.txt` shows the expected skeleton (`src/{game,player,weapons,enemies,carriers,grid,ui}/` with `.gitkeep`, plus `tools/`, `tests/`, `assets/`, `scenes/main/`).
 - [ ] `git-status.txt` shows no untracked engine binaries or editor state — only authored source.
