@@ -22,7 +22,7 @@ Planned design artifacts:
 
 Architecture and tech decision records (ADR-style). Each file captures the decision, alternatives considered, and rationale.
 
-- _None yet. Engine, language, and tooling choices will live here once made._
+- [`decisions/0001-engine-and-language.md`](decisions/0001-engine-and-language.md) — Godot 4.x + GDScript for v1 prototype (2026-05-19).
 
 ## Conventions
 
