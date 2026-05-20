@@ -10,7 +10,7 @@ See [`README.md`](README.md) for workflow rules and [`../PLAN.md`](../PLAN.md) f
 
 - **Active:** none
 - **Blocked:** none
-- **Next proposed:** T007 — Pea shooter + typed weapon damage to enemies
+- **Next proposed:** T008 — Defense Grid Integrity meter + leak damage + run-end
 
 ## M0 — Repo bootstrap
 
@@ -37,7 +37,7 @@ See [`README.md`](README.md) for workflow rules and [`../PLAN.md`](../PLAN.md) f
 | ID | Title | State | Depends on | Evidence type |
 |---|---|---|---|---|
 | T006 | Baseline enemy + descending formation | completed | T005 | video/screens + checklist |
-| T007 | Pea shooter + typed weapon damage to enemies | one-liner | T006 | video/screens + event log |
+| T007 | Pea shooter + typed weapon damage to enemies | completed | T006 | video/screens + event log |
 | T008 | Defense Grid Integrity meter + leak damage + run-end | one-liner | T007 | video/screens + event log |
 
 ## M4 — Weapon pickups

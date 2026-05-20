@@ -19,6 +19,10 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	position.y += descent_speed * delta
 
+	if get_child_count() == 0:
+		queue_free()
+		return
+
 	if _top_edge_y() > playfield_height + despawn_margin:
 		queue_free()
 

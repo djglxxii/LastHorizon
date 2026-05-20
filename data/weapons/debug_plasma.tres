@@ -10,5 +10,5 @@ max_energy = 100.0
 firing_cost = 5.0
 fire_interval = 0.1
 projectile_speed = 760.0
-projectile_damage = 2.0
+projectile_damage = 3.0
 projectile_sprite = ExtResource("2_sprite")

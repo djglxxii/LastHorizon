@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/vfx/pixel_burst.gd" id="1_pixel_burst"]
+
+[node name="PixelBurst" type="Node2D"]
+z_index = 18
+script = ExtResource("1_pixel_burst")

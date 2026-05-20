@@ -6,7 +6,7 @@ class_name TypedWeaponFamily
 @export var firing_cost := 5.0
 @export var fire_interval := 0.1
 @export var projectile_speed := 760.0
-@export var projectile_damage := 2.0
+@export var projectile_damage := 3.0
 @export var projectile_sprite: Texture2D
 
 
