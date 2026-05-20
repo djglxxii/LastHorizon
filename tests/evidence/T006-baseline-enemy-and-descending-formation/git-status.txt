@@ -1,0 +1,25 @@
+On branch main
+Your branch is ahead of 'origin/main' by 11 commits.
+  (use "git push" to publish your local commits)
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   assets/README.md
+	modified:   docs/tasks/INDEX.md
+	modified:   project.godot
+	modified:   scenes/main/Main.tscn
+	modified:   src/game/boot_smoke.gd
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	assets/sprites/enemies/
+	docs/tasks/completed/T006-baseline-enemy-and-descending-formation.md
+	scenes/enemies/
+	src/enemies/baseline_enemy.gd
+	src/enemies/enemy_formation.gd
+	src/enemies/enemy_spawner.gd
+	tests/evidence/T006-baseline-enemy-and-descending-formation/
+	tools/generate_baseline_enemy_sprite.gd
+
+no changes added to commit (use "git add" and/or "git commit -a")

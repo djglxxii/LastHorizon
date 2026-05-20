@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://src/enemies/enemy_formation.gd" id="1_formation"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/BaselineEnemy.tscn" id="2_enemy"]
+
+[node name="EnemyFormation" type="Node2D"]
+script = ExtResource("1_formation")
+enemy_scene = ExtResource("2_enemy")
