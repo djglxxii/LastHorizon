@@ -1,12 +1,18 @@
-[gd_scene load_steps=5 format=3 uid="uid://bnmwr2u04jy8n"]
+[gd_scene load_steps=7 format=3 uid="uid://bnmwr2u04jy8n"]
 
 [ext_resource type="Script" path="res://src/game/boot_smoke.gd" id="1_boot"]
 [ext_resource type="PackedScene" path="res://scenes/player/Player.tscn" id="2_player"]
 [ext_resource type="PackedScene" path="res://scenes/ui/HUD.tscn" id="3_hud"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/EnemySpawner.tscn" id="4_spawner"]
+[ext_resource type="Script" path="res://src/grid/defense_grid.gd" id="5_defense_grid"]
+[ext_resource type="PackedScene" path="res://scenes/ui/RunEndOverlay.tscn" id="6_run_end_overlay"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_boot")
+
+[node name="DefenseGrid" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("5_defense_grid")
 
 [node name="EnemySpawner" parent="." instance=ExtResource("4_spawner")]
 
@@ -14,3 +20,7 @@ script = ExtResource("1_boot")
 
 [node name="HUD" parent="." instance=ExtResource("3_hud")]
 typed_weapon_slot_path = NodePath("../Player/TypedWeaponSlot")
+defense_grid_path = NodePath("../DefenseGrid")
+
+[node name="RunEndOverlay" parent="." instance=ExtResource("6_run_end_overlay")]
+unique_name_in_owner = true

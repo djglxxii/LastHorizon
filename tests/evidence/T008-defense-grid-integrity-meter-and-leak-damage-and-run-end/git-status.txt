@@ -1,0 +1,29 @@
+On branch main
+Your branch is ahead of 'origin/main' by 13 commits.
+  (use "git push" to publish your local commits)
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   docs/tasks/INDEX.md
+	modified:   scenes/main/Main.tscn
+	modified:   scenes/ui/HUD.tscn
+	modified:   src/enemies/baseline_enemy.gd
+	modified:   src/enemies/enemy_formation.gd
+	modified:   src/enemies/enemy_spawner.gd
+	modified:   src/game/boot_smoke.gd
+	modified:   src/ui/hud.gd
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	docs/tasks/completed/T008-defense-grid-integrity-meter-and-leak-damage-and-run-end.md
+	scenes/ui/GridMeter.tscn
+	scenes/ui/RunEndOverlay.tscn
+	scenes/vfx/PlanetImpact.tscn
+	src/grid/defense_grid.gd
+	src/ui/grid_meter.gd
+	src/ui/run_end_overlay.gd
+	src/vfx/planet_impact.gd
+	tests/evidence/T008-defense-grid-integrity-meter-and-leak-damage-and-run-end/
+
+no changes added to commit (use "git add" and/or "git commit -a")

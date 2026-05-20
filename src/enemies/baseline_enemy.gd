@@ -3,13 +3,17 @@ class_name BaselineEnemy
 
 signal damaged(amount: float, hit_position: Vector2)
 signal killed
+signal leaked(impact_position: Vector2)
 
 const DAMAGE_NUMBER_SCENE := preload("res://scenes/ui/DamageNumber.tscn")
 const PIXEL_BURST_SCENE := preload("res://scenes/vfx/PixelBurst.tscn")
+const PLANET_IMPACT_SCENE := preload("res://scenes/vfx/PlanetImpact.tscn")
 
 @export var max_hp := 5.0
 @export var sway_amplitude := 5.0
 @export var sway_period := 2.4
+@export var planet_line_y := 900.0
+@export var leak_damage_per_enemy := 10.0
 
 var current_hp := 0.0
 
@@ -17,18 +21,27 @@ var _slot_position := Vector2.ZERO
 var _sway_phase := 0.0
 var _age := 0.0
 var _dead := false
+var _leaked := false
+var _defense_grid: Node
 
 
 func _ready() -> void:
 	current_hp = max_hp
 	_slot_position = position
 	_sway_phase = randf_range(0.0, TAU)
+	_defense_grid = _resolve_defense_grid()
 
 
 func _physics_process(delta: float) -> void:
+	if _dead or _leaked:
+		return
+
 	_age += delta
 	var period := maxf(sway_period, 0.01)
 	position = _slot_position + Vector2(sin((_age / period) * TAU + _sway_phase) * sway_amplitude, 0.0)
+
+	if global_position.y >= planet_line_y:
+		_leak()
 
 
 func configure_sway(amplitude: float, period: float) -> void:
@@ -37,7 +50,7 @@ func configure_sway(amplitude: float, period: float) -> void:
 
 
 func take_damage(amount: float, hit_position := Vector2.INF) -> void:
-	if _dead:
+	if _dead or _leaked:
 		return
 
 	var applied_damage := maxf(amount, 0.0)
@@ -57,12 +70,25 @@ func take_damage(amount: float, hit_position := Vector2.INF) -> void:
 
 
 func _kill() -> void:
-	if _dead:
+	if _dead or _leaked:
 		return
 
 	_dead = true
 	killed.emit()
 	_spawn_pixel_burst()
+	queue_free()
+
+
+func _leak() -> void:
+	if _dead or _leaked:
+		return
+
+	_leaked = true
+	var impact_position := global_position
+	if _defense_grid != null and _defense_grid.has_method("apply_leak_damage"):
+		_defense_grid.apply_leak_damage(leak_damage_per_enemy, impact_position)
+	leaked.emit(impact_position)
+	_spawn_planet_impact(impact_position)
 	queue_free()
 
 
@@ -86,6 +112,28 @@ func _spawn_pixel_burst() -> void:
 	_add_feedback_child(burst)
 	if burst is Node2D:
 		(burst as Node2D).global_position = global_position
+
+
+func _spawn_planet_impact(impact_position: Vector2) -> void:
+	var impact := PLANET_IMPACT_SCENE.instantiate()
+	if impact == null:
+		return
+
+	_add_feedback_child(impact)
+	if impact is Node2D:
+		(impact as Node2D).global_position = impact_position
+
+
+func _resolve_defense_grid() -> Node:
+	var tree := get_tree()
+	if tree == null:
+		return null
+
+	var current_scene := tree.current_scene
+	if current_scene == null:
+		return null
+
+	return current_scene.find_child("DefenseGrid", true, false)
 
 
 func _add_feedback_child(node: Node) -> void:

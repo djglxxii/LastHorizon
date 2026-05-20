@@ -5,7 +5,7 @@ class_name EnemySpawner
 @export var rows := 3
 @export var cols := 5
 @export var cell_size := Vector2(82.0, 66.0)
-@export var descent_speed := 65.0
+@export var descent_speed := 32.5
 @export var sway_amplitude := 5.0
 @export var sway_period := 2.4
 @export var spawn_interval_seconds := 2.35

@@ -3,14 +3,17 @@ extends CanvasLayer
 const EXPIRY_INACTIVE_DELAY := 0.35
 
 @export var typed_weapon_slot_path: NodePath
+@export var defense_grid_path: NodePath
 
 @onready var _energy_meter: EnergyMeter = %EnergyMeter
+@onready var _grid_meter: GridMeter = %GridMeter
 
 var _typed_weapon_slot: Node
 var _last_max_energy := 0.0
 
 
 func _ready() -> void:
+	_grid_meter.bind_defense_grid_node(_resolve_defense_grid())
 	_typed_weapon_slot = _resolve_typed_weapon_slot()
 	if _typed_weapon_slot == null:
 		_energy_meter.set_empty()
@@ -30,6 +33,17 @@ func _resolve_typed_weapon_slot() -> Node:
 		return null
 
 	return current_scene.find_child("TypedWeaponSlot", true, false)
+
+
+func _resolve_defense_grid() -> Node:
+	if defense_grid_path != NodePath() and has_node(defense_grid_path):
+		return get_node(defense_grid_path)
+
+	var current_scene := get_tree().current_scene
+	if current_scene == null:
+		return null
+
+	return current_scene.find_child("DefenseGrid", true, false)
 
 
 func _sync_from_slot() -> void:
