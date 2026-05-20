@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://src/player/player_ship.gd" id="1_player_ship"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/player-ship.png" id="2_player_ship"]
+
+[node name="Player" type="Node2D"]
+position = Vector2(270, 850)
+script = ExtResource("1_player_ship")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("2_player_ship")
+scale = Vector2(1.5, 1.5)

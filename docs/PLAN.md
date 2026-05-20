@@ -10,6 +10,22 @@ Build a playable v1 prototype that lets a human playtester answer the seven ques
 
 Per [`decisions/0001-engine-and-language.md`](decisions/0001-engine-and-language.md): Godot 4.x + GDScript. Engine is pinned and installed locally via a `tools/` bootstrap script. Headless smoke test runs through the same wrapper.
 
+## Visual assets for v1
+
+v1 uses **placeholder pixel-art sprites**, *not* procedural geometric shapes (`ColorRect`, `Polygon2D`, etc.) for game entities. The visual target is the mockup at `assets/last-horizon-gameplay-mockup.png`: pixel-style, retro-modern arcade, saturated effects, readable silhouettes.
+
+Concrete expectations:
+
+- **Game entities** — player ship, enemies, carriers, pickups, projectiles — are **PNG sprites** at modest resolution (roughly 16–64 px per entity, scaled appropriately in-game).
+- **Silhouettes must be recognizable.** A ship looks like a ship, an alien like an alien, a weapon-chip carrier visibly distinct from a fuel-cell carrier. Abstract or purely geometric placeholders are not acceptable.
+- **Quality bar:** "placeholder, not final." Sprites should not distract a playtester from the energy-meter mechanics, but they should not be visually offensive either. Rough pixel art is OK; programmer-art rectangles are not.
+- **Storage layout:** `assets/sprites/<category>/` — e.g., `assets/sprites/player/`, `assets/sprites/enemies/`, `assets/sprites/carriers/`, `assets/sprites/pickups/`, `assets/sprites/projectiles/`.
+- **Sourcing:** the coding agent authors sprites directly (by hand or via image generation). If any third-party asset is used, it must be public domain or CC0, and provenance noted in `assets/README.md`.
+- **HUD elements** (energy meter, Grid meter, text) can use Godot's built-in UI nodes with styled colors — they do not need bespoke sprites.
+- **Side panels** (mini-map, planet view) remain placeholder rectangles per `design/scope.md` and are not in-scope for sprite work.
+
+v1 sprites are throwaway. They will be replaced by final art post-v1; the goal in v1 is enough visual cohesion that playtesting reflects the *mechanics*, not the *graphics*.
+
 ## Source organization
 
 Under `src/`, grouped by gameplay domain:

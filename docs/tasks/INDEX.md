@@ -8,7 +8,7 @@ See [`README.md`](README.md) for workflow rules and [`../PLAN.md`](../PLAN.md) f
 
 ## Current focus
 
-- **Active:** T002 — Player ship + horizontal movement
+- **Active:** none
 - **Blocked:** none
 - **Next proposed:** T003 — Auto-fire pea shooter
 
@@ -22,7 +22,7 @@ See [`README.md`](README.md) for workflow rules and [`../PLAN.md`](../PLAN.md) f
 
 | ID | Title | State | Depends on | Evidence type |
 |---|---|---|---|---|
-| T002 | Player ship + horizontal movement | active | T001 | video/screens + input checklist |
+| T002 | Player ship + horizontal movement | completed | T001 | video/screens + input checklist |
 | T003 | Auto-fire pea shooter | one-liner | T002 | video/screens + event log |
 
 ## M2 — Typed weapon + energy meter

@@ -1,0 +1,25 @@
+On branch main
+Your branch is ahead of 'origin/main' by 6 commits.
+  (use "git push" to publish your local commits)
+
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   .gitignore
+	modified:   docs/PLAN.md
+	modified:   docs/tasks/INDEX.md
+	deleted:    docs/tasks/active/T002-player-ship-horizontal-movement.md
+	modified:   scenes/main/Main.tscn
+	modified:   tools/run_headless_smoke.sh
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	assets/README.md
+	assets/sprites/
+	docs/tasks/completed/T002-player-ship-horizontal-movement.md
+	scenes/player/
+	src/player/player_ship.gd
+	tests/evidence/T002-player-ship-horizontal-movement/
+	tools/generate_player_sprite.gd
+
+no changes added to commit (use "git add" and/or "git commit -a")

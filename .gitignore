@@ -14,6 +14,7 @@ Thumbs.db
 .import/
 *.import
 *.godot.uid
+*.gd.uid
 
 # Local pinned engine download
 tools/godot/
