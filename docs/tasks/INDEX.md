@@ -10,7 +10,7 @@ See [`README.md`](README.md) for workflow rules and [`../PLAN.md`](../PLAN.md) f
 
 - **Active:** none
 - **Blocked:** none
-- **Next proposed:** T004 — Typed-weapon slot + dual-role energy meter
+- **Next proposed:** T005 — Energy-meter HUD readout
 
 ## M0 — Repo bootstrap
 
@@ -29,7 +29,7 @@ See [`README.md`](README.md) for workflow rules and [`../PLAN.md`](../PLAN.md) f
 
 | ID | Title | State | Depends on | Evidence type |
 |---|---|---|---|---|
-| T004 | Typed-weapon slot + dual-role energy meter | one-liner | T003 | video/screens + event log |
+| T004 | Typed-weapon slot + dual-role energy meter | completed | T003 | video/screens + event log |
 | T005 | Energy-meter HUD readout | one-liner | T004 | video/screens + checklist |
 
 ## M3 — Enemy baseline + Defense Grid

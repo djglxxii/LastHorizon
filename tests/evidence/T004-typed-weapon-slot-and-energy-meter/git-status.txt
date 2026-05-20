@@ -1,0 +1,27 @@
+On branch main
+Your branch is ahead of 'origin/main' by 9 commits.
+  (use "git push" to publish your local commits)
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   assets/README.md
+	modified:   docs/tasks/INDEX.md
+	modified:   project.godot
+	modified:   scenes/player/Player.tscn
+	modified:   src/player/player_ship.gd
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	assets/sprites/projectiles/typed-plasma-bolt.png
+	data/
+	docs/tasks/completed/T004-typed-weapon-slot-and-energy-meter.md
+	scenes/projectiles/TypedProjectile.tscn
+	src/player/typed_weapon_slot.gd
+	src/weapons/typed_projectile.gd
+	src/weapons/typed_weapon.gd
+	src/weapons/typed_weapon_family.gd
+	tests/evidence/T004-typed-weapon-slot-and-energy-meter/
+	tools/generate_typed_projectile_sprite.gd
+
+no changes added to commit (use "git add" and/or "git commit -a")
