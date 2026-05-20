@@ -40,6 +40,7 @@ func equip(family: TypedWeaponFamily) -> void:
 func clear() -> void:
 	active_weapon = null
 	_time_until_next_shot = 0.0
+	typed_weapon_energy_changed.emit(0.0, 0.0)
 
 
 func has_weapon() -> bool:

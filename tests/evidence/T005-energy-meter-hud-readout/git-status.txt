@@ -1,0 +1,8 @@
+ M docs/tasks/INDEX.md
+ M scenes/main/Main.tscn
+ M src/player/typed_weapon_slot.gd
+?? docs/tasks/completed/T005-energy-meter-hud-readout.md
+?? scenes/ui/
+?? src/ui/energy_meter.gd
+?? src/ui/hud.gd
+?? tests/evidence/T005-energy-meter-hud-readout/
