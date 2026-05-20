@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | ID | T003 |
-| State | planned |
+| State | completed |
 | Phase | M1 — Player baseline |
 | Depends on | T002 |
 | Plan reference | `docs/PLAN.md` — M1 |
@@ -36,9 +36,9 @@ None.
 
 ## Pre-flight
 
-- [ ] T002 completed and its evidence reviewed.
-- [ ] Re-read the 2026-05-16 "Auto-fire pea shooter; typed-weapon energy doubles as shield and ammo" entry in `docs/design/decisions.md`. The pea shooter's "always firing, never under player input" property is the load-bearing invariant for this task.
-- [ ] Re-read `docs/PLAN.md` M1 milestone and the "Visual assets for v1" section.
+- [x] T002 completed and its evidence reviewed.
+- [x] Re-read the 2026-05-16 "Auto-fire pea shooter; typed-weapon energy doubles as shield and ammo" entry in `docs/design/decisions.md`. The pea shooter's "always firing, never under player input" property is the load-bearing invariant for this task.
+- [x] Re-read `docs/PLAN.md` M1 milestone and the "Visual assets for v1" section.
 
 ## Implementation notes
 
@@ -88,6 +88,10 @@ Manual screenshot/input evidence is produced by running the Godot project and ca
 | Date | Entry |
 |---|---|
 | 2026-05-19 | Created, state: planned. |
+| 2026-05-20 | Activated after pre-flight confirmed T002 evidence, the 2026-05-16 input-model invariant, and the M1/visual-asset plan. |
+| 2026-05-20 | Implemented player-owned auto-fire pea shooter, upward pea bullet scene/script, generated projectile PNG sprite, and main player scene wiring. |
+| 2026-05-20 | Generated acceptance evidence under `tests/evidence/T003-auto-fire-pea-shooter/`: bullet-stream image, headless smoke, fire-rate verification, input checklist, and git status. Ready for human review. |
+| 2026-05-20 | Human-approved; moved to completed. |
 
 ## Blocker
 
