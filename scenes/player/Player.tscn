@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3]
+[gd_scene load_steps=9 format=3]
 
 [ext_resource type="Script" path="res://src/player/player_ship.gd" id="1_player_ship"]
 [ext_resource type="Texture2D" path="res://assets/sprites/player/player-ship.png" id="2_player_ship"]
@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" path="res://scenes/projectiles/PeaBullet.tscn" id="4_pea_bullet"]
 [ext_resource type="Script" path="res://src/player/typed_weapon_slot.gd" id="5_typed_slot"]
 [ext_resource type="PackedScene" path="res://scenes/projectiles/TypedProjectile.tscn" id="6_typed_projectile"]
-[ext_resource type="Resource" path="res://data/weapons/debug_plasma.tres" id="7_debug_plasma"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_pickup_collector"]
 radius = 24.0
@@ -29,7 +28,6 @@ bullet_scene = ExtResource("4_pea_bullet")
 position = Vector2(0, -58)
 script = ExtResource("5_typed_slot")
 projectile_scene = ExtResource("6_typed_projectile")
-default_pickup_family = ExtResource("7_debug_plasma")
 
 [node name="PickupCollector" type="Area2D" parent="."]
 collision_layer = 2

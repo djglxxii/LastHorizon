@@ -6,6 +6,8 @@
 [resource]
 script = ExtResource("1_family")
 family_id = "debug_plasma"
+display_name = "Debug Plasma"
+tint_color = Color(0.3, 0.95, 1, 1)
 max_energy = 100.0
 firing_cost = 1.0
 fire_interval = 0.1

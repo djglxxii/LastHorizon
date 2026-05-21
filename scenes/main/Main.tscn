@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bnmwr2u04jy8n"]
+[gd_scene load_steps=14 format=3 uid="uid://bnmwr2u04jy8n"]
 
 [ext_resource type="Script" path="res://src/game/boot_smoke.gd" id="1_boot"]
 [ext_resource type="PackedScene" path="res://scenes/player/Player.tscn" id="2_player"]
@@ -8,6 +8,11 @@
 [ext_resource type="PackedScene" path="res://scenes/ui/RunEndOverlay.tscn" id="6_run_end_overlay"]
 [ext_resource type="Script" path="res://src/carriers/carrier_spawner.gd" id="7_carrier_spawner"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/WeaponChipCarrier.tscn" id="8_carrier"]
+[ext_resource type="Resource" path="res://data/weapons/debug_plasma.tres" id="9_debug_plasma"]
+[ext_resource type="Resource" path="res://data/weapons/common_wide_spread.tres" id="10_wide_spread"]
+[ext_resource type="Resource" path="res://data/weapons/common_piercing_lance.tres" id="11_piercing_lance"]
+[ext_resource type="Resource" path="res://data/weapons/common_heavy_slug.tres" id="12_heavy_slug"]
+[ext_resource type="Resource" path="res://data/weapons/common_rapid_stream.tres" id="13_rapid_stream"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_boot")
@@ -21,6 +26,7 @@ script = ExtResource("5_defense_grid")
 [node name="CarrierSpawner" type="Node2D" parent="."]
 script = ExtResource("7_carrier_spawner")
 carrier_scene = ExtResource("8_carrier")
+weapon_pool = Array[Resource]([ExtResource("9_debug_plasma"), ExtResource("10_wide_spread"), ExtResource("11_piercing_lance"), ExtResource("12_heavy_slug"), ExtResource("13_rapid_stream")])
 
 [node name="Player" parent="." instance=ExtResource("2_player")]
 

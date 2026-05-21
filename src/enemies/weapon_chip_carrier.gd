@@ -17,6 +17,7 @@ const PIXEL_BURST_SCENE := preload("res://scenes/vfx/PixelBurst.tscn")
 @export var direction := 1.0
 @export var chip_scene: PackedScene
 
+var family: TypedWeaponFamily
 var current_hp := 0.0
 
 var _anchor_y := 0.0
@@ -30,6 +31,12 @@ func _ready() -> void:
 	_anchor_y = position.y
 	_sway_phase = randf_range(0.0, TAU)
 	direction = 1.0 if direction >= 0.0 else -1.0
+	_apply_family_tint()
+
+
+func set_family(weapon_family: TypedWeaponFamily) -> void:
+	family = weapon_family
+	_apply_family_tint()
 
 
 func _physics_process(delta: float) -> void:
@@ -88,6 +95,8 @@ func _spawn_chip(spawn_position: Vector2) -> void:
 		return
 
 	_add_feedback_child(chip)
+	if chip.has_method("set_family"):
+		chip.set_family(family)
 	if chip is Node2D:
 		(chip as Node2D).global_position = spawn_position
 	if chip.has_method("reset_sway_anchor"):
@@ -133,3 +142,11 @@ func _add_feedback_child(node: Node) -> void:
 		return
 
 	feedback_parent.add_child(node)
+
+
+func _apply_family_tint() -> void:
+	if family == null or !has_node("Sprite2D"):
+		return
+
+	var sprite := get_node("Sprite2D") as Sprite2D
+	sprite.modulate = family.tint_color

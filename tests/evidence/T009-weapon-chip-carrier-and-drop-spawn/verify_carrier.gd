@@ -35,6 +35,8 @@ func _verify_carrier_damage_and_chip_drop(failures: Array[String]) -> void:
 	root.add_child(container)
 
 	var carrier := CARRIER_SCENE.instantiate()
+	if carrier.has_method("set_family"):
+		carrier.set_family(DEBUG_FAMILY)
 	container.add_child(carrier)
 	carrier.global_position = Vector2(270.0, 360.0)
 	carrier.set("max_hp", 2.0)
@@ -104,6 +106,8 @@ func _verify_chip_collects_player_overlap(failures: Array[String]) -> void:
 
 	var typed_slot := player.get_node("TypedWeaponSlot")
 	var chip := CHIP_SCENE.instantiate()
+	if chip.has_method("set_family"):
+		chip.set_family(DEBUG_FAMILY)
 	chip.global_position = Vector2(270.0, 780.0)
 	chip.set("drift_speed", 140.0)
 	chip.set("sway_amplitude", 0.0)
@@ -128,7 +132,6 @@ func _verify_chip_collects_player_overlap(failures: Array[String]) -> void:
 
 func _verify_chip_pickup_slot_semantics(failures: Array[String]) -> void:
 	var slot := SLOT_SCRIPT.new()
-	slot.default_pickup_family = DEBUG_FAMILY
 
 	var events: Array[Dictionary] = []
 	slot.chip_pickup_applied.connect(func(family_id: String, granted_new_family: bool) -> void:
@@ -138,7 +141,7 @@ func _verify_chip_pickup_slot_semantics(failures: Array[String]) -> void:
 		})
 	)
 
-	slot.apply_chip_pickup()
+	slot.apply_chip_pickup(DEBUG_FAMILY)
 	if slot.active_weapon == null:
 		failures.append("expected first chip pickup to equip a weapon from empty state")
 		return
@@ -150,7 +153,7 @@ func _verify_chip_pickup_slot_semantics(failures: Array[String]) -> void:
 		failures.append("expected first chip pickup to equip at full energy")
 
 	slot.active_weapon.current_energy = 10.0
-	slot.apply_chip_pickup()
+	slot.apply_chip_pickup(DEBUG_FAMILY)
 	if !is_equal_approx(slot.active_weapon.current_energy, slot.active_weapon.max_energy):
 		failures.append("expected second chip pickup to refill energy to max")
 	if events.size() != 2 or bool(events[1]["granted_new_family"]):

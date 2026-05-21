@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="TypedWeaponFamily" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://src/weapons/typed_weapon_family.gd" id="1_family"]
+[ext_resource type="Texture2D" path="res://assets/sprites/projectiles/wide-spread-shard.png" id="2_sprite"]
+
+[resource]
+script = ExtResource("1_family")
+family_id = "common_wide_spread"
+display_name = "Wide Spread"
+tint_color = Color(1, 0.62, 0.18, 1)
+archetype = 1
+spread_count = 3
+spread_angle_degrees = 24.0
+max_energy = 100.0
+firing_cost = 2.0
+fire_interval = 0.18
+projectile_speed = 640.0
+projectile_damage = 1.0
+projectile_sprite = ExtResource("2_sprite")

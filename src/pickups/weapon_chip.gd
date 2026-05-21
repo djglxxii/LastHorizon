@@ -9,6 +9,8 @@ class_name WeaponChip
 @export var half_width := 12.0
 @export var pickup_burst_scene: PackedScene
 
+var family: TypedWeaponFamily
+
 var _anchor_x := 0.0
 var _sway_phase := 0.0
 var _age := 0.0
@@ -20,6 +22,12 @@ func _ready() -> void:
 	_sway_phase = randf_range(0.0, TAU)
 	area_entered.connect(_on_area_entered)
 	body_entered.connect(_on_body_entered)
+	_apply_family_tint()
+
+
+func set_family(weapon_family: TypedWeaponFamily) -> void:
+	family = weapon_family
+	_apply_family_tint()
 
 
 func reset_sway_anchor() -> void:
@@ -57,7 +65,7 @@ func _try_collect_from(other: Node) -> void:
 		return
 
 	_collected = true
-	slot.apply_chip_pickup()
+	slot.apply_chip_pickup(family)
 	_spawn_pickup_burst()
 	queue_free()
 
@@ -92,3 +100,11 @@ func _spawn_pickup_burst() -> void:
 	feedback_parent.add_child(burst)
 	if burst is Node2D:
 		(burst as Node2D).global_position = global_position
+
+
+func _apply_family_tint() -> void:
+	if family == null or !has_node("Sprite2D"):
+		return
+
+	var sprite := get_node("Sprite2D") as Sprite2D
+	sprite.modulate = family.tint_color

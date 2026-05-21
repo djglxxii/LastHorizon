@@ -1,0 +1,33 @@
+On branch main
+Your branch is ahead of 'origin/main' by 15 commits.
+  (use "git push" to publish your local commits)
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   data/weapons/debug_plasma.tres
+	modified:   docs/tasks/INDEX.md
+	modified:   scenes/main/Main.tscn
+	modified:   scenes/player/Player.tscn
+	modified:   src/carriers/carrier_spawner.gd
+	modified:   src/enemies/weapon_chip_carrier.gd
+	modified:   src/pickups/weapon_chip.gd
+	modified:   src/player/typed_weapon_slot.gd
+	modified:   src/weapons/typed_projectile.gd
+	modified:   src/weapons/typed_weapon_family.gd
+	modified:   tests/evidence/T009-weapon-chip-carrier-and-drop-spawn/verify_carrier.gd
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	assets/sprites/projectiles/heavy-slug-orb.png
+	assets/sprites/projectiles/piercing-lance-bolt.png
+	assets/sprites/projectiles/rapid-stream-dart.png
+	assets/sprites/projectiles/wide-spread-shard.png
+	data/weapons/common_heavy_slug.tres
+	data/weapons/common_piercing_lance.tres
+	data/weapons/common_rapid_stream.tres
+	data/weapons/common_wide_spread.tres
+	docs/tasks/active/T010-common-tier-weapon-families.md
+	tests/evidence/T010-common-tier-weapon-families/
+
+no changes added to commit (use "git add" and/or "git commit -a")

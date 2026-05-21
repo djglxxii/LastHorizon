@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="TypedWeaponFamily" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://src/weapons/typed_weapon_family.gd" id="1_family"]
+[ext_resource type="Texture2D" path="res://assets/sprites/projectiles/rapid-stream-dart.png" id="2_sprite"]
+
+[resource]
+script = ExtResource("1_family")
+family_id = "common_rapid_stream"
+display_name = "Rapid Stream"
+tint_color = Color(0.55, 1, 0.3, 1)
+max_energy = 100.0
+firing_cost = 0.7
+fire_interval = 0.05
+projectile_speed = 880.0
+projectile_damage = 0.6
+projectile_sprite = ExtResource("2_sprite")

@@ -1,0 +1,9 @@
+Godot Engine v4.6.2.stable.official.71f334935 - https://godotengine.org
+OpenGL API 4.6 (Core Profile) Mesa 26.1.0-arch2.1 - Compatibility - Using Device: AMD - AMD Radeon RX 6700 XT (radeonsi, navi22, ACO, DRM 3.64, 7.0.6-1-cachyos)
+
+LAST_HORIZON_BOOT_SMOKE_OK
+LAST_HORIZON_BOOT_SMOKE_OK
+LAST_HORIZON_BOOT_SMOKE_OK
+LAST_HORIZON_BOOT_SMOKE_OK
+LAST_HORIZON_BOOT_SMOKE_OK
+Saved live T010 weapon-pool evidence from res://scenes/main/Main.tscn.

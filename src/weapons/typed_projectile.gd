@@ -2,8 +2,12 @@ extends Node2D
 
 @export var speed := 760.0
 @export var damage := 2.0
+@export var pierce := false
+@export var direction := Vector2.UP
 @export var playfield_width := 540.0
 @export var despawn_margin := 32.0
+
+var _hit_targets: Array[int] = []
 
 
 func _ready() -> void:
@@ -25,7 +29,8 @@ func configure_from_family(family: TypedWeaponFamily) -> void:
 
 	speed = family.projectile_speed
 	damage = family.projectile_damage
-	set_projectile_sprite(family.projectile_sprite)
+	pierce = family.pierce
+	set_projectile_sprite(family.projectile_sprite, family.tint_color)
 
 
 func set_speed(value: float) -> void:
@@ -36,16 +41,21 @@ func set_damage(value: float) -> void:
 	damage = value
 
 
-func set_projectile_sprite(texture: Texture2D) -> void:
-	if texture == null or !has_node("Sprite2D"):
+func set_projectile_sprite(texture: Texture2D, tint := Color.WHITE) -> void:
+	if !has_node("Sprite2D"):
 		return
 
 	var sprite := get_node("Sprite2D") as Sprite2D
-	sprite.texture = texture
+	if texture != null:
+		sprite.texture = texture
+	sprite.modulate = tint
 
 
 func velocity() -> Vector2:
-	return Vector2.UP * speed
+	if direction.is_zero_approx():
+		return Vector2.UP * speed
+
+	return direction.normalized() * speed
 
 
 func _on_hitbox_area_entered(area: Area2D) -> void:
@@ -56,8 +66,16 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 	if target == null or !target.has_method("take_damage"):
 		return
 
+	var target_id := target.get_instance_id()
+	if pierce and _hit_targets.has(target_id):
+		return
+
+	if pierce:
+		_hit_targets.append(target_id)
+
 	target.take_damage(damage, global_position)
-	queue_free()
+	if !pierce:
+		queue_free()
 
 
 func _is_outside_playfield() -> bool:

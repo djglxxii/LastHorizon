@@ -10,7 +10,7 @@ See [`README.md`](README.md) for workflow rules and [`../PLAN.md`](../PLAN.md) f
 
 - **Active:** none
 - **Blocked:** none
-- **Next proposed:** T010 — 3–4 common-tier weapon families
+- **Next proposed:** T011 — Same-family refill / different-family swap-at-full
 
 ## M0 — Repo bootstrap
 
@@ -45,7 +45,7 @@ See [`README.md`](README.md) for workflow rules and [`../PLAN.md`](../PLAN.md) f
 | ID | Title | State | Depends on | Evidence type |
 |---|---|---|---|---|
 | T009 | Weapon-chip carrier + drop spawn | completed | T008 | video/screens + event log |
-| T010 | 3–4 common-tier weapon families | one-liner | T009 | video/screens + event log |
+| T010 | Common-tier weapon families | completed | T009 | video/screens + event log |
 | T011 | Same-family refill / different-family swap-at-full | one-liner | T010 | video/screens + event log |
 
 ## M5 — Fuel cells

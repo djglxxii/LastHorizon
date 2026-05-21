@@ -2,11 +2,12 @@ extends Node2D
 class_name CarrierSpawner
 
 @export var carrier_scene: PackedScene
-@export var spawn_interval_seconds := 8.0
+@export var spawn_interval_seconds := 20.0
 @export var spawn_y_min := 200.0
 @export var spawn_y_max := 500.0
 @export var playfield_width := 540.0
 @export var off_screen_margin := 56.0
+@export var weapon_pool: Array[TypedWeaponFamily] = []
 
 var _time_until_next_spawn := 0.0
 var _next_direction := 1.0
@@ -30,6 +31,10 @@ func _spawn_carrier() -> Node2D:
 		push_warning("CarrierSpawner has no carrier_scene assigned.")
 		return null
 
+	if weapon_pool.is_empty():
+		push_warning("CarrierSpawner has no weapon_pool entries; skipping carrier spawn.")
+		return null
+
 	var carrier := carrier_scene.instantiate() as Node2D
 	if carrier == null:
 		push_warning("CarrierSpawner carrier_scene must instantiate a Node2D.")
@@ -41,6 +46,8 @@ func _spawn_carrier() -> Node2D:
 	carrier.set("direction", direction)
 	carrier.set("playfield_width", playfield_width)
 	carrier.set("off_screen_margin", off_screen_margin)
+	if carrier.has_method("set_family"):
+		carrier.set_family(weapon_pool.pick_random())
 	var spawn_x := -off_screen_margin if direction > 0.0 else playfield_width + off_screen_margin
 	carrier.position = Vector2(spawn_x, randf_range(spawn_y_min, spawn_y_max))
 	add_child(carrier)

@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="TypedWeaponFamily" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://src/weapons/typed_weapon_family.gd" id="1_family"]
+[ext_resource type="Texture2D" path="res://assets/sprites/projectiles/piercing-lance-bolt.png" id="2_sprite"]
+
+[resource]
+script = ExtResource("1_family")
+family_id = "common_piercing_lance"
+display_name = "Piercing Lance"
+tint_color = Color(0.85, 0.3, 1, 1)
+archetype = 2
+pierce = true
+max_energy = 100.0
+firing_cost = 2.0
+fire_interval = 0.2
+projectile_speed = 980.0
+projectile_damage = 2.0
+projectile_sprite = ExtResource("2_sprite")

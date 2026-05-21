@@ -8,7 +8,6 @@ signal chip_pickup_applied(family_id: String, granted_new_family: bool)
 @export var projectile_scene: PackedScene
 @export var bullet_parent_path: NodePath
 @export var fire_action := "fire_typed"
-@export var default_pickup_family: TypedWeaponFamily
 
 var active_weapon: TypedWeapon
 var _time_until_next_shot := 0.0
@@ -45,14 +44,14 @@ func clear() -> void:
 	typed_weapon_energy_changed.emit(0.0, 0.0)
 
 
-func apply_chip_pickup() -> void:
-	if active_weapon == null:
-		if default_pickup_family == null:
-			push_warning("TypedWeaponSlot has no default_pickup_family configured.")
-			return
+func apply_chip_pickup(family: TypedWeaponFamily) -> void:
+	if family == null:
+		push_warning("TypedWeaponSlot received a weapon chip with no family.")
+		return
 
-		equip(default_pickup_family)
-		chip_pickup_applied.emit(default_pickup_family.family_id, true)
+	if active_weapon == null:
+		equip(family)
+		chip_pickup_applied.emit(family.family_id, true)
 		return
 
 	active_weapon.current_energy = active_weapon.max_energy
@@ -95,25 +94,62 @@ func _fire_once() -> bool:
 		_expire_active_weapon(family.family_id)
 		return false
 
-	var projectile := projectile_scene.instantiate() as Node2D
-	if projectile == null:
-		push_warning("TypedWeaponSlot projectile_scene must instantiate a Node2D.")
+	var bullet_parent := _resolve_bullet_parent()
+	var fired_projectiles := _spawn_projectiles_for_family(family, bullet_parent)
+	if fired_projectiles.is_empty():
 		return false
 
-	if projectile.has_method("configure_from_family"):
-		projectile.configure_from_family(family)
-
-	var bullet_parent := _resolve_bullet_parent()
-	bullet_parent.add_child(projectile)
-	projectile.global_position = global_position
-
-	typed_weapon_fired.emit(projectile, active_weapon.current_energy, active_weapon.max_energy)
+	typed_weapon_fired.emit(fired_projectiles[0], active_weapon.current_energy, active_weapon.max_energy)
 	typed_weapon_energy_changed.emit(active_weapon.current_energy, active_weapon.max_energy)
 
 	if active_weapon.is_expired():
 		_expire_active_weapon(family.family_id)
 
 	return true
+
+
+func _spawn_projectiles_for_family(family: TypedWeaponFamily, bullet_parent: Node) -> Array[Node2D]:
+	var projectiles: Array[Node2D] = []
+	var count := 1
+	var spread_angle := 0.0
+	if family.archetype == TypedWeaponFamily.WeaponArchetype.SPREAD:
+		count = family.normalized_spread_count()
+		spread_angle = family.spread_angle_degrees
+
+	var half_angle := spread_angle * 0.5
+	var step := 0.0
+	if count > 1:
+		step = spread_angle / float(count - 1)
+
+	for index in range(count):
+		var projectile := _instantiate_projectile(family)
+		if projectile == null:
+			continue
+
+		var angle_degrees := 0.0
+		if count > 1:
+			angle_degrees = -half_angle + step * float(index)
+		var direction := Vector2.UP.rotated(deg_to_rad(angle_degrees))
+		projectile.set("direction", direction)
+		projectile.rotation = direction.angle() - Vector2.UP.angle()
+
+		bullet_parent.add_child(projectile)
+		projectile.global_position = global_position
+		projectiles.append(projectile)
+
+	return projectiles
+
+
+func _instantiate_projectile(family: TypedWeaponFamily) -> Node2D:
+	var projectile := projectile_scene.instantiate() as Node2D
+	if projectile == null:
+		push_warning("TypedWeaponSlot projectile_scene must instantiate a Node2D.")
+		return null
+
+	if projectile.has_method("configure_from_family"):
+		projectile.configure_from_family(family)
+
+	return projectile
 
 
 func _expire_active_weapon(family_id: String) -> void:
