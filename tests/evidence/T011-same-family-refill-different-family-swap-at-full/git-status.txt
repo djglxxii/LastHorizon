@@ -1,0 +1,19 @@
+On branch main
+Your branch is ahead of 'origin/main' by 16 commits.
+  (use "git push" to publish your local commits)
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   docs/tasks/INDEX.md
+	modified:   src/player/typed_weapon_slot.gd
+	modified:   src/ui/energy_meter.gd
+	modified:   src/ui/hud.gd
+	modified:   tests/evidence/T010-common-tier-weapon-families/verify_weapon_pool.gd
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	docs/tasks/completed/T011-same-family-refill-different-family-swap-at-full.md
+	tests/evidence/T011-same-family-refill-different-family-swap-at-full/
+
+no changes added to commit (use "git add" and/or "git commit -a")

@@ -102,12 +102,12 @@ func _verify_pickup_semantics(failures: Array[String]) -> void:
 	held_slot.equip(heavy)
 	held_slot.active_weapon.current_energy = 10.0
 	held_slot.apply_chip_pickup(rapid)
-	if held_slot.active_weapon.family != heavy:
-		failures.append("expected T010 mismatch pickup to keep Heavy Slug equipped")
+	if held_slot.active_weapon.family != rapid:
+		failures.append("expected T011 mismatch pickup to swap to Rapid Stream")
 	if !is_equal_approx(held_slot.active_weapon.current_energy, held_slot.active_weapon.max_energy):
-		failures.append("expected mismatch pickup to refill held family to max")
-	if held_events.size() != 1 or str(held_events[0]["family_id"]) != "common_heavy_slug" or bool(held_events[0]["granted_new_family"]):
-		failures.append("expected mismatch pickup event common_heavy_slug granted_new_family=false")
+		failures.append("expected mismatch pickup to equip swapped family at max")
+	if held_events.size() != 1 or str(held_events[0]["family_id"]) != "common_rapid_stream" or !bool(held_events[0]["granted_new_family"]):
+		failures.append("expected mismatch pickup event common_rapid_stream granted_new_family=true")
 	held_slot.free()
 
 

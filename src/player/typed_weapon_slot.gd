@@ -3,6 +3,7 @@ extends Node2D
 signal typed_weapon_fired(bullet: Node2D, current_energy: float, max_energy: float)
 signal typed_weapon_energy_changed(current_energy: float, max_energy: float)
 signal typed_weapon_expired(family_id: String)
+signal typed_weapon_refilled(family_id: String)
 signal chip_pickup_applied(family_id: String, granted_new_family: bool)
 
 @export var projectile_scene: PackedScene
@@ -11,6 +12,7 @@ signal chip_pickup_applied(family_id: String, granted_new_family: bool)
 
 var active_weapon: TypedWeapon
 var _time_until_next_shot := 0.0
+var _warned_empty_family_id := false
 
 
 func _physics_process(delta: float) -> void:
@@ -54,9 +56,36 @@ func apply_chip_pickup(family: TypedWeaponFamily) -> void:
 		chip_pickup_applied.emit(family.family_id, true)
 		return
 
-	active_weapon.current_energy = active_weapon.max_energy
-	typed_weapon_energy_changed.emit(active_weapon.current_energy, active_weapon.max_energy)
-	chip_pickup_applied.emit(active_weapon.family.family_id, false)
+	var active_family := active_weapon.family
+	if active_family == null:
+		_warn_empty_family_id_once()
+		equip(family)
+		chip_pickup_applied.emit(family.family_id, true)
+		return
+
+	if _has_empty_family_id(family) or _has_empty_family_id(active_family):
+		_warn_empty_family_id_once()
+
+	if family.family_id == active_family.family_id:
+		active_weapon.current_energy = active_weapon.max_energy
+		typed_weapon_energy_changed.emit(active_weapon.current_energy, active_weapon.max_energy)
+		chip_pickup_applied.emit(family.family_id, false)
+		typed_weapon_refilled.emit(family.family_id)
+		return
+
+	equip(family)
+	chip_pickup_applied.emit(family.family_id, true)
+
+
+func _has_empty_family_id(family: TypedWeaponFamily) -> bool:
+	return family == null or family.family_id.is_empty()
+
+
+func _warn_empty_family_id_once() -> void:
+	if _warned_empty_family_id:
+		return
+	_warned_empty_family_id = true
+	push_warning("TypedWeaponSlot compared weapon families with an empty family_id.")
 
 
 func has_weapon() -> bool:
