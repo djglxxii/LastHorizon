@@ -39,6 +39,7 @@ See [`README.md`](README.md) for workflow rules and [`../PLAN.md`](../PLAN.md) f
 | T006 | Baseline enemy + descending formation | completed | T005 | video/screens + checklist |
 | T007 | Pea shooter + typed weapon damage to enemies | completed | T006 | video/screens + event log |
 | T008 | Defense Grid Integrity meter + leak damage + run-end | completed | T007 | video/screens + event log |
+| T020 | Grid-aligned armada spacing (anti-overlap tuning) | completed | T006 | video/screens + verifier + checklist |
 
 ## M4 — Weapon pickups
 

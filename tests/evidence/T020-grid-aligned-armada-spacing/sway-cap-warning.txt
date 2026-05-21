@@ -1,0 +1,5 @@
+Scenario: EnemyFormation.sway_amplitude set to 50.0 with cell_size.x = 82.0.
+Expected warning: EnemyFormation sway_amplitude exceeds the safe cap and clamps.
+Safe cap: 15.00 px.
+Effective formation amplitude: 15.00 px.
+Effective first-child amplitude: 15.00 px.

@@ -1,6 +1,9 @@
 extends Node2D
 class_name EnemyFormation
 
+const BASELINE_ENEMY_SPRITE_WIDTH := 48.0
+const SWAY_SAFETY_MARGIN := 2.0
+
 @export var enemy_scene: PackedScene
 @export var rows := 3
 @export var cols := 5
@@ -50,6 +53,9 @@ func _spawn_block() -> void:
 		push_warning("EnemyFormation has no enemy_scene assigned.")
 		return
 
+	var effective_sway_amplitude := _clamped_sway_amplitude()
+	sway_amplitude = effective_sway_amplitude
+
 	var start_x := -float(cols - 1) * cell_size.x * 0.5
 	var start_y := -float(rows - 1) * cell_size.y * 0.5
 
@@ -62,9 +68,21 @@ func _spawn_block() -> void:
 
 			enemy.position = Vector2(start_x + col * cell_size.x, start_y + row * cell_size.y)
 			if enemy.has_method("configure_sway"):
-				enemy.configure_sway(sway_amplitude, sway_period)
+				enemy.configure_sway(effective_sway_amplitude, sway_period)
 			add_child(enemy)
 
 
 func _top_edge_y() -> float:
 	return global_position.y - float(rows - 1) * cell_size.y * 0.5
+
+
+func _clamped_sway_amplitude() -> float:
+	var max_amplitude := maxf((cell_size.x - BASELINE_ENEMY_SPRITE_WIDTH) * 0.5 - SWAY_SAFETY_MARGIN, 0.0)
+	if sway_amplitude <= max_amplitude:
+		return sway_amplitude
+
+	push_warning(
+		"EnemyFormation: sway_amplitude %.1f exceeds safe cap %.1f for cell_size.x %.1f; clamping."
+			% [sway_amplitude, max_amplitude, cell_size.x]
+	)
+	return max_amplitude

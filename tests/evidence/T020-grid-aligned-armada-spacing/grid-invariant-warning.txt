@@ -1,0 +1,5 @@
+Scenario: EnemySpawner.spawn_interval_seconds set to 3.0 with default rows/cell_size/descent_speed.
+Expected warning: EnemySpawner spawn interval moves the wrong pixel distance for grid-aligned armada spacing.
+Actual movement: 97.50 px.
+Expected movement: 198.00 px.
+Expected grid-aligned interval: 6.09 s.

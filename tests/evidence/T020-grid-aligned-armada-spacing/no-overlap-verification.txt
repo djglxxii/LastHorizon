@@ -1,0 +1,16 @@
+Godot Engine v4.6.2.stable.official.71f334935 - https://godotengine.org
+
+WARNING: EnemyFormation: sway_amplitude 50.0 exceeds safe cap 15.0 for cell_size.x 82.0; clamping.
+     at: push_warning (core/variant/variant_utility.cpp:1034)
+     GDScript backtrace (most recent call first):
+         [0] _clamped_sway_amplitude (res://src/enemies/enemy_formation.gd:84)
+         [1] _spawn_block (res://src/enemies/enemy_formation.gd:56)
+         [2] _verify_sway_clamp (res://tests/evidence/T020-grid-aligned-armada-spacing/verify_grid_alignment.gd:77)
+         [3] _run (res://tests/evidence/T020-grid-aligned-armada-spacing/verify_grid_alignment.gd:20)
+WARNING: EnemySpawner: spawn_interval_seconds (3.00) moves 97.50 px, expected 198.00 px (6.09 s) for grid-aligned armada spacing.
+     at: push_warning (core/variant/variant_utility.cpp:1034)
+     GDScript backtrace (most recent call first):
+         [0] _validate_grid_aligned_interval (res://src/enemies/enemy_spawner.gd:66)
+         [1] _verify_grid_warning_path (res://tests/evidence/T020-grid-aligned-armada-spacing/verify_grid_alignment.gd:114)
+         [2] _run (res://tests/evidence/T020-grid-aligned-armada-spacing/verify_grid_alignment.gd:21)
+GRID_ALIGNED_VERIFICATION_OK
