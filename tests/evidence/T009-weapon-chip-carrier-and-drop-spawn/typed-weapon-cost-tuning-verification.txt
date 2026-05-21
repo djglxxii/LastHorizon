@@ -1,0 +1,36 @@
+Godot Engine v4.6.2.stable.official.71f334935 - https://godotengine.org
+
+Family: debug_plasma
+Start energy: 100.0 / 100.0
+Typed shots before expiry: 100
+Pea shots total: 98
+Expiry time: 11.55s
+Typed shots after expiry: 0
+Pea shots after expiry: 5
+Energy samples:
+  t=0.00s energy=99.0
+  t=0.50s energy=95.0
+  t=1.00s energy=91.0
+  t=1.50s energy=87.0
+  t=2.00s energy=82.0
+  t=2.50s energy=78.0
+  t=3.00s energy=74.0
+  t=3.50s energy=69.0
+  t=4.00s energy=65.0
+  t=4.50s energy=61.0
+  t=5.00s energy=57.0
+  t=5.50s energy=52.0
+  t=6.00s energy=48.0
+  t=6.50s energy=44.0
+  t=7.00s energy=39.0
+  t=7.50s energy=35.0
+  t=8.00s energy=31.0
+  t=8.50s energy=27.0
+  t=9.00s energy=22.0
+  t=9.50s energy=18.0
+  t=10.00s energy=14.0
+  t=10.50s energy=9.0
+  t=11.00s energy=5.0
+  t=11.50s energy=1.0
+  t=12.00s energy=0.0
+TYPED_WEAPON_VERIFICATION_OK

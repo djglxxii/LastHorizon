@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://src/pickups/weapon_chip.gd" id="1_chip"]
+[ext_resource type="Texture2D" path="res://assets/sprites/pickups/weapon-chip.png" id="2_sprite"]
+[ext_resource type="PackedScene" path="res://scenes/vfx/PickupBurst.tscn" id="3_pickup_burst"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pickup"]
+radius = 18.0
+
+[node name="WeaponChip" type="Area2D"]
+collision_layer = 16
+collision_mask = 2
+script = ExtResource("1_chip")
+pickup_burst_scene = ExtResource("3_pickup_burst")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("2_sprite")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_pickup")

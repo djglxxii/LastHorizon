@@ -105,12 +105,12 @@ func _emit_projectile_area_signal(projectile: Node, enemy: Node) -> void:
 
 
 func _verify_pea_hit(result: Dictionary, failures: Array[String]) -> void:
-	if !is_equal_approx(float(result["max_hp"]), 5.0):
-		failures.append("expected BaselineEnemy.max_hp = 5.0, got %.1f" % result["max_hp"])
+	if !is_equal_approx(float(result["max_hp"]), 2.5):
+		failures.append("expected BaselineEnemy.max_hp = 2.5, got %.1f" % result["max_hp"])
 	if !is_equal_approx(float(result["projectile_damage"]), 1.0):
 		failures.append("expected pea bullet damage = 1.0, got %.1f" % result["projectile_damage"])
-	if !is_equal_approx(float(result["start_hp"]), 5.0) or !is_equal_approx(float(result["end_hp"]), 4.0):
-		failures.append("expected pea hit to move HP 5.0 -> 4.0, got %.1f -> %.1f" % [result["start_hp"], result["end_hp"]])
+	if !is_equal_approx(float(result["start_hp"]), 2.5) or !is_equal_approx(float(result["end_hp"]), 1.5):
+		failures.append("expected pea hit to move HP 2.5 -> 1.5, got %.1f -> %.1f" % [result["start_hp"], result["end_hp"]])
 	if !bool(result["projectile_queued"]):
 		failures.append("expected pea bullet to be queued for free after hit")
 	if !bool(result["damage_number_spawned"]):
@@ -122,8 +122,8 @@ func _verify_typed_hit(result: Dictionary, failures: Array[String]) -> void:
 		failures.append("expected debug plasma projectile_damage = 3.0, got %.1f" % DEBUG_FAMILY.projectile_damage)
 	if !is_equal_approx(float(result["projectile_damage"]), 3.0):
 		failures.append("expected typed projectile damage = 3.0, got %.1f" % result["projectile_damage"])
-	if !is_equal_approx(float(result["start_hp"]), 5.0) or !is_equal_approx(float(result["end_hp"]), 2.0):
-		failures.append("expected typed hit to move HP 5.0 -> 2.0, got %.1f -> %.1f" % [result["start_hp"], result["end_hp"]])
+	if !is_equal_approx(float(result["start_hp"]), 2.5) or !is_equal_approx(float(result["end_hp"]), 0.0):
+		failures.append("expected typed hit to kill HP 2.5 -> 0.0, got %.1f -> %.1f" % [result["start_hp"], result["end_hp"]])
 	if !bool(result["projectile_queued"]):
 		failures.append("expected typed projectile to be queued for free after hit")
 

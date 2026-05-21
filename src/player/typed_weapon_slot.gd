@@ -3,10 +3,12 @@ extends Node2D
 signal typed_weapon_fired(bullet: Node2D, current_energy: float, max_energy: float)
 signal typed_weapon_energy_changed(current_energy: float, max_energy: float)
 signal typed_weapon_expired(family_id: String)
+signal chip_pickup_applied(family_id: String, granted_new_family: bool)
 
 @export var projectile_scene: PackedScene
 @export var bullet_parent_path: NodePath
 @export var fire_action := "fire_typed"
+@export var default_pickup_family: TypedWeaponFamily
 
 var active_weapon: TypedWeapon
 var _time_until_next_shot := 0.0
@@ -41,6 +43,21 @@ func clear() -> void:
 	active_weapon = null
 	_time_until_next_shot = 0.0
 	typed_weapon_energy_changed.emit(0.0, 0.0)
+
+
+func apply_chip_pickup() -> void:
+	if active_weapon == null:
+		if default_pickup_family == null:
+			push_warning("TypedWeaponSlot has no default_pickup_family configured.")
+			return
+
+		equip(default_pickup_family)
+		chip_pickup_applied.emit(default_pickup_family.family_id, true)
+		return
+
+	active_weapon.current_energy = active_weapon.max_energy
+	typed_weapon_energy_changed.emit(active_weapon.current_energy, active_weapon.max_energy)
+	chip_pickup_applied.emit(active_weapon.family.family_id, false)
 
 
 func has_weapon() -> bool:

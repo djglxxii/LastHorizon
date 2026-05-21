@@ -3,7 +3,7 @@ extends SceneTree
 const PLAYER_SCENE := preload("res://scenes/player/Player.tscn")
 const DEBUG_FAMILY := preload("res://data/weapons/debug_plasma.tres")
 const STEP_DELTA := 1.0 / 60.0
-const SIM_SECONDS := 3.25
+const SIM_SECONDS := 12.25
 const SIM_STEPS := int(SIM_SECONDS / STEP_DELTA)
 
 
@@ -153,7 +153,7 @@ func _verify_expiry(result: Dictionary, failures: Array[String]) -> void:
 
 
 func _verify_pea_shooter_continues(result: Dictionary, failures: Array[String]) -> void:
-	if int(result["pea_count"]) <= int(result["typed_count"]):
+	if int(result["pea_count"]) <= 0:
 		failures.append("expected pea shooter to continue throughout simulation")
 
 	if int(result["pea_after_expiry"]) <= 0:

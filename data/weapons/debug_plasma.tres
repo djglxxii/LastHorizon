@@ -7,7 +7,7 @@
 script = ExtResource("1_family")
 family_id = "debug_plasma"
 max_energy = 100.0
-firing_cost = 5.0
+firing_cost = 1.0
 fire_interval = 0.1
 projectile_speed = 760.0
 projectile_damage = 3.0

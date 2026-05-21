@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://src/enemies/weapon_chip_carrier.gd" id="1_carrier"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/weapon-chip-carrier.png" id="2_sprite"]
+[ext_resource type="PackedScene" path="res://scenes/pickups/WeaponChip.tscn" id="3_chip"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hurtbox"]
+size = Vector2(50, 34)
+
+[node name="WeaponChipCarrier" type="Node2D"]
+script = ExtResource("1_carrier")
+chip_scene = ExtResource("3_chip")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("2_sprite")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 0
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("RectangleShape2D_hurtbox")

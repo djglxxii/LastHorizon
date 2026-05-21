@@ -1,56 +1,52 @@
 extends Node2D
-class_name BaselineEnemy
+class_name WeaponChipCarrier
 
 signal damaged(amount: float, hit_position: Vector2)
 signal killed
-signal leaked(impact_position: Vector2)
+signal carrier_killed(death_position: Vector2)
 
 const DAMAGE_NUMBER_SCENE := preload("res://scenes/ui/DamageNumber.tscn")
 const PIXEL_BURST_SCENE := preload("res://scenes/vfx/PixelBurst.tscn")
-const PLANET_IMPACT_SCENE := preload("res://scenes/vfx/PlanetImpact.tscn")
 
-@export var max_hp := 2.5
-@export var sway_amplitude := 5.0
-@export var sway_period := 2.4
-@export var planet_line_y := 900.0
-@export var leak_damage_per_enemy := 10.0
+@export var max_hp := 2.0
+@export var sweep_speed := 110.0
+@export var sway_amplitude := 24.0
+@export var sway_period := 1.8
+@export var playfield_width := 540.0
+@export var off_screen_margin := 56.0
+@export var direction := 1.0
+@export var chip_scene: PackedScene
 
 var current_hp := 0.0
 
-var _slot_position := Vector2.ZERO
+var _anchor_y := 0.0
 var _sway_phase := 0.0
 var _age := 0.0
 var _dead := false
-var _leaked := false
-var _defense_grid: Node
 
 
 func _ready() -> void:
 	current_hp = max_hp
-	_slot_position = position
+	_anchor_y = position.y
 	_sway_phase = randf_range(0.0, TAU)
-	_defense_grid = _resolve_defense_grid()
+	direction = 1.0 if direction >= 0.0 else -1.0
 
 
 func _physics_process(delta: float) -> void:
-	if _dead or _leaked:
+	if _dead:
 		return
 
 	_age += delta
 	var period := maxf(sway_period, 0.01)
-	position = _slot_position + Vector2(sin((_age / period) * TAU + _sway_phase) * sway_amplitude, 0.0)
+	position.x += direction * sweep_speed * delta
+	position.y = _anchor_y + sin((_age / period) * TAU + _sway_phase) * sway_amplitude
 
-	if global_position.y >= planet_line_y:
-		_leak()
-
-
-func configure_sway(amplitude: float, period: float) -> void:
-	sway_amplitude = maxf(amplitude, 0.0)
-	sway_period = maxf(period, 0.01)
+	if _has_cleared_opposite_side():
+		queue_free()
 
 
 func take_damage(amount: float, hit_position := Vector2.INF) -> void:
-	if _dead or _leaked:
+	if _dead:
 		return
 
 	var applied_damage := maxf(amount, 0.0)
@@ -70,26 +66,32 @@ func take_damage(amount: float, hit_position := Vector2.INF) -> void:
 
 
 func _kill() -> void:
-	if _dead or _leaked:
+	if _dead:
 		return
 
 	_dead = true
+	var death_position := global_position
 	killed.emit()
-	_spawn_pixel_burst()
+	carrier_killed.emit(death_position)
+	_spawn_chip(death_position)
+	_spawn_pixel_burst(death_position)
 	queue_free()
 
 
-func _leak() -> void:
-	if _dead or _leaked:
+func _spawn_chip(spawn_position: Vector2) -> void:
+	if chip_scene == null:
+		push_warning("WeaponChipCarrier has no chip_scene assigned.")
 		return
 
-	_leaked = true
-	var impact_position := global_position
-	if _defense_grid != null and _defense_grid.has_method("apply_leak_damage"):
-		_defense_grid.apply_leak_damage(leak_damage_per_enemy, impact_position)
-	leaked.emit(impact_position)
-	_spawn_planet_impact(impact_position)
-	queue_free()
+	var chip := chip_scene.instantiate()
+	if chip == null:
+		return
+
+	_add_feedback_child(chip)
+	if chip is Node2D:
+		(chip as Node2D).global_position = spawn_position
+	if chip.has_method("reset_sway_anchor"):
+		chip.reset_sway_anchor()
 
 
 func _spawn_damage_number(amount: float, spawn_position: Vector2) -> void:
@@ -104,36 +106,21 @@ func _spawn_damage_number(amount: float, spawn_position: Vector2) -> void:
 		damage_number.set_damage(amount)
 
 
-func _spawn_pixel_burst() -> void:
+func _spawn_pixel_burst(spawn_position: Vector2) -> void:
 	var burst := PIXEL_BURST_SCENE.instantiate()
 	if burst == null:
 		return
 
 	_add_feedback_child(burst)
 	if burst is Node2D:
-		(burst as Node2D).global_position = global_position
+		(burst as Node2D).global_position = spawn_position
 
 
-func _spawn_planet_impact(impact_position: Vector2) -> void:
-	var impact := PLANET_IMPACT_SCENE.instantiate()
-	if impact == null:
-		return
+func _has_cleared_opposite_side() -> bool:
+	if direction > 0.0:
+		return global_position.x > playfield_width + off_screen_margin
 
-	_add_feedback_child(impact)
-	if impact is Node2D:
-		(impact as Node2D).global_position = impact_position
-
-
-func _resolve_defense_grid() -> Node:
-	var tree := get_tree()
-	if tree == null:
-		return null
-
-	var current_scene := tree.current_scene
-	if current_scene == null:
-		return null
-
-	return current_scene.find_child("DefenseGrid", true, false)
+	return global_position.x < -off_screen_margin
 
 
 func _add_feedback_child(node: Node) -> void:

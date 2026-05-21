@@ -9,12 +9,10 @@ const GAMEPAD_DEADZONE := 0.2
 @export var playfield_width := PLAYFIELD_WIDTH
 @export var fixed_y := DEFAULT_Y
 @export var half_width := HALF_WIDTH
-@export var debug_starting_family: TypedWeaponFamily
 
 
 func _ready() -> void:
 	clamp_to_playfield()
-	_equip_debug_starting_family()
 
 
 func _physics_process(delta: float) -> void:
@@ -49,13 +47,3 @@ func _get_horizontal_input() -> float:
 		axis += gamepad_axis
 
 	return clampf(axis, -1.0, 1.0)
-
-
-func _equip_debug_starting_family() -> void:
-	# T004 debug bootstrap. T009 replaces this with weapon-chip pickup equip flow.
-	if debug_starting_family == null or !has_node("TypedWeaponSlot"):
-		return
-
-	var typed_weapon_slot := get_node("TypedWeaponSlot")
-	if typed_weapon_slot.has_method("equip"):
-		typed_weapon_slot.equip(debug_starting_family)

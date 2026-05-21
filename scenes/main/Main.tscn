@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bnmwr2u04jy8n"]
+[gd_scene load_steps=9 format=3 uid="uid://bnmwr2u04jy8n"]
 
 [ext_resource type="Script" path="res://src/game/boot_smoke.gd" id="1_boot"]
 [ext_resource type="PackedScene" path="res://scenes/player/Player.tscn" id="2_player"]
@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" path="res://scenes/enemies/EnemySpawner.tscn" id="4_spawner"]
 [ext_resource type="Script" path="res://src/grid/defense_grid.gd" id="5_defense_grid"]
 [ext_resource type="PackedScene" path="res://scenes/ui/RunEndOverlay.tscn" id="6_run_end_overlay"]
+[ext_resource type="Script" path="res://src/carriers/carrier_spawner.gd" id="7_carrier_spawner"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/WeaponChipCarrier.tscn" id="8_carrier"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_boot")
@@ -15,6 +17,10 @@ unique_name_in_owner = true
 script = ExtResource("5_defense_grid")
 
 [node name="EnemySpawner" parent="." instance=ExtResource("4_spawner")]
+
+[node name="CarrierSpawner" type="Node2D" parent="."]
+script = ExtResource("7_carrier_spawner")
+carrier_scene = ExtResource("8_carrier")
 
 [node name="Player" parent="." instance=ExtResource("2_player")]
 

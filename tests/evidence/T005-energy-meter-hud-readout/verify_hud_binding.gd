@@ -2,6 +2,7 @@ extends SceneTree
 
 const PLAYER_SCENE := preload("res://scenes/player/Player.tscn")
 const HUD_SCENE := preload("res://scenes/ui/HUD.tscn")
+const DEBUG_FAMILY := preload("res://data/weapons/debug_plasma.tres")
 const STEP_DELTA := 1.0 / 60.0
 
 var _player: Node2D
@@ -33,7 +34,7 @@ func _run() -> void:
 	_step_simulation(0.75, true)
 	_verify_drain_state(failures)
 
-	_step_simulation(1.9, true)
+	_step_simulation(12.5, true)
 	_verify_expiry_state(failures)
 
 	await create_timer(0.45).timeout
@@ -77,6 +78,7 @@ func _setup_scene() -> void:
 	_typed_slot = _player.get_node("TypedWeaponSlot")
 	_pea_shooter.bullet_parent_path = _pea_shooter.get_path_to(_bullet_parent)
 	_typed_slot.bullet_parent_path = _typed_slot.get_path_to(_bullet_parent)
+	_typed_slot.equip(DEBUG_FAMILY)
 	_pea_shooter.bullet_fired.connect(func(_bullet: Node2D) -> void:
 		_pea_count += 1
 	)
