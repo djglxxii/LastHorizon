@@ -13,9 +13,12 @@ class_name EnemySpawner
 @export var playfield_width := 540.0
 @export var playfield_height := 960.0
 @export var spawn_y := -160.0
+@export var elite_ramp_seconds := 90.0
+@export var elite_chance_max := 0.20
 
 var _time_until_next_spawn := 0.0
 var _stagger_index := 0
+var _run_age_seconds := 0.0
 
 
 func _ready() -> void:
@@ -25,6 +28,7 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	_run_age_seconds += delta
 	_time_until_next_spawn -= delta
 	if _time_until_next_spawn > 0.0:
 		return
@@ -44,7 +48,17 @@ func _spawn_formation() -> Node2D:
 		return null
 
 	if formation.has_method("configure"):
-		formation.configure(rows, cols, cell_size, descent_speed, sway_amplitude, sway_period, playfield_height)
+		formation.configure(
+			rows,
+			cols,
+			cell_size,
+			descent_speed,
+			sway_amplitude,
+			sway_period,
+			playfield_height,
+			current_elite_chance(),
+			_run_age_seconds
+		)
 
 	var spawn_x := playfield_width * 0.5
 	if (_stagger_index % 2) == 1:
@@ -54,6 +68,11 @@ func _spawn_formation() -> Node2D:
 	_stagger_index += 1
 	add_child(formation)
 	return formation
+
+
+func current_elite_chance() -> float:
+	var ramp_ratio := clampf(_run_age_seconds / maxf(elite_ramp_seconds, 0.01), 0.0, 1.0)
+	return ramp_ratio * clampf(elite_chance_max, 0.0, 1.0)
 
 
 func _validate_grid_aligned_interval() -> void:

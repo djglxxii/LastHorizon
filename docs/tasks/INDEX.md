@@ -10,7 +10,7 @@ See [`README.md`](README.md) for workflow rules and [`../PLAN.md`](../PLAN.md) f
 
 - **Active:** none
 - **Blocked:** none
-- **Next proposed:** T014 — Elite/heavy enemy type
+- **Next proposed:** T015 — Collision interception model
 
 ## M0 — Repo bootstrap
 
@@ -60,7 +60,7 @@ See [`README.md`](README.md) for workflow rules and [`../PLAN.md`](../PLAN.md) f
 
 | ID | Title | State | Depends on | Evidence type |
 |---|---|---|---|---|
-| T014 | Elite/heavy enemy type | one-liner | T013 | video/screens + event log |
+| T014 | Elite/heavy enemy type | completed | T013 | video/screens + event log |
 | T015 | Collision interception model | one-liner | T014 | video/screens + event log |
 | T016 | Brief post-hit invulnerability | one-liner | T015 | video/screens + event log |
 

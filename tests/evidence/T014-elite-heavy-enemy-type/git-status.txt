@@ -1,0 +1,22 @@
+On branch main
+Your branch is ahead of 'origin/main' by 20 commits.
+  (use "git push" to publish your local commits)
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   docs/tasks/INDEX.md
+	modified:   scenes/enemies/EnemyFormation.tscn
+	modified:   src/enemies/enemy_formation.gd
+	modified:   src/enemies/enemy_spawner.gd
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	assets/sprites/enemies/elite-heavy.png
+	docs/tasks/completed/T014-elite-heavy-enemy-type.md
+	scenes/enemies/EliteEnemy.tscn
+	src/enemies/elite_enemy.gd
+	tests/evidence/T014-elite-heavy-enemy-type/
+	tools/generate_elite_enemy_sprite.gd
+
+no changes added to commit (use "git add" and/or "git commit -a")
