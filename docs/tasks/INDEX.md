@@ -10,7 +10,7 @@ See [`README.md`](README.md) for workflow rules and [`../PLAN.md`](../PLAN.md) f
 
 - **Active:** none
 - **Blocked:** none
-- **Next proposed:** T013 — Partial energy refill on fuel-cell pickup
+- **Next proposed:** T014 — Elite/heavy enemy type
 
 ## M0 — Repo bootstrap
 
@@ -54,7 +54,7 @@ See [`README.md`](README.md) for workflow rules and [`../PLAN.md`](../PLAN.md) f
 | ID | Title | State | Depends on | Evidence type |
 |---|---|---|---|---|
 | T012 | Coalition fuel-cell carrier approach | completed | T011 | video/screens + event log |
-| T013 | Partial energy refill on fuel-cell pickup | one-liner | T012 | video/screens + event log |
+| T013 | Partial energy refill on fuel-cell pickup | completed | T012 | video/screens + event log |
 
 ## M6 — Elite enemy + collision
 

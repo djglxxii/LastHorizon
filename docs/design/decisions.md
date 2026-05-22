@@ -679,6 +679,23 @@ The dynamic responsiveness from 2026-05-14 (if no weapon, more chips; if low ene
 
 ---
 
+## 2026-05-22 — Double fuel-cell carrier appearance rate for current prototype tuning
+
+**Decision:** The current fuel-cell carrier baseline appearance rate is doubled by reducing its spawn interval from `30.0` seconds to `15.0` seconds.
+
+**Reasoning:** The active prototype needs more frequent opportunities to sustain typed-weapon uptime and exercise the dual-role energy economy. This changes only how often coalition fuel-cell opportunities appear; it does not change the 30% partial refill amount, same-family weapon-chip full refill, weapon-chip spawn cadence, or the no-weapon fuel-cell spawn gate.
+
+**Implications:**
+- Fuel-cell carriers now appear on a faster baseline cadence than weapon-chip carriers (`15.0` seconds vs. weapon chips' current `20.0` seconds).
+- The T013 no-weapon spawn gate and equip-edge reset still apply: while the typed-weapon slot is empty, the fuel-cell timer does not count down; after re-equip, the next fuel cell waits a full `15.0` seconds.
+- This is a prototype tuning value. It may be revisited in M7 alongside fuel-cell yield, weapon-chip cadence, and per-family burn rates.
+
+**Supersedes / amends:**
+- 2026-05-16 "Pickup sources split: enemy carriers drop weapons, coalition supply drops fuel" — amends the current prototype cadence expectation for fuel-cell carriers only.
+- 2026-05-22 T012/T013 implementation tuning that used a `30.0` second fuel-cell carrier interval.
+
+---
+
 ## Open questions to resolve in GDD
 
 - **Collision tuning:** what exact weapon-energy spend rate, ship-shield absorption cap, feedback, and control penalty make ramming a desperate tactical interception rather than either optimal field-sweeping or a pointless action?

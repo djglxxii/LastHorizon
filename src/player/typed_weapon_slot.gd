@@ -4,11 +4,13 @@ signal typed_weapon_fired(bullet: Node2D, current_energy: float, max_energy: flo
 signal typed_weapon_energy_changed(current_energy: float, max_energy: float)
 signal typed_weapon_expired(family_id: String)
 signal typed_weapon_refilled(family_id: String)
+signal typed_weapon_partial_refilled(family_id: String, amount_restored: float)
 signal chip_pickup_applied(family_id: String, granted_new_family: bool)
 
 @export var projectile_scene: PackedScene
 @export var bullet_parent_path: NodePath
 @export var fire_action := "fire_typed"
+@export var fuel_cell_refill_fraction := 0.30
 
 var active_weapon: TypedWeapon
 var _time_until_next_shot := 0.0
@@ -75,6 +77,24 @@ func apply_chip_pickup(family: TypedWeaponFamily) -> void:
 
 	equip(family)
 	chip_pickup_applied.emit(family.family_id, true)
+
+
+func apply_fuel_cell_pickup() -> void:
+	if active_weapon == null:
+		return
+
+	var max_energy_value := maxf(active_weapon.max_energy, 0.0)
+	var refill_amount := clampf(fuel_cell_refill_fraction, 0.0, 1.0) * max_energy_value
+	var restored := minf(max_energy_value - active_weapon.current_energy, refill_amount)
+	restored = clampf(restored, 0.0, max_energy_value)
+	active_weapon.current_energy = clampf(active_weapon.current_energy + restored, 0.0, max_energy_value)
+	typed_weapon_energy_changed.emit(active_weapon.current_energy, active_weapon.max_energy)
+
+	var family_id := ""
+	if active_weapon.family != null:
+		family_id = active_weapon.family.family_id
+	typed_weapon_partial_refilled.emit(family_id, restored)
+	print("typed_weapon_partial_refilled family=%s restored=%.2f current=%.2f max=%.2f" % [family_id, restored, active_weapon.current_energy, active_weapon.max_energy])
 
 
 func _has_empty_family_id(family: TypedWeaponFamily) -> bool:

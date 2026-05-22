@@ -7,6 +7,9 @@ const ACTIVE_FILL := Color(0.0, 0.88, 0.78, 1.0)
 const REFILL_FLASH_BORDER := Color(0.62, 1.0, 1.0, 1.0)
 const REFILL_FLASH_FILL := Color(0.78, 1.0, 0.98, 1.0)
 const REFILL_FLASH_SECONDS := 0.25
+const PARTIAL_REFILL_FLASH_BORDER := Color(0.35, 0.84, 0.94, 1.0)
+const PARTIAL_REFILL_FLASH_FILL := Color(0.55, 0.92, 0.96, 1.0)
+const PARTIAL_REFILL_FLASH_SECONDS := 0.16
 const LOW_FILL := Color(1.0, 0.68, 0.18, 1.0)
 const EMPTY_BACKGROUND := Color(0.09, 0.035, 0.04, 0.94)
 const EMPTY_BORDER := Color(0.92, 0.24, 0.18, 1.0)
@@ -18,6 +21,8 @@ const INACTIVE_TEXT := Color(0.48, 0.54, 0.58, 1.0)
 
 @onready var _bar: ProgressBar = %EnergyBar
 @onready var _label: Label = %ValueLabel
+
+var _flash_sequence := 0
 
 
 func _ready() -> void:
@@ -66,6 +71,8 @@ func flash_refill() -> void:
 	if !is_inside_tree():
 		return
 
+	_flash_sequence += 1
+	var flash_sequence := _flash_sequence
 	_apply_style(ACTIVE_BACKGROUND, REFILL_FLASH_BORDER, REFILL_FLASH_FILL, ACTIVE_TEXT)
 
 	var tree := get_tree()
@@ -75,6 +82,30 @@ func flash_refill() -> void:
 
 	await tree.create_timer(REFILL_FLASH_SECONDS).timeout
 	if !is_inside_tree():
+		return
+	if flash_sequence != _flash_sequence:
+		return
+
+	set_energy(_bar.value, _bar.max_value)
+
+
+func flash_partial_refill() -> void:
+	if !is_inside_tree():
+		return
+
+	_flash_sequence += 1
+	var flash_sequence := _flash_sequence
+	_apply_style(ACTIVE_BACKGROUND, PARTIAL_REFILL_FLASH_BORDER, PARTIAL_REFILL_FLASH_FILL, ACTIVE_TEXT)
+
+	var tree := get_tree()
+	if tree == null:
+		set_energy(_bar.value, _bar.max_value)
+		return
+
+	await tree.create_timer(PARTIAL_REFILL_FLASH_SECONDS).timeout
+	if !is_inside_tree():
+		return
+	if flash_sequence != _flash_sequence:
 		return
 
 	set_energy(_bar.value, _bar.max_value)

@@ -86,7 +86,13 @@ func _try_collect_from(other: Node) -> void:
 	if _state != TravelState.DESCENT:
 		return
 
-	if _resolve_typed_weapon_slot(other) == null:
+	var slot := _resolve_typed_weapon_slot(other)
+	if slot == null or !slot.has_method("has_weapon") or !bool(slot.call("has_weapon")):
+		return
+
+	if slot.has_method("apply_fuel_cell_pickup"):
+		slot.call("apply_fuel_cell_pickup")
+	else:
 		return
 
 	_collected = true

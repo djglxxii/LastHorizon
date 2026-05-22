@@ -22,6 +22,7 @@ func _ready() -> void:
 	_typed_weapon_slot.connect("typed_weapon_energy_changed", _on_typed_weapon_energy_changed)
 	_typed_weapon_slot.connect("typed_weapon_expired", _on_typed_weapon_expired)
 	_typed_weapon_slot.connect("typed_weapon_refilled", _on_typed_weapon_refilled)
+	_typed_weapon_slot.connect("typed_weapon_partial_refilled", _on_typed_weapon_partial_refilled)
 	_sync_from_slot()
 
 
@@ -84,3 +85,7 @@ func _on_typed_weapon_expired(_family_id: String) -> void:
 
 func _on_typed_weapon_refilled(_family_id: String) -> void:
 	_energy_meter.flash_refill()
+
+
+func _on_typed_weapon_partial_refilled(_family_id: String, _amount_restored: float) -> void:
+	_energy_meter.flash_partial_refill()

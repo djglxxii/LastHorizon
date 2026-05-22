@@ -1,0 +1,21 @@
+On branch main
+Your branch is ahead of 'origin/main' by 19 commits.
+  (use "git push" to publish your local commits)
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   docs/design/decisions.md
+	modified:   docs/tasks/INDEX.md
+	modified:   src/carriers/fuel_cell_carrier.gd
+	modified:   src/carriers/fuel_cell_carrier_spawner.gd
+	modified:   src/player/typed_weapon_slot.gd
+	modified:   src/ui/energy_meter.gd
+	modified:   src/ui/hud.gd
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	docs/tasks/completed/T013-partial-energy-refill-on-fuel-cell-pickup.md
+	tests/evidence/T013-partial-energy-refill-on-fuel-cell-pickup/
+
+no changes added to commit (use "git add" and/or "git commit -a")
