@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bnmwr2u04jy8n"]
+[gd_scene load_steps=16 format=3 uid="uid://bnmwr2u04jy8n"]
 
 [ext_resource type="Script" path="res://src/game/boot_smoke.gd" id="1_boot"]
 [ext_resource type="PackedScene" path="res://scenes/player/Player.tscn" id="2_player"]
@@ -13,6 +13,8 @@
 [ext_resource type="Resource" path="res://data/weapons/common_piercing_lance.tres" id="11_piercing_lance"]
 [ext_resource type="Resource" path="res://data/weapons/common_heavy_slug.tres" id="12_heavy_slug"]
 [ext_resource type="Resource" path="res://data/weapons/common_rapid_stream.tres" id="13_rapid_stream"]
+[ext_resource type="Script" path="res://src/carriers/fuel_cell_carrier_spawner.gd" id="14_fuel_spawner"]
+[ext_resource type="PackedScene" path="res://scenes/carriers/FuelCellCarrier.tscn" id="15_fuel_carrier"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_boot")
@@ -27,6 +29,10 @@ script = ExtResource("5_defense_grid")
 script = ExtResource("7_carrier_spawner")
 carrier_scene = ExtResource("8_carrier")
 weapon_pool = Array[Resource]([ExtResource("9_debug_plasma"), ExtResource("10_wide_spread"), ExtResource("11_piercing_lance"), ExtResource("12_heavy_slug"), ExtResource("13_rapid_stream")])
+
+[node name="FuelCellCarrierSpawner" type="Node2D" parent="."]
+script = ExtResource("14_fuel_spawner")
+carrier_scene = ExtResource("15_fuel_carrier")
 
 [node name="Player" parent="." instance=ExtResource("2_player")]
 

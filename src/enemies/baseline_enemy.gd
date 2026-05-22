@@ -9,7 +9,7 @@ const DAMAGE_NUMBER_SCENE := preload("res://scenes/ui/DamageNumber.tscn")
 const PIXEL_BURST_SCENE := preload("res://scenes/vfx/PixelBurst.tscn")
 const PLANET_IMPACT_SCENE := preload("res://scenes/vfx/PlanetImpact.tscn")
 
-@export var max_hp := 2.5
+@export var max_hp := 5.0
 @export var sway_amplitude := 5.0
 @export var sway_period := 2.4
 @export var planet_line_y := 900.0

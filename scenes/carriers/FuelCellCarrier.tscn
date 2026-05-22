@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://src/carriers/fuel_cell_carrier.gd" id="1_fuel_carrier"]
+[ext_resource type="Texture2D" path="res://assets/sprites/carriers/fuel-cell-carrier.png" id="2_sprite"]
+[ext_resource type="PackedScene" path="res://scenes/vfx/PickupBurst.tscn" id="3_pickup_burst"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_collect"]
+size = Vector2(42, 38)
+
+[node name="FuelCellCarrier" type="Area2D"]
+collision_layer = 16
+collision_mask = 2
+script = ExtResource("1_fuel_carrier")
+pickup_burst_scene = ExtResource("3_pickup_burst")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("2_sprite")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_collect")

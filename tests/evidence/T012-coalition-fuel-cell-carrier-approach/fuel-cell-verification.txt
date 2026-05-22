@@ -1,0 +1,6 @@
+Godot Engine v4.6.2.stable.official.71f334935 - https://godotengine.org
+
+fuel_cell_carrier_spawned position=(448.7963, 1016.0)
+fuel_cell_carrier_exited position=(255.1513, 1065.0)
+fuel_cell_collected position=(0.0, 0.0)
+FUEL_CELL_VERIFICATION_OK

@@ -1,0 +1,20 @@
+Godot Engine v4.6.2.stable.official.71f334935 - https://godotengine.org
+OpenGL API 4.6 (Core Profile) Mesa 26.1.1-arch2.1 - Compatibility - Using Device: AMD - AMD Radeon RX 6700 XT (radeonsi, navi22, ACO, DRM 3.64, 7.0.9-1-cachyos)
+
+LAST_HORIZON_BOOT_SMOKE_OK
+fuel_cell_carrier_spawned position=(128.9741, 1016.0)
+fuel_cell_carrier_spawned position=(128.9741, 1016.0)
+fuel_cell_carrier_exited position=(281.5208, 1016.667)
+fuel_cell_carrier_exited queued=true
+fuel_cell_exit_grid 100.0 -> 100.0, grid_damage_events=0
+LAST_HORIZON_BOOT_SMOKE_OK
+fuel_cell_carrier_spawned position=(434.1104, 1016.0)
+fuel_cell_collected position=(270.0, 846.0)
+fuel_cell_collected position=(270.0, 846.0)
+fuel_cell_collection_energy 42.0 -> 42.0
+LAST_HORIZON_BOOT_SMOKE_OK
+fuel_cell_carrier_spawned position=(269.8715, 1016.0)
+projectiles_pass_through pea_queued=false typed_queued=false carrier_queued=false
+LAST_HORIZON_BOOT_SMOKE_OK
+visual_distinctness fuel_sprite=assets/sprites/carriers/fuel-cell-carrier.png weapon_sprite=assets/sprites/enemies/weapon-chip-carrier.png
+Saved live T012 fuel-cell carrier evidence from res://scenes/main/Main.tscn.

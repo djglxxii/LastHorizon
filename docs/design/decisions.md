@@ -663,6 +663,22 @@ The dynamic responsiveness from 2026-05-14 (if no weapon, more chips; if low ene
 
 ---
 
+## 2026-05-22 — Double baseline alien HP for current prototype tuning
+
+**Decision:** The current baseline alien's hit points are doubled from `2.5` to `5.0` for the active prototype tuning pass.
+
+**Reasoning:** This is an ad hoc feel adjustment to make the current alien survive longer against the existing pea-shooter and typed-weapon damage values. It restores a longer baseline time-to-kill without changing projectile damage or weapon energy costs.
+
+**Implications:**
+- Pea bullets still deal `1.0` damage, so a fresh baseline alien now takes five pea hits to kill.
+- Debug plasma typed projectiles still deal `3.0` damage, so one hit leaves a fresh baseline alien at `2.0` HP instead of killing it outright.
+- This is a prototype tuning value, not a new enemy-tier rule. Future enemy HP and stage density tuning still belong to playtest-driven tuning passes.
+
+**Supersedes / amends:**
+- The 2026-05-21 post-T009 tuning adjustment that reduced the current baseline alien HP from `5.0` to `2.5`.
+
+---
+
 ## Open questions to resolve in GDD
 
 - **Collision tuning:** what exact weapon-energy spend rate, ship-shield absorption cap, feedback, and control penalty make ramming a desperate tactical interception rather than either optimal field-sweeping or a pointless action?
