@@ -1,0 +1,53 @@
+Godot Engine v4.6.2.stable.official.71f334935 - https://godotengine.org
+OpenGL API 4.6 (Core Profile) Mesa 26.1.1-arch2.1 - Compatibility - Using Device: AMD - AMD Radeon RX 6700 XT (radeonsi, navi22, ACO, DRM 3.64, 7.0.9-1-cachyos)
+
+LAST_HORIZON_BOOT_SMOKE_OK
+typed_weapon_collision_drain family=common_wide_spread spent=5.00 current=95.00 max=100.00
+baseline_collided impact=<270.0,850.0>
+baseline_collided impact=<270.0,850.0>
+typed_weapon_collision_drain family=common_wide_spread spent=5.00 current=95.00 max=100.00
+full_energy_baseline energy=100.00->95.00 grid=100.00->100.00 enemy_consumed=true
+LAST_HORIZON_BOOT_SMOKE_OK
+typed_weapon_collision_drain family=common_wide_spread spent=20.00 current=80.00 max=100.00
+elite_collided impact=<270.0,850.0>
+elite_collided impact=<270.0,850.0>
+typed_weapon_collision_drain family=common_wide_spread spent=20.00 current=80.00 max=100.00
+full_energy_elite energy=100.00->80.00 grid=100.00->100.00 enemy_consumed=true
+LAST_HORIZON_BOOT_SMOKE_OK
+typed_weapon_silent family=common_wide_spread current=0.00 max=100.00
+typed_weapon_collision_drain family=common_wide_spread spent=5.00 current=0.00 max=100.00
+grid_collision_damage amount=15.00
+elite_collided impact=<270.0,850.0>
+elite_collided impact=<270.0,850.0>
+typed_weapon_collision_drain family=common_wide_spread spent=5.00 current=0.00 max=100.00
+grid_collision_damage amount=15.00
+partial_energy_elite energy=5.00->0.00 grid=100.00->85.00 enemy_consumed=true
+LAST_HORIZON_BOOT_SMOKE_OK
+collision_no_intercept reason=zero_energy enemy=baseline
+collision_no_intercept reason=zero_energy enemy=baseline
+baseline_leaked grid_damage=10.00
+zero_energy_baseline energy=0.00->0.00 grid=100.00->90.00 enemy_consumed=false leak_damage=10.00
+LAST_HORIZON_BOOT_SMOKE_OK
+collision_no_intercept reason=zero_energy enemy=elite
+collision_no_intercept reason=zero_energy enemy=elite
+elite_leaked grid_damage=40.00
+elite_leaked grid_damage=40.00
+zero_energy_elite energy=0.00->0.00 grid=100.00->60.00 enemy_consumed=false leak_damage=40.00
+LAST_HORIZON_BOOT_SMOKE_OK
+typed_weapon_collision_drain family=common_wide_spread spent=5.00 current=95.00 max=100.00
+baseline_collided impact=<270.0,850.0>
+baseline_collided impact=<270.0,850.0>
+typed_weapon_collision_drain family=common_wide_spread spent=5.00 current=95.00 max=100.00
+collision_cooldown_suppressed
+collision_cooldown_suppressed
+typed_weapon_collision_drain family=common_wide_spread spent=5.00 current=90.00 max=100.00
+baseline_collided impact=<270.0,850.0>
+baseline_collided impact=<270.0,850.0>
+typed_weapon_collision_drain family=common_wide_spread spent=5.00 current=90.00 max=100.00
+cluster_cooldown energy=100.00->90.00 first_consumed=true second_consumed=false third_consumed=true
+LAST_HORIZON_BOOT_SMOKE_OK
+typed_weapon_collision_drain family=common_wide_spread spent=5.00 current=95.00 max=100.00
+baseline_collided impact=<270.0,850.0>
+baseline_collided impact=<270.0,850.0>
+typed_weapon_collision_drain family=common_wide_spread spent=5.00 current=95.00 max=100.00
+Saved live T015 collision evidence from res://scenes/main/Main.tscn.

@@ -1,0 +1,24 @@
+baseline_collided impact=<270.0,850.0>
+typed_weapon_collision_drain family=common_wide_spread spent=5.00 current=95.00 max=100.00
+full_energy_baseline energy=100.00->95.00 grid=100.00->100.00 enemy_consumed=true
+elite_collided impact=<270.0,850.0>
+typed_weapon_collision_drain family=common_wide_spread spent=20.00 current=80.00 max=100.00
+full_energy_elite energy=100.00->80.00 grid=100.00->100.00 enemy_consumed=true
+elite_collided impact=<270.0,850.0>
+typed_weapon_collision_drain family=common_wide_spread spent=5.00 current=0.00 max=100.00
+grid_collision_damage amount=15.00
+partial_energy_elite energy=5.00->0.00 grid=100.00->85.00 enemy_consumed=true
+collision_no_intercept reason=zero_energy enemy=baseline
+baseline_leaked grid_damage=10.00
+zero_energy_baseline energy=0.00->0.00 grid=100.00->90.00 enemy_consumed=false leak_damage=10.00
+collision_no_intercept reason=zero_energy enemy=elite
+elite_leaked grid_damage=40.00
+zero_energy_elite energy=0.00->0.00 grid=100.00->60.00 enemy_consumed=false leak_damage=40.00
+baseline_collided impact=<270.0,850.0>
+typed_weapon_collision_drain family=common_wide_spread spent=5.00 current=95.00 max=100.00
+collision_cooldown_suppressed
+baseline_collided impact=<270.0,850.0>
+typed_weapon_collision_drain family=common_wide_spread spent=5.00 current=90.00 max=100.00
+cluster_cooldown energy=100.00->90.00 first_consumed=true second_consumed=false third_consumed=true
+baseline_collided impact=<270.0,850.0>
+typed_weapon_collision_drain family=common_wide_spread spent=5.00 current=95.00 max=100.00

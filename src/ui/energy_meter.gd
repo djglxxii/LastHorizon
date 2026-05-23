@@ -10,6 +10,9 @@ const REFILL_FLASH_SECONDS := 0.25
 const PARTIAL_REFILL_FLASH_BORDER := Color(0.35, 0.84, 0.94, 1.0)
 const PARTIAL_REFILL_FLASH_FILL := Color(0.55, 0.92, 0.96, 1.0)
 const PARTIAL_REFILL_FLASH_SECONDS := 0.16
+const COLLISION_FLASH_BORDER := Color(1.0, 0.38, 0.22, 1.0)
+const COLLISION_FLASH_FILL := Color(1.0, 0.78, 0.38, 1.0)
+const COLLISION_FLASH_SECONDS := 0.14
 const LOW_FILL := Color(1.0, 0.68, 0.18, 1.0)
 const EMPTY_BACKGROUND := Color(0.09, 0.035, 0.04, 0.94)
 const EMPTY_BORDER := Color(0.92, 0.24, 0.18, 1.0)
@@ -103,6 +106,28 @@ func flash_partial_refill() -> void:
 		return
 
 	await tree.create_timer(PARTIAL_REFILL_FLASH_SECONDS).timeout
+	if !is_inside_tree():
+		return
+	if flash_sequence != _flash_sequence:
+		return
+
+	set_energy(_bar.value, _bar.max_value)
+
+
+func flash_collision() -> void:
+	if !is_inside_tree():
+		return
+
+	_flash_sequence += 1
+	var flash_sequence := _flash_sequence
+	_apply_style(ACTIVE_BACKGROUND, COLLISION_FLASH_BORDER, COLLISION_FLASH_FILL, ACTIVE_TEXT)
+
+	var tree := get_tree()
+	if tree == null:
+		set_energy(_bar.value, _bar.max_value)
+		return
+
+	await tree.create_timer(COLLISION_FLASH_SECONDS).timeout
 	if !is_inside_tree():
 		return
 	if flash_sequence != _flash_sequence:

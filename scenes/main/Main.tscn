@@ -23,6 +23,10 @@ script = ExtResource("1_boot")
 unique_name_in_owner = true
 script = ExtResource("5_defense_grid")
 
+[node name="GameplayCamera" type="Camera2D" parent="."]
+position = Vector2(270, 480)
+enabled = true
+
 [node name="EnemySpawner" parent="." instance=ExtResource("4_spawner")]
 
 [node name="CarrierSpawner" type="Node2D" parent="."]

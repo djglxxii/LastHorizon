@@ -1,0 +1,20 @@
+Godot Engine v4.6.2.stable.official.71f334935 - https://godotengine.org
+
+typed_weapon_collision_drain family=collision_family spent=5.00 current=95.00 max=100.00
+baseline_collided impact=<270.0,850.0>
+typed_weapon_silent family=collision_family current=0.00 max=100.00
+typed_weapon_collision_drain family=collision_family spent=5.00 current=0.00 max=100.00
+grid_collision_damage amount=15.00
+elite_collided impact=<270.0,850.0>
+collision_no_intercept reason=zero_energy enemy=baseline
+typed_weapon_collision_drain family=collision_family spent=5.00 current=95.00 max=100.00
+baseline_collided impact=<270.0,850.0>
+collision_cooldown_suppressed
+typed_weapon_collision_drain family=collision_family spent=5.00 current=90.00 max=100.00
+baseline_collided impact=<270.0,850.0>
+grid_collision_damage amount=15.00
+grid_collision_damage amount=5.00
+typed_weapon_collision_drain family=collision_family spent=7.00 current=3.00 max=10.00
+typed_weapon_silent family=collision_family current=0.00 max=10.00
+typed_weapon_collision_drain family=collision_family spent=3.00 current=0.00 max=10.00
+COLLISION_VERIFICATION_OK

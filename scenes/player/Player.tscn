@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3]
+[gd_scene load_steps=11 format=3]
 
 [ext_resource type="Script" path="res://src/player/player_ship.gd" id="1_player_ship"]
 [ext_resource type="Texture2D" path="res://assets/sprites/player/player-ship.png" id="2_player_ship"]
@@ -6,9 +6,13 @@
 [ext_resource type="PackedScene" path="res://scenes/projectiles/PeaBullet.tscn" id="4_pea_bullet"]
 [ext_resource type="Script" path="res://src/player/typed_weapon_slot.gd" id="5_typed_slot"]
 [ext_resource type="PackedScene" path="res://scenes/projectiles/TypedProjectile.tscn" id="6_typed_projectile"]
+[ext_resource type="Script" path="res://src/player/player_collision.gd" id="7_player_collision"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_pickup_collector"]
 radius = 24.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_player_hull"]
+radius = 18.0
 
 [node name="Player" type="Node2D"]
 position = Vector2(270, 850)
@@ -35,3 +39,16 @@ collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PickupCollector"]
 shape = SubResource("CircleShape2D_pickup_collector")
+
+[node name="PlayerHull" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 16
+script = ExtResource("7_player_collision")
+typed_weapon_slot_path = NodePath("../TypedWeaponSlot")
+defense_grid_path = NodePath("../../DefenseGrid")
+ship_sprite_path = NodePath("../Sprite2D")
+camera_path = NodePath("../../GameplayCamera")
+hud_path = NodePath("../../HUD")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerHull"]
+shape = SubResource("CircleShape2D_player_hull")

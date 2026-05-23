@@ -4,6 +4,7 @@ class_name EliteEnemy
 signal damaged(amount: float, hit_position: Vector2)
 signal killed
 signal leaked(impact_position: Vector2)
+signal collided(impact_position: Vector2)
 
 const DAMAGE_NUMBER_SCENE := preload("res://scenes/ui/DamageNumber.tscn")
 const PIXEL_BURST_SCENE := preload("res://scenes/vfx/PixelBurst.tscn")
@@ -69,6 +70,17 @@ func take_damage(amount: float, hit_position := Vector2.INF) -> void:
 		_kill()
 
 
+func consume_for_collision(impact_position: Vector2) -> void:
+	if _dead or _leaked:
+		return
+
+	_dead = true
+	collided.emit(impact_position)
+	print("elite_collided impact=<%.1f,%.1f>" % [impact_position.x, impact_position.y])
+	_spawn_pixel_burst(impact_position)
+	queue_free()
+
+
 func _kill() -> void:
 	if _dead or _leaked:
 		return
@@ -76,7 +88,7 @@ func _kill() -> void:
 	_dead = true
 	killed.emit()
 	print("elite_killed")
-	_spawn_pixel_burst()
+	_spawn_pixel_burst(global_position)
 	queue_free()
 
 
@@ -106,14 +118,14 @@ func _spawn_damage_number(amount: float, spawn_position: Vector2) -> void:
 		damage_number.set_damage(amount)
 
 
-func _spawn_pixel_burst() -> void:
+func _spawn_pixel_burst(spawn_position: Vector2) -> void:
 	var burst := PIXEL_BURST_SCENE.instantiate()
 	if burst == null:
 		return
 
 	_add_feedback_child(burst)
 	if burst is Node2D:
-		(burst as Node2D).global_position = global_position
+		(burst as Node2D).global_position = spawn_position
 
 
 func _spawn_planet_impact(impact_position: Vector2) -> void:

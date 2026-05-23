@@ -760,9 +760,71 @@ The role-letter convention (S/P/H/R/D) is mnemonic — each letter matches the w
 
 ---
 
+## 2026-05-23 — Collision interception math: energy 1:1 versus enemy HP, no shared-shield cap
+
+**Decision:** Ship collision with an enemy resolves as a direct typed-weapon-energy-to-enemy-HP conversion with no intermediate shared-shield absorption cap.
+
+Collision resolution order:
+1. If `current_energy > 0`, spend `energy_spent = min(current_energy, enemy.current_hp)`.
+2. Drain `energy_spent` from the typed-weapon meter.
+3. Compute `leftover_hp = enemy.current_hp - energy_spent`.
+4. If `leftover_hp > 0`, apply that amount directly to Defense Grid Integrity immediately.
+5. Consume the enemy through the collision path.
+
+If `current_energy == 0` at contact, no interception occurs: the enemy is not consumed, takes no collision damage, and continues toward the planet line where it leaks normally for its full `leak_damage_per_enemy`.
+
+**Reasoning:** This keeps collision as a desperate last-line resource conversion while removing the ambiguous cap-N shield step. The player can body-block only by paying typed-weapon energy, and any enemy HP not covered by that energy becomes immediate Grid damage. At `0` energy, the ship has no intercepting resource, so contact is readable feedback rather than free mitigation.
+
+**Implications:**
+- A typed-weapon meter with even 1 energy can intercept any current enemy, because the enemy is consumed after the collision spend. For example, ramming a 20-HP elite with 1 energy spends 1 energy, consumes the elite, and deals 19 Grid damage instead of allowing a 40-Grid elite leak.
+- The marginal value of the last energy point is intentionally high. Hoarding one energy point as an emergency body-block option is a real decision; M7 may revisit if playtest shows it dominates normal firing choices.
+- Collision damage and leak damage must be logged separately so playtest review can distinguish "intercepted with leftover HP" from "leaked past the player."
+- The zero-energy branch must not use `has_weapon()` as its gate, because the held typed-weapon family persists at `0` energy.
+
+**Supersedes / amends:**
+- 2026-05-14 "Collision interception spends weapon energy before shared shield" — superseded for the cap-N shared-shield absorption step. Step 1's 1:1 typed-weapon-energy spend semantics survive; step 2's capped shared-shield absorption does not.
+- 2026-05-14 "Ship and planet share one Defense Grid shield" — amends the collision line of the damage hierarchy to remove capped shared-shield absorption from collision resolution.
+
+---
+
+## 2026-05-23 — Armada descent speed halved for prototype tuning
+
+**Decision:** The v1 prototype's baseline descending armada speed is reduced by 2x, from `32.5 px/s` to `16.25 px/s`.
+
+The formation spawn interval is doubled from approximately `6.09 s` to `12.18 s` so `spawn_interval_seconds * descent_speed` still equals the active block height (`rows * cell_size.y`) and preserves the T020 grid-aligned armada spacing invariant.
+
+**Reasoning:** The current prototype needs a slower armada descent to make threat reads, typed-weapon energy decisions, pickup movement, and collision interception easier to evaluate during playtest. This is a tuning adjustment, not a change to the committed stage shape: stages remain a continuous descending armada with pressure increasing through composition and density.
+
+**Implications:**
+- Individual enemies spend roughly twice as long crossing the playfield.
+- Formation-to-formation spacing remains grid-aligned; this change should not reintroduce vertical overlap.
+- Playtest timing expectations for leak pressure, elite pressure, carrier contest windows, and energy cycling should be read against the slower v1 armada speed.
+- M7 may revisit this value alongside density, carrier cadence, and weapon burn-rate tuning.
+
+---
+
+## 2026-05-23 — Armada descent speed retuned to midpoint
+
+**Decision:** The v1 prototype's baseline descending armada speed is increased from the too-slow `16.25 px/s` tuning to `24.375 px/s`, the midpoint between the previous `32.5 px/s` and `16.25 px/s` values.
+
+The formation spawn interval is recalculated to `8.12308 s` so `spawn_interval_seconds * descent_speed` remains approximately `198 px`, preserving the T020 grid-aligned armada spacing invariant.
+
+**Reasoning:** The 2x slowdown made the armada too slow for the intended pressure. The midpoint keeps the readability gain from slowing the original value while restoring more descent urgency.
+
+**Implications:**
+- The 2026-05-23 "Armada descent speed halved for prototype tuning" value is superseded for the active prototype tuning value.
+- Individual enemies cross the playfield slower than the original `32.5 px/s` tuning, but faster than the `16.25 px/s` test.
+- Grid-aligned formation spacing remains preserved by the adjusted spawn interval.
+- M7 may still revisit this value alongside density, carrier cadence, and weapon burn-rate tuning.
+
+**Supersedes / amends:**
+- 2026-05-23 "Armada descent speed halved for prototype tuning" — supersedes the `16.25 px/s` descent speed and `12.18 s` spawn interval values.
+
+---
+
 ## Open questions to resolve in GDD
 
-- **Collision tuning:** what exact weapon-energy spend rate, ship-shield absorption cap, feedback, and control penalty make ramming a desperate tactical interception rather than either optimal field-sweeping or a pointless action?
+- **Collision tuning:** with 1:1 weapon-energy-to-HP collision spend and no shared-shield absorption cap now committed, what exact feedback, proto-cooldown / invulnerability timing, and optional control penalty make ramming a desperate tactical interception rather than either optimal field-sweeping or a pointless action?
 - **Weapon drop tuning:** fuel-cell restore amounts, weapon-chip carrier spawn rules across faction stages and across the within-stage rarity zones (2026-05-19 late-armada rarity gating), and the separate per-rarity drop rates for **common / rare / legendary** (2026-05-19 three-tier rarity) in both the in-faction primary pool and the cross-run reverse-engineered pool.
 - **Grid repair tuning:** what exact restore amount, spawn cap, and stage placement rules should govern rare Defense Grid repair carriers?
 - **Defense Grid repair carrier source (opened 2026-05-16):** with pickup sources split between enemy armada (weapon chips) and coalition supply from below/sides (fuel cells), where do repair carriers come from? Coalition supply is the natural narrative match ("we send help"), but in-armada repair carriers as a rare enemy-side spawn preserves the "engage or let leak" tension that makes weapon-chip carriers tactically rich.

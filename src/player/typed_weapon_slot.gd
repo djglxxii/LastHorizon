@@ -143,6 +143,24 @@ func max_energy() -> float:
 	return active_weapon.max_energy
 
 
+func drain_for_collision(amount: float) -> float:
+	if active_weapon == null:
+		return 0.0
+
+	var requested := maxf(amount, 0.0)
+	if requested <= 0.0:
+		return 0.0
+
+	var spent := minf(active_weapon.current_energy, requested)
+	active_weapon.current_energy = clampf(active_weapon.current_energy - spent, 0.0, active_weapon.max_energy)
+	typed_weapon_energy_changed.emit(active_weapon.current_energy, active_weapon.max_energy)
+	_check_silent_resumed_edge()
+
+	var family_id := current_family_id()
+	print("typed_weapon_collision_drain family=%s spent=%.2f current=%.2f max=%.2f" % [family_id, spent, active_weapon.current_energy, active_weapon.max_energy])
+	return spent
+
+
 func _fire_once() -> bool:
 	if active_weapon == null:
 		return false

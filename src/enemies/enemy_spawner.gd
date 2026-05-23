@@ -5,11 +5,11 @@ class_name EnemySpawner
 @export var rows := 3
 @export var cols := 5
 @export var cell_size := Vector2(82.0, 66.0)
-@export var descent_speed := 32.5
+@export var descent_speed := 24.375
 @export var sway_amplitude := 5.0
 @export var sway_period := 2.4
 # spawn_interval_seconds * descent_speed must equal rows * cell_size.y to keep the armada on a continuous grid (T020).
-@export var spawn_interval_seconds := 6.09
+@export var spawn_interval_seconds := 8.12308
 @export var playfield_width := 540.0
 @export var playfield_height := 960.0
 @export var spawn_y := -160.0

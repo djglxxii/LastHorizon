@@ -74,3 +74,7 @@ func _on_typed_weapon_refilled(_family_id: String) -> void:
 
 func _on_typed_weapon_partial_refilled(_family_id: String, _amount_restored: float) -> void:
 	_energy_meter.flash_partial_refill()
+
+
+func flash_collision() -> void:
+	_energy_meter.flash_collision()
