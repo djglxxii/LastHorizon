@@ -7,6 +7,7 @@
 script = ExtResource("1_family")
 family_id = "common_heavy_slug"
 display_name = "Heavy Slug"
+letter_glyph = "H"
 tint_color = Color(1, 0.88, 0.28, 1)
 max_energy = 100.0
 firing_cost = 6.0

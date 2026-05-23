@@ -1,0 +1,11 @@
+typed_weapon_silent family=common_wide_spread current=0.00 max=100.00
+zero_energy_fire_noop typed_projectiles_before=1 after=1 has_weapon=true family=common_wide_spread
+typed_weapon_partial_refilled family=common_wide_spread restored=30.00 current=30.00 max=100.00
+typed_weapon_resumed family=common_wide_spread current=30.00 max=100.00
+typed_weapon_silent family=common_wide_spread current=0.00 max=100.00
+chip_pickup_applied family=common_wide_spread granted_new_family=false current=100.00 max=100.00
+typed_weapon_refilled family=common_wide_spread current=100.00 max=100.00
+typed_weapon_resumed family=common_wide_spread current=100.00 max=100.00
+typed_weapon_silent family=common_wide_spread current=0.00 max=100.00
+chip_pickup_applied family=common_heavy_slug granted_new_family=true current=100.00 max=100.00
+typed_weapon_resumed family=common_heavy_slug current=100.00 max=100.00

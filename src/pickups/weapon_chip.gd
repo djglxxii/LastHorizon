@@ -22,12 +22,12 @@ func _ready() -> void:
 	_sway_phase = randf_range(0.0, TAU)
 	area_entered.connect(_on_area_entered)
 	body_entered.connect(_on_body_entered)
-	_apply_family_tint()
+	_apply_family_identity()
 
 
 func set_family(weapon_family: TypedWeaponFamily) -> void:
 	family = weapon_family
-	_apply_family_tint()
+	_apply_family_identity()
 
 
 func reset_sway_anchor() -> void:
@@ -102,9 +102,22 @@ func _spawn_pickup_burst() -> void:
 		(burst as Node2D).global_position = global_position
 
 
-func _apply_family_tint() -> void:
-	if family == null or !has_node("Sprite2D"):
+func _apply_family_identity() -> void:
+	var label := get_node_or_null("LetterGlyph") as Label
+	if label != null:
+		label.visible = false
+		label.text = ""
+		label.modulate = Color.WHITE
+
+	if family == null:
 		return
 
-	var sprite := get_node("Sprite2D") as Sprite2D
-	sprite.modulate = family.tint_color
+	var sprite := get_node_or_null("Sprite2D") as Sprite2D
+	if sprite != null:
+		sprite.modulate = family.tint_color
+
+	if label == null:
+		return
+
+	label.text = family.letter_glyph
+	label.visible = !family.letter_glyph.is_empty()

@@ -17,5 +17,17 @@ pickup_burst_scene = ExtResource("3_pickup_burst")
 texture_filter = 1
 texture = ExtResource("2_sprite")
 
+[node name="LetterGlyph" type="Label" parent="."]
+texture_filter = 1
+visible = false
+modulate = Color(1, 1, 1, 1)
+offset_left = -18.0
+offset_top = -18.0
+offset_right = 18.0
+offset_bottom = 18.0
+theme_override_font_sizes/font_size = 24
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_pickup")

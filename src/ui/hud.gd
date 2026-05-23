@@ -1,7 +1,5 @@
 extends CanvasLayer
 
-const EXPIRY_INACTIVE_DELAY := 0.35
-
 @export var typed_weapon_slot_path: NodePath
 @export var defense_grid_path: NodePath
 
@@ -20,7 +18,6 @@ func _ready() -> void:
 		return
 
 	_typed_weapon_slot.connect("typed_weapon_energy_changed", _on_typed_weapon_energy_changed)
-	_typed_weapon_slot.connect("typed_weapon_expired", _on_typed_weapon_expired)
 	_typed_weapon_slot.connect("typed_weapon_refilled", _on_typed_weapon_refilled)
 	_typed_weapon_slot.connect("typed_weapon_partial_refilled", _on_typed_weapon_partial_refilled)
 	_sync_from_slot()
@@ -69,18 +66,6 @@ func _on_typed_weapon_energy_changed(current_energy: float, max_energy: float) -
 
 	_last_max_energy = max_energy
 	_energy_meter.set_energy(current_energy, max_energy)
-
-
-func _on_typed_weapon_expired(_family_id: String) -> void:
-	_energy_meter.set_energy(0.0, maxf(_last_max_energy, 1.0))
-	var tree := get_tree()
-	if tree == null:
-		_energy_meter.set_empty()
-		return
-
-	await tree.create_timer(EXPIRY_INACTIVE_DELAY).timeout
-	if _typed_weapon_slot == null or !_typed_weapon_slot.has_method("has_weapon") or !_typed_weapon_slot.call("has_weapon"):
-		_energy_meter.set_empty()
 
 
 func _on_typed_weapon_refilled(_family_id: String) -> void:

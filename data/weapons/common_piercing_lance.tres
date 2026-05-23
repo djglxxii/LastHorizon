@@ -7,6 +7,7 @@
 script = ExtResource("1_family")
 family_id = "common_piercing_lance"
 display_name = "Piercing Lance"
+letter_glyph = "P"
 tint_color = Color(0.85, 0.3, 1, 1)
 archetype = 2
 pierce = true

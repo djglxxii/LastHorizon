@@ -7,6 +7,7 @@ enum WeaponArchetype { SINGLE, SPREAD, PIERCE }
 
 @export var family_id := "debug_plasma"
 @export var display_name := "Debug Plasma"
+@export var letter_glyph := ""
 @export var tint_color := Color(0.3, 0.95, 1.0)
 @export var archetype: WeaponArchetype = WeaponArchetype.SINGLE
 @export var spread_count := 1

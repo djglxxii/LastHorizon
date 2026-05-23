@@ -61,8 +61,14 @@ See [`README.md`](README.md) for workflow rules and [`../PLAN.md`](../PLAN.md) f
 | ID | Title | State | Depends on | Evidence type |
 |---|---|---|---|---|
 | T014 | Elite/heavy enemy type | completed | T013 | video/screens + event log |
-| T015 | Collision interception model | one-liner | T014 | video/screens + event log |
+| T015 | Collision interception model | one-liner | T014, T021 | video/screens + event log |
 | T016 | Brief post-hit invulnerability | one-liner | T015 | video/screens + event log |
+
+## M2 / M4 tuning revisit
+
+| ID | Title | State | Depends on | Evidence type |
+|---|---|---|---|---|
+| T021 | Persist typed weapon at zero energy + chip letter glyphs | completed | T013, T014 | video/screens + event log |
 
 ## M7 — Playtest packaging
 

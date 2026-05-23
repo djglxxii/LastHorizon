@@ -1,0 +1,11 @@
+Godot Engine v4.6.2.stable.official.71f334935 - https://godotengine.org
+
+typed_weapon_silent family=A current=0.00 max=10.00
+typed_weapon_silent family=A current=0.00 max=10.00
+typed_weapon_resumed family=A current=10.00 max=10.00
+typed_weapon_silent family=A current=0.00 max=10.00
+typed_weapon_resumed family=B current=16.00 max=16.00
+typed_weapon_silent family=A current=0.00 max=100.00
+typed_weapon_partial_refilled family=A restored=30.00 current=30.00 max=100.00
+typed_weapon_resumed family=A current=30.00 max=100.00
+PERSIST_AT_ZERO_VERIFICATION_OK

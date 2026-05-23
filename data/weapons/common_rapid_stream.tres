@@ -7,6 +7,7 @@
 script = ExtResource("1_family")
 family_id = "common_rapid_stream"
 display_name = "Rapid Stream"
+letter_glyph = "R"
 tint_color = Color(0.55, 1, 0.3, 1)
 max_energy = 100.0
 firing_cost = 0.7

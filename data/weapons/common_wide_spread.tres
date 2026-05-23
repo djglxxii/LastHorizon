@@ -7,6 +7,7 @@
 script = ExtResource("1_family")
 family_id = "common_wide_spread"
 display_name = "Wide Spread"
+letter_glyph = "S"
 tint_color = Color(1, 0.62, 0.18, 1)
 archetype = 1
 spread_count = 3

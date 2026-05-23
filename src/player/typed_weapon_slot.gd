@@ -2,7 +2,8 @@ extends Node2D
 
 signal typed_weapon_fired(bullet: Node2D, current_energy: float, max_energy: float)
 signal typed_weapon_energy_changed(current_energy: float, max_energy: float)
-signal typed_weapon_expired(family_id: String)
+signal typed_weapon_silent(family_id: String)
+signal typed_weapon_resumed(family_id: String)
 signal typed_weapon_refilled(family_id: String)
 signal typed_weapon_partial_refilled(family_id: String, amount_restored: float)
 signal chip_pickup_applied(family_id: String, granted_new_family: bool)
@@ -15,6 +16,7 @@ signal chip_pickup_applied(family_id: String, granted_new_family: bool)
 var active_weapon: TypedWeapon
 var _time_until_next_shot := 0.0
 var _warned_empty_family_id := false
+var _was_empty_last_tick := false
 
 
 func _physics_process(delta: float) -> void:
@@ -39,12 +41,14 @@ func equip(family: TypedWeaponFamily) -> void:
 
 	active_weapon = TypedWeapon.new(family)
 	_time_until_next_shot = 0.0
+	_was_empty_last_tick = active_weapon.current_energy <= 0.0
 	typed_weapon_energy_changed.emit(active_weapon.current_energy, active_weapon.max_energy)
 
 
 func clear() -> void:
 	active_weapon = null
 	_time_until_next_shot = 0.0
+	_was_empty_last_tick = false
 	typed_weapon_energy_changed.emit(0.0, 0.0)
 
 
@@ -56,13 +60,17 @@ func apply_chip_pickup(family: TypedWeaponFamily) -> void:
 	if active_weapon == null:
 		equip(family)
 		chip_pickup_applied.emit(family.family_id, true)
+		_check_silent_resumed_edge()
 		return
 
 	var active_family := active_weapon.family
 	if active_family == null:
 		_warn_empty_family_id_once()
+		var was_empty_before_replace := _was_empty_last_tick
 		equip(family)
+		_was_empty_last_tick = was_empty_before_replace
 		chip_pickup_applied.emit(family.family_id, true)
+		_check_silent_resumed_edge()
 		return
 
 	if _has_empty_family_id(family) or _has_empty_family_id(active_family):
@@ -73,10 +81,14 @@ func apply_chip_pickup(family: TypedWeaponFamily) -> void:
 		typed_weapon_energy_changed.emit(active_weapon.current_energy, active_weapon.max_energy)
 		chip_pickup_applied.emit(family.family_id, false)
 		typed_weapon_refilled.emit(family.family_id)
+		_check_silent_resumed_edge()
 		return
 
+	var was_empty_before_swap := _was_empty_last_tick
 	equip(family)
+	_was_empty_last_tick = was_empty_before_swap
 	chip_pickup_applied.emit(family.family_id, true)
+	_check_silent_resumed_edge()
 
 
 func apply_fuel_cell_pickup() -> void:
@@ -95,6 +107,7 @@ func apply_fuel_cell_pickup() -> void:
 		family_id = active_weapon.family.family_id
 	typed_weapon_partial_refilled.emit(family_id, restored)
 	print("typed_weapon_partial_refilled family=%s restored=%.2f current=%.2f max=%.2f" % [family_id, restored, active_weapon.current_energy, active_weapon.max_energy])
+	_check_silent_resumed_edge()
 
 
 func _has_empty_family_id(family: TypedWeaponFamily) -> bool:
@@ -139,20 +152,23 @@ func _fire_once() -> bool:
 		push_warning("TypedWeaponSlot has no projectile_scene assigned.")
 		return false
 
+	var energy_before_try_fire := active_weapon.current_energy
 	if !active_weapon.try_fire():
-		_expire_active_weapon(family.family_id)
+		if !is_equal_approx(active_weapon.current_energy, energy_before_try_fire):
+			typed_weapon_energy_changed.emit(active_weapon.current_energy, active_weapon.max_energy)
+		_check_silent_resumed_edge()
 		return false
 
 	var bullet_parent := _resolve_bullet_parent()
 	var fired_projectiles := _spawn_projectiles_for_family(family, bullet_parent)
 	if fired_projectiles.is_empty():
+		typed_weapon_energy_changed.emit(active_weapon.current_energy, active_weapon.max_energy)
+		_check_silent_resumed_edge()
 		return false
 
 	typed_weapon_fired.emit(fired_projectiles[0], active_weapon.current_energy, active_weapon.max_energy)
 	typed_weapon_energy_changed.emit(active_weapon.current_energy, active_weapon.max_energy)
-
-	if active_weapon.is_expired():
-		_expire_active_weapon(family.family_id)
+	_check_silent_resumed_edge()
 
 	return true
 
@@ -201,11 +217,6 @@ func _instantiate_projectile(family: TypedWeaponFamily) -> Node2D:
 	return projectile
 
 
-func _expire_active_weapon(family_id: String) -> void:
-	clear()
-	typed_weapon_expired.emit(family_id)
-
-
 func _resolve_bullet_parent() -> Node:
 	if bullet_parent_path != NodePath() and has_node(bullet_parent_path):
 		return get_node(bullet_parent_path)
@@ -215,3 +226,23 @@ func _resolve_bullet_parent() -> Node:
 		return current_scene
 
 	return get_tree().root
+
+
+func _check_silent_resumed_edge() -> void:
+	if active_weapon == null:
+		_was_empty_last_tick = false
+		return
+
+	var is_empty := active_weapon.current_energy <= 0.0
+	if is_empty == _was_empty_last_tick:
+		return
+
+	var family_id := current_family_id()
+	if is_empty:
+		typed_weapon_silent.emit(family_id)
+		print("typed_weapon_silent family=%s current=%.2f max=%.2f" % [family_id, active_weapon.current_energy, active_weapon.max_energy])
+	else:
+		typed_weapon_resumed.emit(family_id)
+		print("typed_weapon_resumed family=%s current=%.2f max=%.2f" % [family_id, active_weapon.current_energy, active_weapon.max_energy])
+
+	_was_empty_last_tick = is_empty

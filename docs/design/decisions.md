@@ -696,6 +696,70 @@ The dynamic responsiveness from 2026-05-14 (if no weapon, more chips; if low ene
 
 ---
 
+## 2026-05-22 — Typed weapon persists at zero energy; no auto-expire to pea shooter
+
+**Decision:** The held typed-weapon family **persists** when its energy meter reaches `0`. The weapon does not auto-expire and the player is not auto-dropped to the pea-shooter-only state. While energy is at `0`, the typed weapon simply cannot fire; the pea shooter continues to auto-fire as the lone active offense. As soon as energy is restored — by a same-family chip (full refill), a fuel cell (partial refill), or a different-family chip swap (full refill of the new family) — the typed weapon resumes firing.
+
+Different-family swap semantics are **unchanged**: catching a chip of a different family swaps to the new family at full energy regardless of the current energy level, including at `0`. The "do I commit to my current family?" decision is preserved; the only behavioral change is that the player retains family identity through the empty window instead of involuntarily losing it.
+
+**Reasoning:** Watching the prototype, the auto-expire-at-zero rule produced a frustrating ambiguity for the player at the moment energy hit `0`: their build identity vanished silently, and the next chip caught had to be inspected to know what they now held. With the family preserved, the empty-meter window becomes an obvious "I can't shoot my big gun right now" pressure state, not an identity-loss state. The dual-role energy hierarchy is preserved (energy still both fires and absorbs hits), and the functional rhythm the M2 prototype was built to test (typed-weapon fire drops out at `0`, pea shooter alone for a while, then resumes on refill) still happens — but the *cognitive* drop-back is now "my held weapon is silent" rather than "my held weapon disappeared." This makes the dual-role tension easier to read in playtest without weakening it.
+
+A side benefit is that fuel-cell pickups can never put the player into a "refilled into nothing" dead-end. The T013 fuel-cell carrier spawner-gate (don't spawn fuel cells when no weapon is equipped) still applies for run-start before the first chip is caught; after that first equip, the player always holds *some* family and the gate is effectively always open.
+
+**Implications:**
+- `TypedWeaponSlot.has_weapon()` remains true through `current_energy == 0`. The slot's `active_weapon` is not cleared at zero.
+- The T011 same-family-refill / different-family-swap-at-full rules still apply at every energy level, including `0`. Catching a different-family chip at `0` energy swaps and the player loses the previously held (empty) family — the swap mechanic is unchanged, including its cost.
+- Fuel cells continue to partially refill the held family (T013); at `0` energy this is no longer a "save me from being weaponless" beat — it's a "kick my big gun back on" beat. The 30% starting fraction is unchanged.
+- The HUD energy meter at `0` should still read as "this weapon is held but not firing" (e.g., the bar empty but the family tint still present, no expiry flash). The 2026-05-19 dual-role readability work continues to apply.
+- The fuel-cell carrier spawner gate (T013) is unaffected mechanically — `has_weapon()` returning true through zero energy means the spawner countdown runs continuously after the first equip, which is the intended steady state once the player is past run-start.
+- The `typed_weapon_expired` signal on `TypedWeaponSlot` is no longer fired by the energy-reaches-zero path. The signal name is preserved for back-compat but its only remaining caller is the swap-clearing-old-family path, if at all. Listeners should be reviewed: any HUD or event-log code expecting the empty-meter beat must transition to listening on `typed_weapon_energy_changed` reaching `0` instead. The previous "drop back to pea shooter" event log line is replaced by a "weapon silent" beat.
+- Per-rarity, per-faction, and cross-run reverse-engineered weapon drop logic (2026-05-18 / 2026-05-19) is unaffected — those entries described what *can* roll into the slot, not the empty-state behavior of the slot itself.
+
+**Supersedes / amends:**
+- 2026-05-13 "Ship cannot be destroyed; hits drain weapon power" — the "If the energy/fuel reaches 0, the typed weapon expires and the player drops back to the pea shooter" clause is **superseded**. The typed weapon no longer expires at `0`; it persists silent.
+- 2026-05-14 "Typed weapons are temporary energy states" — amended. Typed weapons are still energy-bounded in *firing capability*, but no longer in *identity persistence*. The "temporary" framing now refers to firing uptime, not to weapon retention.
+- The CLAUDE.md "Energy is dual-role" invariant — the "When it reaches 0, the typed weapon expires and the player drops back to the pea shooter" sentence is superseded by this entry. The CLAUDE.md text should be updated by the implementation task to read "When it reaches 0, the typed weapon cannot fire until refilled, but the held family persists."
+
+---
+
+## 2026-05-22 — Weapon-chip readability via stylized family-letter glyph
+
+**Decision:** Weapon-chip sprites carry a **stylized letter glyph** identifying the family, centered on the chip face in the family tint. Each common-tier family is assigned a single representative letter taken from the family role: Wide **S**pread → `S`, **P**iercing Lance → `P`, **H**eavy Slug → `H`, **R**apid Stream → `R`, debug_plasma → `D`. Carrier hulls continue to telegraph the family via tint modulate only — letters appear on **chips only**, not on the carrier itself.
+
+**Reasoning:** T010 shipped the five common-tier families with tint-only family identity on both carrier and chip. In playtest the tint axis alone has proved hard to read at chip-catch distance: hue alone does not survive against a saturated arcade backdrop, and the player frequently does not know which family they are about to commit to until after the pickup applies. Adding a letter glyph on the chip — at the actual catch decision moment — gives the player a definitive, color-independent identity read without changing any tuning. Keeping the carrier as tint-only preserves the "distant silhouette" readability work without doubling the sprite-authoring cost; the carrier already telegraphs family well enough from across the playfield that the up-close letter beat on the chip is what's missing.
+
+The role-letter convention (S/P/H/R/D) is mnemonic — each letter matches the way the player will say the family aloud ("the S chip", "the H chip"). Display-name first letters were considered (W/L/H/R/D) but the role-letter convention reads more naturally at a glance and preserves the in-play vocabulary.
+
+**Implications:**
+- Each common-tier `TypedWeaponFamily` resource gains a `letter_glyph: String` field (a single character: `"S"`, `"P"`, `"H"`, `"R"`, `"D"`). Empty string is a no-glyph fallback for any future family whose chip representation is symbolic rather than alphabetic.
+- The `WeaponChip` sprite composites the letter glyph on top of the chip body. v1 implementation can use either a `Label` node child or a per-family pre-rendered chip PNG that bakes the letter into the sprite — implementation task decides. The chip body is still tinted via `family.tint_color`; the letter sits on top in a contrasting on-tint color (white or near-white) for legibility.
+- `WeaponChipCarrier` is unchanged. Letters do not appear on carrier hulls in v1. Tint-only carrier telegraphing remains the from-distance readability surface.
+- The letter glyph is a **placeholder identity surface** for v1, not a final UI. Final art may replace the letter with an icon, a sigil, or a different visual treatment per family. The letter convention is committed for the prototype playtest pass; post-v1 readability work may revisit.
+- Rare and legendary tier weapons (post-v1) will need their own readability convention on top of the letter (e.g., a border, a particle accent). That decision is deferred; v1 common-tier ships with letters alone.
+- No change to weapon family tuning, projectile sprites, projectile tints, fuel-cell appearance, carrier appearance, or HUD layout. Pure chip-sprite readability fix.
+
+**Supersedes / amends:**
+- 2026-05-18 "Three rarity tiers (common / rare / legendary) as the in-run power-spike axis" — adds a v1 readability convention for the common tier. Rare and legendary readability conventions remain open.
+- T010 "Common-tier weapon families" — chip identity surface is no longer tint-only. The `tint_color` field stays load-bearing for carrier hull and projectile tint; chip readability adds the letter axis.
+
+---
+
+## 2026-05-22 — Retire typed weapon expired signal for silent zero-energy state
+
+**Decision:** `TypedWeaponSlot.typed_weapon_expired` is retired in the v1 prototype. Zero energy is represented by the held weapon entering a **silent** state, with `typed_weapon_silent(family_id)` emitted on the `> 0` to `0` edge and `typed_weapon_resumed(family_id)` emitted on the `0` to `> 0` refill edge. There is no dormant `typed_weapon_expired` signal kept for back-compat.
+
+**Reasoning:** The v1 codebase has no stable external API contract yet, and the only in-repo listener for the old expired signal was the HUD expiry-flash path that no longer matches the design. Keeping an unused signal with the old name would imply the old weapon-loss model still exists. The silent/resumed signal pair names the current behavior directly and gives evidence scripts a precise event to verify.
+
+**Implications:**
+- HUD code listens to `typed_weapon_energy_changed`, `typed_weapon_refilled`, and `typed_weapon_partial_refilled`; it no longer connects to an expiry signal or schedules a delayed empty-meter transition.
+- Event logs use `typed_weapon_silent` and `typed_weapon_resumed` for zero-energy edge transitions.
+- Any future mechanic that explicitly clears the held family should call `clear()` or introduce a mechanic-specific event rather than reusing the retired expiry concept.
+
+**Supersedes / amends:**
+- 2026-05-22 "Typed weapon persists at zero energy; no auto-expire to pea shooter" — supersedes the implementation implication that the `typed_weapon_expired` signal name should be preserved for back-compat. It is retired outright for v1.
+
+---
+
 ## Open questions to resolve in GDD
 
 - **Collision tuning:** what exact weapon-energy spend rate, ship-shield absorption cap, feedback, and control penalty make ramming a desperate tactical interception rather than either optimal field-sweeping or a pointless action?
